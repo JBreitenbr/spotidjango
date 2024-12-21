@@ -1,0 +1,32 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Julias Spotify Tracks</title>
+    <link rel="stylesheet" href="{% static 'css/styled.css' %}"/>
+  </head>
+  <body>
+    <main>
+    {% block content %}
+<h1>Tracks</h1>
+<!--Begin col-->
+<div class="column">
+    {% for item in tracks.tracks %}
+    <p>
+      <div class="outer-wrapper">
+        <img src="{{item.image}}" height="100" width="100" />
+        <div class="inner-wrapper">
+        <div class="artist">{{item.artist}}</div>
+        <div class="track">{{item.name}}</div>
+        </div>
+      </div>
+    </p>
+    {% endfor %}
+</div>
+<!--End col-->
+{% endblock %}
+</main>
+</body>
+</html>
