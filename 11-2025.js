@@ -98,3 +98,106 @@ For example, given 2 and 3, return:
 function buildMatrix(rows, cols) {
   return Array(rows).fill("").map((item)=>Array(cols).fill(0));
 }
+
+/* 06-11-2025: Weekday Finder
+Given a string date in the format YYYY-MM-DD, return the day of the week.
+
+Valid return days are:
+
+"Sunday"
+"Monday"
+"Tuesday"
+"Wednesday"
+"Thursday"
+"Friday"
+"Saturday"
+Be sure to ignore time zones.
+*/
+
+function getWeekday(dateString) {
+  let wD={0:"Sunday",1:"Monday",2:"Tuesday",3:"Wednesday",4:"Thursday",5:"Friday",6:"Saturday"};
+  let d=new Date(dateString).getDay();
+  return wD[d];
+}
+
+/* 07-11-2025: Counting Cards
+A standard deck of playing cards has 13 unique cards in each suit. Given an integer representing the number of cards to pick from the deck, return the number of unique combinations of cards you can pick.
+
+Order does not matter. Picking card A then card B is the same as picking card B then card A.
+For example, given 52, return 1. There's only one combination of 52 cards to pick from a 52 card deck. And given 2, return 1326, There's 1326 card combinations you can end up with when picking 2 cards from the deck.
+*/
+
+function combinations(cards) {
+  if(cards>52 || cards<0) {return 0;}
+  else if(cards==52 || cards==0){
+    return 1;
+  }
+  else if(cards==51 || cards==1){
+    return 52;
+  } else {
+    if(cards>26){
+      cards=52-cards;
+    }
+    let res=52;
+    for(let i = 2; i <= cards; i++) res *= (52 - i + 1) / i;
+  return Math.round(res);
+  }
+}
+
+/* 08-11-2025: Character Limit
+In this challenge, you are given a string and need to determine if it fits in a social media post. Return the following strings based on the rules given:
+
+"short post" if it fits within a 40-character limit.
+"long post" if it's greater than 40 characters and fits within an 80-character limit.
+"invalid post" if it's too long to fit within either limit.
+*/
+
+function canPost(message) {
+  return message.length<=40?"short post":message.length<=80?"long post":"invalid post";
+}
+
+/* 09-11-2025: Word Search
+Given a matrix (an array of arrays) of single letters and a word to find, return the start and end indices of the word in the matrix.
+
+The given matrix will be filled with all lowercase letters (a-z).
+The word to find will always be in the matrix exactly once.
+The word to find will always be in a straight line in one of these directions:
+left to right
+right to left
+top to bottom
+bottom to top
+For example, given the matrix:
+
+[
+  ["a", "c", "t"],
+  ["t", "a", "t"],
+  ["c", "t", "c"]
+]
+And the word "cat", return:
+
+[[0, 1], [2, 1]]
+Where [0, 1] are the indices for the "c" (start of the word), and [2, 1] are the indices for the "t" (end of the word).
+*/
+
+function findWord(matrix, word) {
+    let pre=[];
+    let l=matrix.length;
+    let m=matrix;
+    let wL=word.length;
+    let t=m[0].map((_, colIndex)=>m.map(row=>row[colIndex]));
+    for(let i=0;i<l;i++){
+        if(m[i].join("").slice(0,wL)==word){
+            pre.push([i,wL==l?0:1],[i,l-1]);
+           } 
+        if(m[i].reverse().join("").slice(0,wL)==word){
+            pre.push([i,l-1],[i,wL==l?0:1]);
+           } 
+        if(t[i].join("").slice(0,wL)==word){
+            pre.push([wL==l?0:1,i],[l-1,i]);
+           } 
+        if(t[i].reverse().join("").slice(0,wL)==word){
+            pre.push([l-1,i],[wL==l?0:1,i]);
+           }
+        return pre;
+}
+findWord([["f", "x", "o", "x"], ["o", "x", "o", "f"], ["f", "o", "f", "x"], ["f", "x", "x", "o"]], "fox") 
