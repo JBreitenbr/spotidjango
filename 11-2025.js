@@ -201,3 +201,36 @@ function findWord(matrix, word) {
         return pre;
 }
 findWord([["f", "x", "o", "x"], ["o", "x", "o", "f"], ["f", "o", "f", "x"], ["f", "x", "x", "o"]], "fox") 
+
+/* 10-11-2025: Extension Extractor
+Given a string representing a filename, return the extension of the file.
+
+The extension is the part of the filename that comes after the last period (.).
+If the filename does not contain a period or ends with a period, return "none".
+The extension should be returned as-is, preserving case.
+ */
+  
+function getExtension(filename) {
+  let s=filename.split(".");
+  if(s.length>1 && s[s.length-1]!=''){
+    return s[s.length-1];
+  }
+  else return 'none';
+}
+
+/* 11-11-2025: Vowels and Consonants
+Given a string, return an array with the number of vowels and number of consonants in the string.
+
+Vowels consist of a, e, i, o, u in any case.
+Consonants consist of all other letters in any case.
+Ignore any non-letter characters.
+For example, given "Hello World", return [3, 7].
+*/
+
+function count(str) {
+let vReg=/[aeiou]/gi;
+let lReg=/[a-z]/gi;
+  let s1=str.split("").map((item)=>item.match(vReg)?1:0).reduce((a,b)=>a+b,0);
+  let s2=str.split("").map((item)=>item.match(lReg)?1:0).reduce((a,b)=>a+b,0);
+  return [s1,s2-s1];
+}
