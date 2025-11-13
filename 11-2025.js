@@ -234,3 +234,45 @@ let lReg=/[a-z]/gi;
   let s2=str.split("").map((item)=>item.match(lReg)?1:0).reduce((a,b)=>a+b,0);
   return [s1,s2-s1];
 }
+
+/* 12-11-2025: Email Signature Generator
+Given strings for a person's name, title, and company, return an email signature as a single string using the following rules:
+
+The name should appear first, preceded by a prefix that depends on the first letter of the name. For names starting with (case-insensitive):
+A-I: Use >> as the prefix.
+J-R: Use -- as the prefix.
+S-Z: Use :: as the prefix.
+A comma and space (, ) should follow the name.
+The title and company should follow the comma and space, separated by " at " (with spaces around it).
+For example, given "Quinn Waverly", "Founder and CEO", and "TechCo" return "--Quinn Waverly, Founder and CEO at TechCo".
+*/
+  
+function generateSignature(name, title, company) {
+  let r1=/[A-I]/;
+  let r2=/[J-R]/;
+  let r3=/[S-Z]/;
+  let stri=r1.test(name[0])?">>":r2.test(name[0])?"--":"::";
+  stri+=name+", "+title+" at "+ company;
+  return stri;
+ }
+
+/* 13-11-2025: Array Shift
+Given an array and an integer representing how many positions to shift the array, return the shifted array.
+
+A positive integer shifts the array to the left.
+A negative integer shifts the array to the right.
+The shift wraps around the array.
+For example, given [1, 2, 3] and 1, shift the array 1 to the left, returning [2, 3, 1].
+*/
+
+function shiftArray(arr, n) {
+  let rep=[].concat(...new Array(5).fill(arr));
+  let s=rep.slice(n,n+arr.length);
+  if(n<0){
+    s=rep.slice(n+arr.length,n+2*arr.length);
+  }
+  return s;
+}
+shiftArray([1,2,3],-1);
+shiftArray(["alpha", "bravo", "charlie"], 5) 
+shiftArray([0, 1, 2, 3, 4, 5, 6, 7, 8, 9], 15)
