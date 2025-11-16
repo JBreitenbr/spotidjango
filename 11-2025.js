@@ -276,3 +276,50 @@ function shiftArray(arr, n) {
 shiftArray([1,2,3],-1);
 shiftArray(["alpha", "bravo", "charlie"], 5) 
 shiftArray([0, 1, 2, 3, 4, 5, 6, 7, 8, 9], 15)
+
+/* 14-11-2025: Is It the Weekend?
+Given a date in the format "YYYY-MM-DD", return the number of days left until the weekend.
+
+The weekend starts on Saturday.
+If the given date is Saturday or Sunday, return "It's the weekend!".
+Otherwise, return "X days until the weekend.", where X is the number of days until Saturday.
+If X is 1, use "day" (singular) instead of "days" (plural).
+Make sure the calculation ignores your local timezone.
+*/
+
+function daysUntilWeekend(dateString) {
+  let wD=new Date(dateString).getDay();
+  if(wD==0 || wD==6){
+  return "It's the weekend!";
+  } else {
+    return wD<5?`${6-wD} days until the weekend.`:"1 day until the weekend."
+  }
+}
+
+/* 15-11-2025: GCD
+Given two positive integers, return their greatest common divisor (GCD).
+
+The GCD of two integers is the largest number that divides evenly into both numbers without leaving a remainder.
+For example, the divisors of 4 are 1, 2, and 4. The divisors of 6 are 1, 2, 3, and 6. So given 4 and 6, return 2, the largest number that appears in both sets of divisors.
+*/
+
+function gcd(x, y) {
+  return Array.from(Array(x>y?x:y).keys()).map((item)=>item+1).filter((item)=>x%item==0&&y%item==0).reverse()[0];
+}
+
+/* 16-11-2025: Rectangle Count
+Given two positive integers representing the width and height of a rectangle, determine how many rectangles can fit in the given one.
+
+Only count rectangles with integer width and height.
+For example, given 1 and 3, return 6. Three 1x1 rectangles, two 1x2 rectangles, and one 1x3 rectangle.
+*/
+
+function countRectangles(width, height) {
+   let count = 0;
+   for (let i = 1; i <= width; i++) { 
+     for (let j = 1; j <= height; j++) { 
+      count += (width - i + 1) * (height - j + 1); 
+    }
+      }
+  return count;
+}
