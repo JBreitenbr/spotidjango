@@ -323,3 +323,73 @@ function countRectangles(width, height) {
       }
   return count;
 }
+
+/* Python */
+def count_rectangles(width, height):
+    cnt=0
+    for i in range(1,width+1):
+        for j in range(1,height+1):
+            cnt+=(width-i+1)*(height-j+1)
+    return cnt
+
+/* 17-11-2025: Fingerprint Test
+Given two strings representing fingerprints, determine if they are a match using the following rules:
+
+Each fingerprint will consist only of lowercase letters (a-z).
+Two fingerprints are considered a match if:
+They are the same length.
+The number of differing characters does not exceed 10% of the fingerprint length.
+*/
+
+function isMatch(fingerprintA, fingerprintB) {
+  let l1=fingerprintA.length;
+  let l2=fingerprintB.length;
+  if(l1!==l2){
+    return false;
+  }
+  else {
+  if(fingerprintA===fingerprintB){
+    return true;
+  }
+  else {
+  let sn=0;
+    for(let i=0;i<l1;i++){
+      if(fingerprintA[i]!==fingerprintB[i]){
+        sn+=1;
+      }
+    }
+    return sn/l1<=0.1?true:false;
+  }
+  }
+}
+
+/* Python */
+def is_match(f_a, f_b):
+    sn=0
+    if len(f_a) !=len(f_b):
+        return False
+    else:
+        if f_a==f_b:
+           return True
+        else: 
+            for i in range(len(f_a)):
+                if f_a[i]!=f_b[i]:
+                    sn+=1
+                    if sn/len(f_a)>0.1:
+                        return False
+    return True
+
+/* 18-11-2025: 100 Characters
+Welcome to the 100th Daily Coding Challenge!
+
+Given a string, repeat its characters until the result is exactly 100 characters long. If your repetitions go over 100 characters, trim the extra so it's exactly 100.
+*/
+
+function oneHundred(chars) {
+let rep=[].concat(...new Array(100).fill(chars)).join("").slice(0,100);
+  return rep;
+}
+
+/* Python */
+def one_hundred(chars):
+    return (chars*100)[0:100]
