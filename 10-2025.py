@@ -1,4 +1,5 @@
-/* 01-10-2025: Binary to Decimal
+"""
+01-10-2025: Binary to Decimal
 Given a string representing a binary number, return its decimal equivalent as a number.
 
 A binary number uses only the digits 0 and 1 to represent any number. To convert binary to decimal, multiply each digit by a power of 2 and add them together. Start by multiplying the rightmost digit by 2^0, the next digit to the left by 2^1, and so on. Once all digits have been multiplied by a power of 2, add the result together.
@@ -6,17 +7,18 @@ A binary number uses only the digits 0 and 1 to represent any number. To convert
 For example, the binary number 101 equals 5 in decimal because:
 
 1 * 2^2 + 0 * 2^1 + 1 * 2^0 = 4 + 0 + 1 = 5
-*/
+"""
+import math
+def to_decimal(binary):
+    dec=0
+    s=list(reversed(binary))
+    for i in range(len(s)):
+        dec+=int(s[i])*math.pow(2,i)
+    return dec
 
-function toDecimal(binary) {
-  let dec=binary.split("").reverse().map((item,index)=>Number(item)*Math.pow(2,index)).reduce((a,b)=>a+b,0);
-  return dec;
-}
-toDecimal("1010")
-
-/* 02-10-2025: Decimal to Binary
+""" 02-10-2025: Decimal to Binary
 Given a non-negative integer, return its binary representation as a string.
-*/
+"""
 
 function toBinary(decimal) {
   return decimal.toString(2);
