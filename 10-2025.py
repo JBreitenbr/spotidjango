@@ -85,18 +85,16 @@ Characters A-Z correspond to luminosity levels 10-35.
 A star is considered to have an exoplanet if any single reading is less than or equal to 80% of the average of all readings. For example, if the average luminosity of a star is 10, it would be considered to have a exoplanet if any single reading is 8 or less.
 """
 
-function hasExoplanet(readings) {
-  let s="0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
-  let arr=s.map((item,index)=>index);
-  const res = {};
-  s.forEach((key, index) => {
-      res[key] = arr[index];
-      });
-  let avg=readings.split("").map((item)=>res[item]).reduce((a,b)=>a+b,0)/readings.length;
-  let flt=readings.split("").filter((item)=>res[item]<=0.8*avg);
-  return flt.length>0;
-}
-hasExoplanet("665544554")
+def has_exoplanet(readings):
+    lst=list(readings)
+    avg=0
+    for i in range(len(lst)):
+        avg+=int(lst[i],36)
+    avg=avg/len(lst)
+    for i in range(len(lst)):
+        if int(lst[i],36)<=0.8*avg:
+            return True
+    return False
 
 """ 06-10-2025: Space Week Day 3: Phone Home
 For day three of Space Week, you are given an array of numbers representing distances (in kilometers) between yourself, satellites, and your home planet in a communication route. Determine how long it will take a message sent through the route to reach its destination planet using the following constraints:
@@ -115,7 +113,7 @@ def send_message(route):
     s = reduce(lambda x, y: (x + y), route)/300000
     return round(res+s,4)
 
-/* 07-10-2025: Space Week Day 4: Landing Spot
+""" 07-10-2025: Space Week Day 4: Landing Spot
 In day four of Space Week, you are given a matrix of numbers (an array of arrays), representing potential landing spots for your rover. Find the safest landing spot based on the following rules:
 
 Each spot in the matrix will contain a number from 0-9, inclusive.
@@ -131,7 +129,7 @@ For instance, given:
   [2, 0]
 ]
 Return [0, 1], the indices for the 0 in the first array.
-*/
+"""
 
 function findLandingSpot(matrix) {
   let m=matrix;
