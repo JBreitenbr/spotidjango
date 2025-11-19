@@ -76,14 +76,14 @@ function classification(temp) {
   return temp>=30000?"O":temp>=10000?"B":temp>=7500?"A":temp>=6000?"F":temp>=5200?"G":temp>=3700?"K":"M";
 }
 
-/* 05-10-2025: Space Week Day 2: Exoplanet Search
+""" 05-10-2025: Space Week Day 2: Exoplanet Search
 For the second day of Space Week, you are given a string where each character represents the luminosity reading of a star. Determine if the readings have detected an exoplanet using the transit method. The transit method is when a planet passes in front of a star, reducing its observed luminosity.
 
 Luminosity readings only comprise of characters 0-9 and A-Z where each reading corresponds to the following numerical values:
 Characters 0-9 correspond to luminosity levels 0-9.
 Characters A-Z correspond to luminosity levels 10-35.
 A star is considered to have an exoplanet if any single reading is less than or equal to 80% of the average of all readings. For example, if the average luminosity of a star is 10, it would be considered to have a exoplanet if any single reading is 8 or less.
-*/
+"""
 
 function hasExoplanet(readings) {
   let s="0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
@@ -98,7 +98,7 @@ function hasExoplanet(readings) {
 }
 hasExoplanet("665544554")
 
-/* 06-10-2025: Space Week Day 3: Phone Home
+""" 06-10-2025: Space Week Day 3: Phone Home
 For day three of Space Week, you are given an array of numbers representing distances (in kilometers) between yourself, satellites, and your home planet in a communication route. Determine how long it will take a message sent through the route to reach its destination planet using the following constraints:
 
 The first value in the array is the distance from your location to the first satellite.
@@ -107,15 +107,13 @@ The last value in the array is the distance from the previous satellite to your 
 The message travels at 300,000 km/s.
 Each satellite the message passes through adds a 0.5 second transmission delay.
 Return a number rounded to 4 decimal places, with trailing zeros removed.
-*/
+"""
 
-function sendMessage(route) {
-  let res=(route.length-1)*0.5;
-  let d=route.reduce((a,b)=>a+b,0)/300000;
-  let dur=Math.round(10000*(res+d));
-  return dur/10000;
-}
-sendMessage([1000000, 500000000, 1000000]);
+from functools import reduce
+def send_message(route):
+    res=(len(route)-1)*0.5
+    s = reduce(lambda x, y: (x + y), route)/300000
+    return round(res+s,4)
 
 /* 07-10-2025: Space Week Day 4: Landing Spot
 In day four of Space Week, you are given a matrix of numbers (an array of arrays), representing potential landing spots for your rover. Find the safest landing spot based on the following rules:
