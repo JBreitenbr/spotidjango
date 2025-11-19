@@ -34,23 +34,27 @@ It contains at least one special character from this set: !, @, #, $, %, ^, &, o
 Return "weak" if the password meets fewer than two of the rules. Return "medium" if the password meets 2 or 3 of the rules. Return "strong" if the password meets all 4 rules.
 """
 
-function checkStrength(password) {
-  let pw=password;
-  let sp=["!","@","#","$","%","^","&","*"];
-  let n="0123456789".split("");
-  let u=pw.split("").filter((item)=>item.toUpperCase()==item && !n.includes(item) && !sp.includes(item)).length;
-  let l=pw.split("").filter((item)=>item.toLowerCase()==item && !n.includes(item) && !sp.includes(item)).length;
-  let c1=pw.length>=8;
-  let c2=u>=1 && l>=1;
-  let c3=pw.split("").filter((item)=>n.includes(item)).length>0;
-  let c4=pw.split("").filter((item)=>sp.includes(item)).length>0;
-  let arr=[c1,c2,c3,c4];
-  let c=[c1,c2,c3,c4].filter((item)=>item).length;
-  return c<2?"weak":c<4?"medium":"strong";
-}
-checkStrength("pass!!!");
+def check_strength(password):
+    pw=list(password)
+    sp=["!","@","#","$","%","^","&","*"]
+    u=len([val for val in pw if val.isupper()])
+    l=len([val for val in pw if val.islower()])
+    n=len([val for val in pw if val.isnumeric()])
+    s=len([val for val in pw if val in sp])
+    c1=len(pw)>=8
+    c2=u>=1 and l>=1
+    c3=n>=1
+    c4=s>=1
+    arr=[c1,c2,c3,c4]
+    f=len([val for val in arr if val==True])
+    if f<2:
+        return "weak"
+    elif f<4:
+        return "medium"
+    else:
+        return "strong"
 
-/* 04-10-2025: Space Week Day 1: Stellar Classification
+""" 04-10-2025: Space Week Day 1: Stellar Classification
 October 4th marks the beginning of World Space Week. The next seven days will bring you astronomy-themed coding challenges.
 
 For today's challenge, you are given the surface temperature of a star in Kelvin (K) and need to determine its stellar classification based on the following ranges:
@@ -70,7 +74,7 @@ For today's challenge, you are given the surface temperature of a star in Kelvin
 "M": 0 K - 3,699 K
 
 Return the classification of the given star.
-*/
+"""
 
 function classification(temp) {
   return temp>=30000?"O":temp>=10000?"B":temp>=7500?"A":temp>=6000?"F":temp>=5200?"G":temp>=3700?"K":"M";
