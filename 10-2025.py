@@ -19,12 +19,10 @@ def to_decimal(binary):
 """ 02-10-2025: Decimal to Binary
 Given a non-negative integer, return its binary representation as a string.
 """
+def to_binary(decimal):
+    return str(bin(decimal))[2:]
 
-function toBinary(decimal) {
-  return decimal.toString(2);
-}
-
-/* 03-10-2025: P@ssw0rd Str3ngth!
+""" 03-10-2025: P@ssw0rd Str3ngth!
 Given a password string, return "weak", "medium", or "strong" based on the strength of the password.
 
 A password is evaluated according to the following rules:
@@ -34,7 +32,7 @@ It contains both uppercase and lowercase letters.
 It contains at least one number.
 It contains at least one special character from this set: !, @, #, $, %, ^, &, or *.
 Return "weak" if the password meets fewer than two of the rules. Return "medium" if the password meets 2 or 3 of the rules. Return "strong" if the password meets all 4 rules.
-*/
+"""
 
 function checkStrength(password) {
   let pw=password;
@@ -257,7 +255,7 @@ function launchFuel(payload) {
 }
 launchFuel(243);
 
-/* 11-10-2025: Hex to Decimal
+""" 11-10-2025: Hex to Decimal
 Given a string representing a hexadecimal number (base 16), return its decimal (base 10) value as an integer.
 
 Hexadecimal is a number system that uses 16 digits:
@@ -282,17 +280,12 @@ A0	160
 FF	255
 100	256
 The string will only contain characters 0–9 and A–F.
-*/
+"""
 
-function hexToDecimal(hex) {
-   let d={"A":10,"B":11,"C":12,"D":13,"E":14,"F":15,"0":0,"1":1,"2":2,"3":3,"4":4,"5":5,"6":6,"7":7,"8":8,"9":9};
-   let h=hex.split("").reverse().map((item)=>d[item]);
-   let c=h.map((item,index)=>Math.pow(16,index)*item).reduce((a,b)=>a+b,0);
-   return c;
-}
-hexToDecimal("2E");
+def hex_to_decimal(hex):
+    return int(hex,16)
 
-/* 12-10-2025: Battle of Words
+""" 12-10-2025: Battle of Words
 Given two sentences representing your team and an opposing team, where each word from your team battles the corresponding word from the opposing team, determine which team wins using the following rules:
 
 The given sentences will always contain the same number of words.
@@ -304,7 +297,7 @@ Words battle in order: the first word of your team battles the first word of the
 A word wins if its value is greater than the opposing word's value.
 The team with more winning words is the winner.
 Return "We win" if your team is the winner, "We lose" if your team loses, and "Draw" if both teams have the same number of wins.
-*/
+"""
 
 function compArr(arr1,arr2){
   let s1=0;
