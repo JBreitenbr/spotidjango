@@ -131,43 +131,29 @@ For instance, given:
 Return [0, 1], the indices for the 0 in the first array.
 """
 
-function findLandingSpot(matrix) {
-  let m=matrix;
-  let l=m.length;
-  let p=[];
-  for(let i=0;i<l;i++){
-    for(let j=0;j<l;j++){
-      if(m[i][j]==0){
-        p.push([i,j]);
-      }
-    }
-  }
-  for(let k=0;k<p.length;k++){ let sm=0;
-    if(p[k][0]>0){
-        sm+=m[p[k][0]-1][p[k][1]];
-     } 
-    if(p[k][0]<l-1){
-        sm+=m[p[k][0]+1][p[k][1]];
-      }
-    if(p[k][1]>0){
-      sm+=m[p[k][0]][p[k][1]-1];
-    }
-    if(p[k][1]<l-1){
-      sm+=m[p[k][0]][p[k][1]+1];
-    }
-    p[k].push(sm);
-  }
-  let q=p.sort((a,b)=>a[2]-b[2]);
-  let r= q[0];
-  let res=[];
-  res.push(r[0]);
-  res.push(r[1]);
-  return res;
-}
-findLandingSpot([[1,0],[2,0]]);
-//findLandingSpot([[1, 2, 1], [0, 0, 2], [3, 0, 0]]);
+def find_landing_spot(matrix):
+    m=matrix
+    l=len(m)
+    p=[]
+    for i in range(l):
+        for j in range(l):
+            if m[i][j]==0:
+                p.append([i,j])
+    for k in range(len(p)):
+        sm=0
+        if p[k][0]>0:
+            sm+=m[p[k][0]-1][p[k][1]]
+        if p[k][0]<l-1:
+            sm+=m[p[k][0]+1][p[k][1]]
+        if p[k][1]>0:
+            sm+=m[p[k][0]][p[k][1]-1]
+        if p[k][1]<l-1:
+            sm+=m[p[k][0]][p[k][1]+1]
+        p[k].append(sm)
+    q = sorted(p, key=lambda x: x[2])
+    return [q[0][0],q[0][1]]
 
-/* 08-10-2025: Space Week Day 5: Goldilocks Zone
+""" 08-10-2025: Space Week Day 5: Goldilocks Zone
 For the fifth day of Space Week, you will calculate the "Goldilocks zone" of a star - the region around a star where conditions are "just right" for liquid water to exist.
 
 Given the mass of a star, return an array with the start and end distances of its Goldilocks Zone in Astronomical Units.
@@ -179,16 +165,14 @@ The start of the zone is 0.95 times the square root of its luminosity.
 The end of the zone is 1.37 times the square root of its luminosity.
 Return the distances rounded to two decimal places.
 For example, given 1 as a mass, return [0.95, 1.37].
-*/
+"""
 
-function goldilocksZone(mass) {
-  let lum=Math.pow(mass,3.5);
-  let low=0.95*Math.sqrt(lum);
-  let high=1.37*Math.sqrt(lum); 
-  let zone=[Math.round(100*low)/100,Math.round(100*high)/100];
-  return zone;
-}
-goldilocksZone(0.5);
+import math
+def goldilocks_zone(mass):
+    lum=math.pow(mass,3.5)
+    low=math.sqrt(lum)*0.95
+    high=math.sqrt(lum)*1.37
+    return [round(low,2),round(high,2)]
 
 /* 09-10-2025: Space Week Day 6: Moon Phase
 For day six of Space Week, you will be given a date in the format "YYYY-MM-DD" and need to determine the phase of the moon for that day using the following rules:
@@ -221,7 +205,7 @@ function moonPhase(dateString){
 }
 moonPhase("2000-01-13");
 
-/* 10-10-2025: Space Week Day 7: Launch Fuel
+""" 10-10-2025: Space Week Day 7: Launch Fuel
 For the final day of Space Week, you will be given the mass in kilograms (kg) of a payload you want to send to orbit. Determine the amount of fuel needed to send your payload to orbit using the following rules:
 
 Rockets require 1 kg of fuel per 5 kg of mass they must lift.
@@ -231,25 +215,20 @@ Ignore the mass of the rocket itself. Only compute fuel needed to lift the paylo
 For example, given a payload mass of 50 kg, you would need 10 kg of fuel to lift it (payload / 5), which increases the total mass to 60 kg, which needs 12 kg to lift (2 additional kg), which increases the total mass to 62 kg, which needs 12.4 kg to lift - 0.4 additional kg - which is less 1 additional kg, so we stop here. The total mass to lift is 62.4 kg, 50 of which is the initial payload and 12.4 of fuel.
 
 Return the amount of fuel needed rounded to one decimal place.
-*/
+"""
 
-function launchFuel(payload) {
-  let pl=[payload];
-  let fuel=[pl[0]/5];
-  pl.push(fuel[0]+pl[0]);
-  fuel.push(pl[1]/5);
-  for(let i=1;i<5;i++){
-    pl.push(fuel[i]+pl[0]);
-    fuel.push(pl[i+1]/5);
-  }
-  for(let i=0;i<fuel.length;i++){
-    if(fuel[i+1]-fuel[i]<1){
-      return Math.round(10*fuel[i+1])/10;
-    }
-  }
-  return payload;
-}
-launchFuel(243);
+def launch_fuel(payload):
+    pl=[payload]
+    fuel=[pl[0]/5]
+    pl.append(fuel[0]+pl[0])
+    fuel.append(pl[1]/5)
+    for i in range(1,5):
+        pl.append(fuel[i]+pl[0])
+        fuel.append(pl[i+1]/5)
+    for i in range(len(fuel)):
+          if fuel[i+1]-fuel[i]<1: 
+             return round(fuel[i+1],1)
+    return payload
 
 """ 11-10-2025: Hex to Decimal
 Given a string representing a hexadecimal number (base 16), return its decimal (base 10) value as an integer.
