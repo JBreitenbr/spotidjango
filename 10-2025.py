@@ -426,7 +426,7 @@ def mask(card):
       mk="****-****-****-"
     return mk+card[-4:]
       
-/* 18-10-2025: Missing Socks
+""" 18-10-2025: Missing Socks
 Given an integer representing the number of pairs of socks you started with, and another integer representing how many wash cycles you have gone through, return the number of complete pairs of socks you currently have using the following constraints:
 
 Every 2 wash cycles, you lose a single sock.
@@ -436,21 +436,21 @@ Every 10 wash cycles, you buy a pair of socks.
 You can never have less than zero total socks.
 Rules can overlap. For example, on wash cycle 10, you will lose a single sock, throw away a single sock, and buy a new pair of socks.
 Return the number of complete pairs of socks.
-*/
+"""
 
-function sockPairs(pairs, cycles) {
-  let s=pairs*2;
-  s=s-Math.floor(cycles/2);
-  s=s+Math.floor(cycles/3);
-  s=s-Math.floor(cycles/5);
-  s=s+Math.floor(cycles/10)*2;
-  if(s<0){
-    return 0;
-  }
-  let p=s%2==0?s/2:Math.floor(s/2);
-  return p;
-}
-sockPairs(1,2);
+import math
+def sock_pairs(pairs, cycles):
+    s=pairs*2;
+    s=s-math.floor(cycles/2)
+    s=s+math.floor(cycles/3)
+    s=s-math.floor(cycles/5)
+    s=s+math.floor(cycles/10)*2
+    if s<0:
+      return 0;
+    elif s%2==0:
+      return s/2
+    else:
+      return math.floor(s/2)
 
 /* 19-10-2025: HTML Attribute Extractor
 Given a string of a valid HTML element, return the attributes of the element using the following criteria:
