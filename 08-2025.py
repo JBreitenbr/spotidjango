@@ -97,16 +97,10 @@ Given a string, remove all spaces from the string, insert two spaces between eve
 
 Non-alphabetical characters should remain unchanged (except for spaces). """
 
-function spaceJam(s) {
-  let cap=s.toUpperCase().split("").filter((item)=>item!=" ").join("");
-  let targ="";
-  for(let i=0;i<cap.length;i++){
-    targ+=cap[i];
-    targ+="  ";
-  }
-  let res=targ.split("").slice(0,targ.length-2).join("");
-  return res;
-}
+def space_jam(s):
+    lst=list(s.strip().upper().replace(" ",""))
+    j="  ".join(lst)
+    return j
 
 /* 15-08-2025: Jbelmud Text
 Given a string, return a jumbled version of that string where each word is transformed using the following constraints:
@@ -131,15 +125,20 @@ function jbelmu(text) {
   return targ.join(" ");
         }
 
-/* 16-08-2025: Anagram Checker
+""" 16-08-2025: Anagram Checker
 Given two strings, determine if they are anagrams of each other (contain the same characters in any order).
-Ignore casing and white space. */
+Ignore casing and white space. """
 
-function areAnagrams(str1, str2) {
-  let stri1=str1.toLowerCase().split("").sort().join("");
-  let stri2=str2.toLowerCase().split("").sort().join("");
-  return stri1===stri2;
-}
+def are_anagrams(str1, str2):
+    lst1=list(str1.lower().replace(" ",""))
+    lst2=list(str2.lower().replace(" ",""))
+    if len(lst1)!=len(lst2):
+        return False
+    else:
+        for c in lst1:
+            if c not in lst2:
+                return False
+    return True
 
 /* 17-08-2025: Targeted Sum
 Given an array of numbers and an integer target, find two unique numbers in the array that add up to the target value. 
@@ -158,23 +157,28 @@ function findTarget(arr, target) {
   return "Target not found";
 }
 
-/* 18-08-2025: Factorializer
+""" 18-08-2025: Factorializer
 Given an integer from zero to 20, return the factorial of that number. The factorial of a number is the product of all the numbers between 1 and the given number.
 
-The factorial of zero is 1. */
+The factorial of zero is 1. """
 
-function factorial(n) {
-  if(n==0) return 1;
-  else return n*factorial(n-1);
-}
+def factorial(n):
+    if n==0:
+        return 1
+    else:
+        return n*factorial(n-1)
+    
+""" 19-08-2025: Sum of Squares
+Given a positive integer up to 1,000, return the sum of all the integers squared from 1 up to the number. """
 
-/* 19-08-2025: Sum of Squares
-Given a positive integer up to 1,000, return the sum of all the integers squared from 1 up to the number. */
-
-function sumOfSquares(n) {
-  let arr=Array.from(new Array(n+1).keys()).slice(1);
-  return arr.map((item)=>item*item).reduce((a,b)=>a+b,0);
-}
+from functools import reduce
+def sum_of_squares(n):
+    rng=list(range(1,n+1))
+    sqr=[]
+    for r in rng:
+        sqr.append(r*r)
+    res = reduce(lambda x, y: x + y, sqr)
+    return res
 
 /* 20-08-2025: 3 Strikes
 Given an integer between 1 and 10,000, return a count of how many numbers from 1 up to that integer whose square contains at least one digit 3.
