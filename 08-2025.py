@@ -102,28 +102,24 @@ def space_jam(s):
     j="  ".join(lst)
     return j
 
-/* 15-08-2025: Jbelmud Text
+""" 15-08-2025: Jbelmud Text
 Given a string, return a jumbled version of that string where each word is transformed using the following constraints:
 
 The first and last letters of the words remain in place
 All letters between the first and last letter are sorted alphabetically.
-The input strings will contain no punctuation, and will be entirely lowercase. */
+The input strings will contain no punctuation, and will be entirely lowercase. """
 
-function jbelmu(text) {
-  let spli=text.split(" ");
-  let targ=[];
-  for(let i=0;i<spli.length;i++){ 
-      let f=spli[i][0];
-      let l=spli[i][spli[i].length-1];
-      let m=spli[i].slice(1,spli[i].length-1).split("").sort().join("");
-      let c;
-      if(spli[i].length==1){
-        c=f;
-      }  else {c=f+m+l} ;
-      targ.push(c);
-  }
-  return targ.join(" ");
-        }
+def jbelmu(text):
+    s=text.split(" ")
+    res=[]
+    for w in s:
+        if len(w)>3:
+            v=w[0]+"".join(sorted(list(w[1:-1])))+w[-1]        
+            res.append(v)
+        else:
+            v=w
+            res.append(v) 
+    return " ".join(res)
 
 """ 16-08-2025: Anagram Checker
 Given two strings, determine if they are anagrams of each other (contain the same characters in any order).
@@ -140,22 +136,19 @@ def are_anagrams(str1, str2):
                 return False
     return True
 
-/* 17-08-2025: Targeted Sum
+""" 17-08-2025: Targeted Sum
 Given an array of numbers and an integer target, find two unique numbers in the array that add up to the target value. 
 Return an array with the indices of those two numbers, or "Target not found" if no two numbers sum up to the target.
-The returned array should have the indices in ascending order. */
+The returned array should have the indices in ascending order. """
 
-function findTarget(arr, target) {
-  let res=[];
-  for(let i=0;i<arr.length-1;i++){
-    if(arr[i]+arr[i+1]==target){
-      res.push(i);
-      res.push(i+1);
-      return res;
-    }
-  }
-  return "Target not found";
-}
+def find_target(arr, target):
+    res=[]
+    for i in range(len(arr)-1):
+        if arr[i]+arr[i+1]==target:
+            res.append(i)
+            res.append(i+1)
+            return res
+    return "Target not found"
 
 """ 18-08-2025: Factorializer
 Given an integer from zero to 20, return the factorial of that number. The factorial of a number is the product of all the numbers between 1 and the given number.
