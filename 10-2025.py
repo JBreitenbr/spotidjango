@@ -1,5 +1,4 @@
-"""
-01-10-2025: Binary to Decimal
+""" 01-10-2025: Binary to Decimal
 Given a string representing a binary number, return its decimal equivalent as a number.
 
 A binary number uses only the digits 0 and 1 to represent any number. To convert binary to decimal, multiply each digit by a power of 2 and add them together. Start by multiplying the rightmost digit by 2^0, the next digit to the left by 2^1, and so on. Once all digits have been multiplied by a power of 2, add the result together.
@@ -76,9 +75,21 @@ For today's challenge, you are given the surface temperature of a star in Kelvin
 Return the classification of the given star.
 """
 
-function classification(temp) {
-  return temp>=30000?"O":temp>=10000?"B":temp>=7500?"A":temp>=6000?"F":temp>=5200?"G":temp>=3700?"K":"M";
-}
+def classification(temp):
+    if temp>=30000:
+        return "O"
+    elif temp>=10000:
+        return "B"
+    elif temp>=7500:
+        return "A"
+    elif temp>=6000:
+        return "F"
+    elif temp>=5200:
+        return "G"
+    elif temp>=3700:
+        return "K"
+    else:
+        return "M"
 
 """ 05-10-2025: Space Week Day 2: Exoplanet Search
 For the second day of Space Week, you are given a string where each character represents the luminosity reading of a star. Determine if the readings have detected an exoplanet using the transit method. The transit method is when a planet passes in front of a star, reducing its observed luminosity.
@@ -327,22 +338,19 @@ function to12(time) {
 }
 to12("0030")
   
-/* 14-10-2025: String Count
+""" 14-10-2025: String Count
 Given two strings, determine how many times the second string appears in the first.
 
 The pattern string can overlap in the first string. For example, "aaa" contains "aa" twice. The first two a's and the second two.
-*/
+"""
 
-function count(text, pattern) {
-  let l=pattern.length;
-  let sn=0;
-  for(let i=0;i<text.length-l+1;i++){
-    if(text.slice(i,i+l)==pattern){
-      sn+=1;
-    }
-  }
-  return sn;
-}
+def count(text, parameter):
+    l=len(parameter)
+    sn=0
+    for i in range(len(text)-l+1):
+      if text[i:i+l]==parameter:
+         sn+=1
+    return sn
 
 /* 15-10-2025: HTML Tag Stripper
 Given a string of HTML code, remove the tags and return the plain text content.
@@ -401,21 +409,23 @@ validate("example@test.c0")
 //validate("hello@world..com")
 //validate("git@commit@push.io")
 
-/* 17-10-2025: Credit Card Masker
+""" 17-10-2025: Credit Card Masker
 Given a string of credit card numbers, return a masked version of it using the following constraints:
 
 The string will contain four sets of four digits (0-9), with all sets being separated by a single space, or a single hyphen (-).
 Replace all numbers, except the last four, with an asterisk (*).
 Leave the remaining characters unchanged.
 For example, given "4012-8888-8888-1881" return "****-****-****-1881".
-*/
+"""
 
-function mask(card) {
-  let sp=card.includes("-")?card.split("-"):card.split(" ");
-  let mk=sp.map((item,index)=>index<3?"****":item);
-  return card.includes("-")?mk.join("-"):mk.join(" ");
-}
-
+def mask(card):
+    ind=card.find("-")
+    if ind==-1:
+      mk="**** **** **** "
+    else:
+      mk="****-****-****-"
+    return mk+card[-4:]
+      
 /* 18-10-2025: Missing Socks
 Given an integer representing the number of pairs of socks you started with, and another integer representing how many wash cycles you have gone through, return the number of complete pairs of socks you currently have using the following constraints:
 
