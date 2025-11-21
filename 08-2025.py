@@ -1,31 +1,29 @@
-/* 11-08-2025: Vowel Balance
+""" 11-08-2025: Vowel Balance
 Given a string, determine whether the number of vowels in the first half of the string is equal to the number of vowels in the second half.
 
 The string can contain any characters.
 The letters a, e, i, o, and u, in either uppercase or lowercase, are considered vowels.
-If there's an odd number of characters in the string, ignore the center character. */
+If there's an odd number of characters in the string, ignore the center character. 
+"""
 
-function isBalanced(s) {
-  let v="aeiou";
-  let str=s.toLowerCase();
-  let l=str.length;
-  let s1=str.slice(0,Math.floor(l/2)).split("");
-  let s2=str.slice(Math.ceil(l/2)).split("");
-  let sum1=0;
-  let sum2=0;
-  for(let i=0;i<s1.length;i++){
-    if(v.includes(s1[i])){
-      sum1+=1;
-    }
-  }
-  for(let i=0;i<s2.length;i++)
-  {
-    if(v.includes(s2[i])){
-      sum2+=1;
-    }
-  }
-  return sum1==sum2;
-      }
+def is_balanced(s):
+    vowels=list("aeiouAEIOU")
+    l=len(s)
+    c1=0
+    c2=0
+    if l%2==1:
+        h1=s[:int(l/2-0.5)]
+        h2=s[int(l/2+0.5):]
+    else:
+        h1=s[:int(l/2)]
+        h2=s[int(l/2):]
+    for i in range(len(h1)):
+        if h1[i] in vowels:
+            c1+=1
+    for i in range(len(h2)):
+        if h2[i] in vowels:
+            c2+=1
+    return c1==c2
 
 /* 12-08-2025: Base Check
 Given a string representing a number, and an integer base from 2 to 36, determine whether the number is valid in that base.
@@ -56,46 +54,38 @@ function isValidNumber(n, base) {
   else return true;
 }
 
-/* 13-08-2025: Fibonacci Sequence
+""" 13-08-2025: Fibonacci Sequence
 The Fibonacci sequence is a series of numbers where each number is the sum of the two preceding ones. When starting with 0 and 1, the first 10 numbers in the sequence are 0, 1, 1, 2, 3, 5, 8, 13, 21, 34.
 
 Given an array containing the first two numbers of a Fibonacci sequence, and an integer representing the length of the sequence, return an array containing the sequence of the given length.
 
 Your function should handle sequences of any length greater than or equal to zero.
 If the length is zero, return an empty array.
-Note that the starting numbers are part of the sequence.*/
+Note that the starting numbers are part of the sequence."""
 
-function fibo(n,first,second) {
-     if(n==0){
-       return first;
-      }
-     if(n==1){
-       return second;
-      }
-     if(n>1){
-        return fibo(n-1,first,second)+fibo(n-2,first,second);
-     }
-}
+def fibo(n,first,second): 
+    if n==0:
+        return first
+    if n==1:
+        return second
+    if n>1:
+        return fibo(n-1,first,second)+fibo(n-2,first,second)
 
-function fibArr(n,first,second){
-  let targ=[];
-  for(let i=0;i<n;i++){
-    targ.push(fibo(i,first,second));
-  }
-  return targ;
-}
-
-function fibonacciSequence(startSequence, length) {
-  if(length==0)
-  { return [];}
-  else if(length==1){
-    return startSequence.slice(0,1);
-  }
-  else if(length==2){
-    return startSequence;
-  }
-  else return fibArr(length,startSequence[0],startSequence[1]);
-    }
+def fibArr(n,first,second):
+    targ=[]
+    for i in range(n):
+        targ.append(fibo(i,first,second))
+    return targ    
+    
+def fibonacci_sequence(start_sequence, length):
+    if length==0:
+        return []
+    elif length==1:
+        return [start_sequence[0]]
+    elif length==2:
+        return start_sequence
+    else:
+        return fibArr(length,start_sequence[0],start_sequence[1])
 
 /* 14-08-2025: S P A C E J A M
 Given a string, remove all spaces from the string, insert two spaces between every character, convert all alphabetical letters to uppercase, and return the result.
