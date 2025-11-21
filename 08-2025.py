@@ -25,7 +25,7 @@ def is_balanced(s):
             c2+=1
     return c1==c2
 
-/* 12-08-2025: Base Check
+""" 12-08-2025: Base Check
 Given a string representing a number, and an integer base from 2 to 36, determine whether the number is valid in that base.
 
 The string may contain integers, and uppercase or lowercase characters.
@@ -37,22 +37,27 @@ Base 2: 0-1
 Base 8: 0-7
 Base 10: 0-9
 Base 16: 0-9 and A-F
-Base 36: 0-9 and A-Z */
+Base 36: 0-9 and A-Z """
 
-function isValidNumber(n, base) {
-  let m=n.toUpperCase().split("").sort();
-  let last=m[m.length-1];
-  if(base<16){
-    if(last<base)
-    return true;
-    else return false;
-  }
-  else if(base==16){
-    if(last<"G") return true;
-    else return false;
-  }
-  else return true;
-}
+def is_valid_number(n, base):
+    last=sorted(list(n))[-1]
+    digits=list("0123456789")
+    chars=list("abcdefABCDEF")
+    if base<16:
+        if last in digits:
+             if int(last)<base:
+                return True
+             else:
+                return False
+        if last not in digits:
+            return False
+    elif base==16:
+        if last in digits or last in chars:
+            return True
+        else:
+            return False
+    else:
+        return True
 
 """ 13-08-2025: Fibonacci Sequence
 The Fibonacci sequence is a series of numbers where each number is the sum of the two preceding ones. When starting with 0 and 1, the first 10 numbers in the sequence are 0, 1, 1, 2, 3, 5, 8, 13, 21, 34.
@@ -87,10 +92,10 @@ def fibonacci_sequence(start_sequence, length):
     else:
         return fibArr(length,start_sequence[0],start_sequence[1])
 
-/* 14-08-2025: S P A C E J A M
+""" 14-08-2025: S P A C E J A M
 Given a string, remove all spaces from the string, insert two spaces between every character, convert all alphabetical letters to uppercase, and return the result.
 
-Non-alphabetical characters should remain unchanged (except for spaces). */
+Non-alphabetical characters should remain unchanged (except for spaces). """
 
 function spaceJam(s) {
   let cap=s.toUpperCase().split("").filter((item)=>item!=" ").join("");
