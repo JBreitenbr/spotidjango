@@ -735,7 +735,7 @@ function navigate(commands){                                                    
 }
 //navigate(["Visit About Us", "Visit Gallery", "Back", "Back"]) ;
 
-/* 29-10-2025: Email Sorter
+""" 29-10-2025: Email Sorter
 On October 29, 1971, the first email ever was sent, introducing the username@domain format we still use. Now, there are billions of email addresses.
 
 In this challenge, you are given a list of email addresses and need to sort them alphabetically by domain name first (the part after the @), and username second (the part before the @).
@@ -745,7 +745,7 @@ If more than one email has the same domain, sort them by their username.
 Return an array of the sorted addresses.
 Returned addresses should retain their original case.
 For example, given ["jill@mail.com", "john@example.com", "jane@example.com"], return ["jane@example.com", "john@example.com", "jill@mail.com"].
-*/
+"""
                             
 function sort(emails) {
   let s=emails.map((item)=>item.split("@")).map((item)=>item[1]+"/"+item[0]);
@@ -757,27 +757,25 @@ function sort(emails) {
 }
 sort(["jill@mail.com", "john@example.com", "jane@example.com"]);
 
-/* 30-10-2025 Nth Prime
+""" 30-10-2025 Nth Prime
 A prime number is a positive integer greater than 1 that is divisible only by 1 and itself. The first five prime numbers are 2, 3, 5, 7, and 11.
 
 Given a positive integer n, return the nth prime number. For example, given 5 return the 5th prime number: 11.
-*/
+"""
 
-function isPrime(num){
-  for(let i = 2, s = Math.sqrt(num); i <= s; i++) {
-    if(num % i === 0) return false;
-    }
-  return num > 1;
-}
-function nthPrime(n) {
-  let p=[];                  
-  for(let i=2;i<8000;i++){
-    if(isPrime(i)){
-      p.push(i);
-    }
-  }
-  return p[n-1];
-}
+import math
+def is_prime(num):
+    for i in range(2,math.ceil(math.sqrt(num))+1):
+        if num%i==0:
+            return False
+    return True
+
+def nth_prime(n):
+    p=[2]
+    for i in range(2,8000):
+        if is_prime(i):
+            p.append(i)
+    return p[n-1]
 
 /* 31-10-2025: SpOoKy~CaSe
 Given a string representing a variable name, convert it to "spooky case" using the following constraints:
