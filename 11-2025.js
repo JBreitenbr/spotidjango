@@ -393,3 +393,16 @@ let rep=[].concat(...new Array(100).fill(chars)).join("").slice(0,100);
 /* Python */
 def one_hundred(chars):
     return (chars*100)[0:100]
+
+def scale_recipe(ingredients, scale):
+    ing=ingredients
+    lst=[]
+    for i in range(len(ing)):
+        lst.append([])
+        s=ing[i].split(" ")
+        lst[i].append(str(float(s[0])*scale).replace(".0",""))
+        lst[i].append(" ".join(s[1:]))
+    res=[]
+    for i in range(len(ing)):
+        res.append(" ".join(lst[i]))
+    return res
