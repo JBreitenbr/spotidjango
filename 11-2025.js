@@ -394,6 +394,89 @@ let rep=[].concat(...new Array(100).fill(chars)).join("").slice(0,100);
 def one_hundred(chars):
     return (chars*100)[0:100]
 
+/* 19-11-2025 Markdown Heading Converter
+Given a string representing a Markdown heading, return the equivalent HTML heading.
+
+A valid Markdown heading must:
+
+Start with zero or more spaces, followed by
+1 to 6 hash characters (#) in a row, then
+At least one space. And finally,
+The heading text.
+The number of hash symbols determines the heading level. For example, one hash symbol corresponds to an h1 tag, and six hash symbols correspond to an h6 tag.
+
+If the given string doesn't have the exact format above, return "Invalid format".
+
+For example, given "# My level 1 heading", return "<h1>My level 1 heading</h1>".
+
+Note: The console may not display HTML tags in strings when logging messages. Check the browser console to see logs with tags included. */
+
+function convert(heading) {
+  let h=heading.trimStart();
+  let s=h.split(" ");
+  let r=/^[#]{1,6}$/;
+  console.log(s);
+  if(!r.test(s[0])){
+    return "Invalid format";
+  }
+  let res="";
+  let s2=s.slice(1).filter((item)=>item!="").join(" ");
+  if(s[0]=="#"){
+    res="<h1>"+s2+"</h1>";
+  } else if(s[0]=="##"){
+    res="<h2>"+s2+"</h2>";
+  } else if(s[0]=="###"){
+    res="<h3>"+s2+"</h3>";
+  } else if(s[0]=="####"){
+    res="<h4>"+s2+"</h4>";
+  } else if(s[0]=="#####"){
+    res="<h5>"+s2+"</h5>";
+  } else if(s[0]=="######"){
+    res="<h6>"+s2+"</h6>";
+  }
+  return res;
+}
+
+/* 20-11-2025 Longest Word
+Given a sentence string, return the longest word in the sentence.
+
+Words are separated by a single space.
+Only letters (a-z, case-insensitive) count toward the word's length.
+If there are multiple words with the same length, return the first one that appears.
+Return the word as it appears in the given string, with punctuation removed.*/
+
+function longestWord(sentence) {
+  let reg=/[A-Za-z ]/gi;
+  let s=sentence.match(reg).join("").split(" ").sort((a,b)=>b.length-a.length);
+  return s[0];
+}
+
+/* 21-11-2025 LCM
+Given two integers, return the least common multiple (LCM) of the two numbers.
+
+The LCM of two numbers is the smallest positive integer that is a multiple of both numbers. For example, given 4 and 6, return 12 because:
+
+Multiples of 4 are 4, 8, 12 and so on.
+Multiples of 6 are 6, 12, 18 and so on.
+12 is the smallest number that is a multiple of both.*/
+  
+function lcm(a, b) {
+  let gcd=Array.from(Array(a>b?a:b).keys()).map((item)=>item+1).filter((item)=>a%item==0 && b%item==0).reverse()[0];
+  return a*b/gcd;
+}
+
+/* 22-11-2025: Recipe Scaler
+Given an array of recipe ingredients and a number to scale the recipe, return an array with the quantities scaled accordingly.
+
+Each item in the given array will be a string in the format: "quantity unit ingredient". For example "2 C Flour".
+Scale the quantity by the given number. Do not include any trailing zeros and do not convert any units.
+Return the scaled items in the same order they are given.*/
+
+function scaleRecipe(ingredients, scale) {
+  let ing=ingredients.map((item)=>item.split(" ")).map((item)=>[item[0]*scale,item.slice(1)]).map((item)=>item.flat()).map((item)=>item.join(" "));
+  return ing;
+}
+
 def scale_recipe(ingredients, scale):
     ing=ingredients
     lst=[]
