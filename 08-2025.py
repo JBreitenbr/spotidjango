@@ -173,32 +173,43 @@ def sum_of_squares(n):
     res = reduce(lambda x, y: x + y, sqr)
     return res
 
-/* 20-08-2025: 3 Strikes
+""" 20-08-2025: 3 Strikes
 Given an integer between 1 and 10,000, return a count of how many numbers from 1 up to that integer whose square contains at least one digit 3.
-*/
+"""
 
-function squaresWithThree(n) {
-  let r=Array.from(new Array(n).keys()).slice(1);
-  let m=r.map((item)=>(item*item).toString()).filter((item)=>item.includes('3'));
-  return m.length;
-}
+def squares_with_three(n):
+    sq=[str(x*x) for x in range(1,n+1)]
+    res=[]
+    for i in range(len(sq)):
+        if sq[i].find("3")>-1:
+            res.append(sq[i])
+    return len(res)
 
-/* 21-08-2025: Mile Pace
+""" 21-08-2025: Mile Pace
 Given a number of miles ran, and a time in "MM:SS" (minutes:seconds) it took to run those miles, return a string for the average time it took to run each mile in the format "MM:SS".
 
-Add leading zeros when needed. */
+Add leading zeros when needed. """
 
-function milePace(miles, duration) {
-  let min=duration.length<=5?duration.substring(0,2):duration.substring(0,3);
-  let sec=duration.length<=5?duration.substring(3,5):duration.substring(4,6);
-  let dur_m=(60*Number(min)+Number(sec))/miles;
-  let min_m=Math.floor(dur_m/60);
-  let sec_m=dur_m-60*min_m;
-  min_m=min_m<10?"0"+min_m.toString():min_m.toString();
-  sec_m=sec_m<10?"0"+sec_m.toString():sec_m.toString().substring(0,2);
-  let pace_per_mile=min_m+":"+sec_m;
-  return pace_per_mile;
-}
+import math
+def mile_pace(miles, dur):
+    if len(dur)<=5:
+        _min=dur[0:2]
+        _sec=dur[3:5]
+    else:
+        _min=dur[0:3]
+        _sec=dur[4:6]
+    dur_m=(60*int(_min)+int(_sec))/miles
+    min_m=math.floor(dur_m/60)
+    sec_m=dur_m-60*min_m
+    if min_m<10:
+        min_m="0"+str(min_m)
+    else:
+        min_m=str(min_m)
+    if sec_m<10:
+        sec_m=("0"+str(sec_m))[0:2]
+    else:
+        sec_m=str(sec_m)[0:2]
+    return min_m+":"+sec_m
 
 /* 22-08-2025: Message Decoder
 Given a secret message string, and an integer representing the number of letters that were used to shift the message to encode it, return the decoded string.
@@ -248,30 +259,26 @@ stri+=String.fromCharCode(ch+26-shi); }
     return stri;
 }
 
-/* 23-08-2025: Unnatural Prime
+""" 23-08-2025: Unnatural Prime
 Given an integer, determine if that number is a prime number or a negative prime number.
 
 A prime number is a positive integer greater than 1 that is only divisible by 1 and itself.
 A negative prime number is the negative version of a positive prime number.
 1 and 0 are not considered prime numbers.
-*/
+"""
 
-function isUnnaturalPrime(n) {
-   if(n==0||n==1||n==-1){
-     return false;
-   }
-   let s;
-   if(n<0){
-     s=-n;
-   }
-   else s=n;
-   for(let i=2;i<Math.floor(Math.sqrt(s))+2;i++){
-     if(s%i==0){
-       return false;
-     }
-   }
-   return true;
-}
+import math
+def is_unnatural_prime(n):
+    if n==0 or n==-1 or n==1:
+        return False
+    if n<0:
+        s=-n
+    else:
+        s=n
+    for i in range(2,math.ceil(math.sqrt(s))+1):
+        if s%i==0:
+           return False  
+    return True
 
 /* 24-08-2025: Character Battle
 Given two strings representing your army and an opposing army, each character from your army battles the character at the same position from the opposing army using the following rules:
