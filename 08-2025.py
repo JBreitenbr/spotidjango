@@ -339,25 +339,32 @@ return "We lost";}
 }
 // battle("C@T5", "D0G$");
 
-/* 25.08.2025: camelCase
+""" 25.08.2025: camelCase
 Given a string, return its camel case version using the following rules:
 
 Words in the string argument are separated by one or more characters from the following set: space ( ), dash (-), or underscore (_). Treat any sequence of these as a word break.
 The first word should be all lowercase.
 Each subsequent word should start with an uppercase letter, with the rest of it lowercase.
 All spaces and separators should be removed.
-*/
+"""
 
+def prop_case(s):
+    return s[0].upper()+s[1:].lower()
+
+def to_camel_case(s):
+    stri=s.lower().replace("-"," ").replace("_"," ")
+    sp=[]
+    sp0=stri.split(" ")
+    for i in range(len(sp0)):
+        if sp0[i]!="":
+            sp.append(sp0[i])
+    res=sp[0]
+    for i in range(1,len(sp)):
+        res+=prop_case(sp[i])
+    return res
 function propCase(stri){
   let prop = stri.slice(0,1).toUpperCase()+stri.slice(1).toLowerCase();
   return prop;
-}
-
-function toCamelCase(s) {
-  let spli=s.toLowerCase().split(/[ -_]/);
-  console.log(spli);
-  let mp=spli.slice(1).map((item)=>propCase(item)).join("");
-  return spli[0]+mp;
 }
 
 /* 26-08-2025: Reverse Parenthesis
@@ -429,31 +436,28 @@ function evaluate(numbers, operators) {
   return val;
 }
 
-/* 28-08-2025: Second Best
+""" 28-08-2025: Second Best
 Given an array of integers representing the price of different laptops, and an integer representing your budget, return:
 
 The second most expensive laptop if it is within your budget, or
 The most expensive laptop that is within your budget, or
 0 if no laptops are within your budget.
 Duplicate prices should be ignored.
-*/
+"""
 
-function getLaptopCost(laptops, budget) {
-  let s=new Set(laptops);
-  let arr=Array.from(s).sort(); 
-  let sl=arr.slice(arr.length-2,arr.length-1);
-  let flt=arr.filter((item)=>item<=budget);
-  if(budget>=sl){
-    return sl;
-  } else {
-    if(flt){
-      return flt.slice(flt.length-1);
-    } else return 0;
-  }
-}
-// getLaptopCost([1200, 1500, 1600, 1800, 1400, 2000], 1450)
+def get_laptop_cost(laptops, budget):
+    s=sorted(list(set(laptops)))
+    sl=s[-2]
+    flt=[x for x in s if x<=budget]
+    if budget>=sl:
+        return sl
+    else:
+        if len(flt)>0:
+            return flt[-1]
+        else:
+            return 0
 
-/* 29-08-2025: Candlelight
+""" 29-08-2025: Candlelight
 Given an integer representing the number of candles you start with, and an integer representing how many burned candles it takes to create a new one, return the number of candles you will have used after creating and burning as many as you can.
 
 For example, if given 7 candles and it takes 2 burned candles to make a new one:
@@ -466,29 +470,33 @@ Burn 2 candles to get 2 leftovers,
 Recycle 2 leftovers into 1 new candle,
 Burn 1 candle.
 You will have burned 13 total candles in the example.
-*/
+"""
 
-function burnCandles(candles, leftoversNeeded) {
-  let burned=0;
-  while(candles >=leftoversNeeded){
-    let v=Math.floor(candles/leftoversNeeded);
-    burned+=v*leftoversNeeded;
-    candles=v+(candles%leftoversNeeded);
-  }
-  burned+=candles;
-  return burned;
-}
+import math
+def burn_candles(candles, leftovers_needed):
+    burned=0
+    while candles >=leftovers_needed:
+        v=math.floor(candles/leftovers_needed)
+        burned+=v*leftovers_needed;
+        candles=v+(candles%leftovers_needed)
+    burned+=candles
+    return burned
 
-/* 30-08-2025: Array Duplicates
+""" 30-08-2025: Array Duplicates
 Given an array of integers, return an array of integers that appear more than once in the initial array, sorted in ascending order. If no values appear more than once, return an empty array.
 
 Only include one instance of each value in the returned array.
-*/
-
-function findDuplicates(arr) {
-  let s=Array.from(new Set(arr.sort((a,b)=>a-b).filter((item,index)=>arr.indexOf(item)<index)));
-  return s;
-} 
+"""
+def find_duplicates(arr):
+    ulist=[]
+    duplist=[]
+    for el in arr:
+        if el not in ulist:
+            ulist.append(el)
+        else:
+            duplist.append(el)
+    s=sorted(list(set(duplist)))
+    return s
 
 /* 31-08-2025: Hex Generator
 Given a named CSS color string, generate a random hexadecimal (hex) color code that is dominant in the given color.
