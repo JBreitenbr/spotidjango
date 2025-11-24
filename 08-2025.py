@@ -211,53 +211,36 @@ def mile_pace(miles, dur):
         sec_m=str(sec_m)[0:2]
     return min_m+":"+sec_m
 
-/* 22-08-2025: Message Decoder
+""" 22-08-2025: Message Decoder
 Given a secret message string, and an integer representing the number of letters that were used to shift the message to encode it, return the decoded string.
 
 A positive number means the message was shifted forward in the alphabet.
 A negative number means the message was shifted backward in the alphabet.
 Case matters, decoded characters should retain the case of their encoded counterparts.
 Non-alphabetical characters should not get decoded.
-*/
+"""
 
-function isAlpha(ch) {
-let cd=ch.charCodeAt(0);  
-let arr1=Array.from(new Array(26).keys()).map((item)=>item+65);
-let arr2=Array.from(new Array(26).keys()).map((item)=>item+97);
-let arr=[...arr1,...arr2];
-return arr.includes(cd);
-}
-
-function isUpper(ch){
-  return ch.toUpperCase()===ch;
-}
-
-function isLower(ch){
-  return ch.toLowerCase()===ch;
-}
-
-function decode(message, shift) {
-  let shi=shift<0?shift+26:shift;
-  let m=message;
-  let stri="";
-  for(let i=0;i<m.length;i++){
-    let ch=m.charCodeAt(i);
-    if(isAlpha(m[i])){
-      if(isUpper(m[i])){
-        if(ch+26-shi<91){
-stri+=String.fromCharCode(ch+26-shi); }
-        else stri+=String.fromCharCode(ch-shi);
-      }
-      if(isLower(m[i])){
-        if(ch+26-shi<123){
-          stri+=String.fromCharCode(ch+26-shi);}
-          else stri+=String.fromCharCode(ch-shi);
-        }
-      }
-     else stri+=m[i];
-    }
-    return stri;
-}
+def decode(message, shift):
+    msg=message.lower()
+    a="abcdefghijklmnopqrstuvwxyz"
+    if shift>0:
+       sh=a[26-shift:26]+a[0:26-shift]
+    if shift<0:
+       sh=a[-shift:26]+a[0:-shift]
+    d=dict(zip(a,sh))
+    pre=""
+    for i in range(len(msg)):
+       if msg[i] in d.keys():
+          pre+=d[msg[i]]
+       else:
+          pre+=msg[i]
+    res=""
+    for i in range(len(msg)):
+       if message[i].isupper():
+          res+=pre[i].upper()
+       else:
+          res+=pre[i]
+    return res
 
 """ 23-08-2025: Unnatural Prime
 Given an integer, determine if that number is a prime number or a negative prime number.
@@ -280,7 +263,7 @@ def is_unnatural_prime(n):
            return False  
     return True
 
-/* 24-08-2025: Character Battle
+""" 24-08-2025: Character Battle
 Given two strings representing your army and an opposing army, each character from your army battles the character at the same position from the opposing army using the following rules:
 
 Characters a-z have a strength of 1-26, respectively.
@@ -295,7 +278,7 @@ For each battle, the stronger character wins. The army with more victories, wins
 "We won" if your army won more battles.
 "We lost" if the opposing army won more battles.
 "It was a tie" if both armies won the same number of battles.
-*/
+"""
 
 function mkDict() {
   let s1="abcdefghijklmnopqrstuvwxyz";let s2=s1.toUpperCase();
