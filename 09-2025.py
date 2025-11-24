@@ -165,7 +165,7 @@ function isValidIPv4(ipv4) {
   return true;
 }
 
-/* 06-09-2025: Matrix Rotate
+""" 06-09-2025: Matrix Rotate
 Given a matrix (an array of arrays), rotate the matrix 90 degrees clockwise and return it. For instance, given [[1, 2], [3, 4]], which looks like this:
 
 1	2
@@ -174,12 +174,17 @@ You should return [[3, 1], [4, 2]], which looks like this:
 
 3	1
 4	2
-*/
+"""
 
-function rotate(matrix) {
-let mat=matrix[0].map((val, index) => matrix.map(row => row[index]).reverse())
-  return mat;
-}
+def rotate(matrix):
+    m=matrix[::-1]
+    res=[]
+    for i in range(len(m[0])):
+        res.append([])
+        for j in range(len(m)):           
+            
+            res[i].append(m[j][i])
+    return res
 
 /* 07-09-2025: Roman Numeral Parser
 Given a string representing a Roman numeral, return its integer value.
@@ -218,67 +223,63 @@ previous = current;}
 return result;
 }
 
-/* 08-09-2025: Acronym Builder
+""" 08-09-2025: Acronym Builder
 Given a string containing one or more words, return an acronym of the words using the following constraints:
 
 The acronym should consist of the first letter of each word capitalized, unless otherwise noted.
 The acronym should ignore the first letter of these words unless they are the first word of the given string: a, for, an, and, by, and of.
 The acronym letters should be returned in order they are given.
 The acronym should not contain any spaces.
-*/
+"""
+def build_acronym(s):
+    st_w=["a", "for", "an", "and", "by", "of"]
+    res=[]
+    sp=s.split(" ")
+    for el in sp:
+        if not el in st_w:
+            res.append(el.upper()[0])
+    return "".join(res)
 
-function buildAcronym(str) {
-  let s=str.replace("a ","").replace("for ","").replace("an ","").replace("and ","").replace("by ","").replace("of ","");
-  let spl=s.split(" ");
-  let ac=spl.map((item)=>item.substring(0,1).toUpperCase()).join("");
-  return ac;
-}
-
-/* 09-09-2025: Unique Characters
+""" 09-09-2025: Unique Characters
 Given a string, determine if all the characters in the string are unique.
 
 Uppercase and lowercase letters should be considered different characters.
-*/
+"""
 
-function allUnique(str) {
-let s=Array.from(new Set(str.split("")));
+def all_unique(s):
+    st=list(set(s))
+    return len(list(s))==len(st)
 
-  return str.length==s.length;
-}
-
-/* 10-09-2025: Array Diff
+""" 10-09-2025: Array Diff
 Given two arrays with strings values, return a new array containing all the values that appear in only one of the arrays.
 
 The returned array should be sorted in alphabetical order.
-*/
+"""
 
-function arrayDiff(arr1, arr2) {
-  let arr=[];
-  for(let i=0;i<arr1.length;i++){
-    if(!arr2.includes(arr1[i])){
-      arr.push(arr1[i]);
-    }
-  }
-  for(let i=0;i<arr2.length;i++){
-    if(!arr1.includes(arr2[i])){
-      arr.push(arr2[i]);
-    }
-  }
-  return arr.sort();
-}
+def array_diff(arr1, arr2):
+    res=[]
+    for el in arr1:
+        if not el in arr2:
+            res.append(el)
+    for el in arr2:
+        if not el in arr1:
+            res.append(el)
+    return sorted(res)
 
-/* 11-09-2025: Reverse Sentence
+""" 11-09-2025: Reverse Sentence
 Given a string of words, return a new string with the words in reverse order. For example, the first word should be at the end of the returned string, and the last word should be at the beginning of the returned string.
 
 In the given string, words can be separated by one or more spaces.
 The returned string should only have one space between words.
-*/
+"""
 
-function reverseSentence(sentence) {
-  let spl=sentence.split(" ").filter((item)=>item!="");
-  let res=spl.reverse().join(" ");
-  return res;
-}
+def reverse_sentence(sentence):
+    sp=sentence.split(" ")
+    res=[]
+    for i in range(len(sp)):
+        if sp[len(sp)-i-1]!="":
+           res.append(sp[len(sp)-i-1])
+    return " ".join(res)
 
 /* 12-09-2025: Screen Time
 Given an input array of seven integers, representing a week's time, where each integer is the amount of hours spent on your phone that day, determine if it is too much screen time based on these constraints:
