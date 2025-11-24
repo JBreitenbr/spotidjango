@@ -280,47 +280,41 @@ For each battle, the stronger character wins. The army with more victories, wins
 "It was a tie" if both armies won the same number of battles.
 """
 
-function mkDict() {
-  let s1="abcdefghijklmnopqrstuvwxyz";let s2=s1.toUpperCase();
-  let d={};
-  for(let i=0;i<s1.length;i++){
-   d[s1.slice(i,i+1)]=s1.charCodeAt(i)-96;
-   d[s2.slice(i,i+1)]=s2.charCodeAt(i)-38;
-  }
-  let n="0123456789";
-  for(let i=0;i<10;i++){
-    d[n.slice(i,i+1)]=Number(n[i]);
-  }
-  return d;
-}
-
-
-function battle(myArmy, opposingArmy) {
-  let d=mkDict();
-  if(myArmy.length>opposingArmy.length){
-    return "Opponent retreated";
-  }
-  else if(myArmy.length<opposingArmy.length){
-    return "We retreated";
-  } else {
-    let a1=myArmy;
-    let a2=opposingArmy;
-    let s1=0; let s2=0;
-    for(let i=0;i<a1.length;i++){
-if(d[a1[i]]==undefined){d[a1[i]]=0;}
-if(d[a2[i]]==undefined){
-  d[a2[i]]=0;
-}
-       if(d[a1[i]]>d[a2[i]]){s1+=1;}
-      
-       if(d[a2[i]]>d[a1[i]]){s2+=1;};
-    } if(s1>s2){
-return "We won";} else if(s1<s2) {
-return "We lost";}
-    return "It was a tie";
-  }
-}
-// battle("C@T5", "D0G$");
+def battle(m_arm, o_arm):
+    k="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+    v=list(range(1,53))
+    d=dict(zip(k,v))
+    for i in range(10):
+        d[str(i)]=i
+    x=[]
+    y=[]
+    s1=0
+    s2=0
+    if len(m_arm)>len(o_arm):
+        return "Opponent retreated"
+    elif len(m_arm)<len(o_arm):
+        return "We retreated"
+    else:
+        for i in range(len(m_arm)):
+            if m_arm[i] in d.keys():
+                x.append(d[m_arm[i]])
+            else:
+                x.append(0)
+            if o_arm[i] in d.keys():
+                y.append(d[o_arm[i]])
+            else:
+                y.append(0)
+        for i in range(len(x)):
+            if x[i]>y[i]:
+                s1+=1
+            if x[i]<y[i]:
+                s2+=1
+        if s1>s2:
+            return "We won"
+        elif s1<s2:
+            return "We lost"
+        else:
+            return "It was a tie"
 
 """ 25.08.2025: camelCase
 Given a string, return its camel case version using the following rules:
