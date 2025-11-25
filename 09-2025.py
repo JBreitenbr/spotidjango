@@ -374,20 +374,13 @@ All other characters should be preserved.
 Sentences can end with a period (.), one or more question marks (?), or one or more exclamation points (!).
 """
 
-function capitalize(paragraph) {
-  let p=paragraph.split("");
-  p[0]=p[0].toUpperCase();
-  for(let i=1;i<p.length-1;i++){
-    if([".","!","?"].includes(p[i])){
-      p[i+1]=p[i+1].toUpperCase();
-    }
-    if([".","!","?"].includes(p[i]) && p[i+1]==" "){
-     p[i+2]=p[i+2].toUpperCase();
-    }
-  }
-  return p.join("");
-}
-capitalize("hello world. how are you?")
+def capitalize(p):
+    s0=p[0].upper()+p[1:]
+    s=list(s0)
+    for i in range(2,len(s0)-2):
+        if s[i-2]=="." and s[i-1]==" " or s[i-1]=="?" or s[i-1]=="!" or s[i-1]==".":
+            s[i]=s[i].upper()
+    return "".join(s)
 
 /* 17-09-2025: Slug Generator
 Given a string, return a URL-friendly version of the string using the following constraints:
@@ -438,19 +431,18 @@ function costToFill(tankSize, fuelLevel, pricePerGallon) {
   return p;
 }
 
-/* 19-09-2025: Photo Storage
+""" 19-09-2025: Photo Storage
 Given a photo size in megabytes (MB), and hard drive capacity in gigabytes (GB), return the number of photos the hard drive can store using the following constraints:
 
 1 gigabyte equals 1000 megabytes.
 Return the number of whole photos the drive can store.
-*/
+"""
 
-function numberOfPhotos(photoSizeMb, hardDriveSizeGb) {
+import math
+def number_of_photos(photo_size_mb, drive_size_gb):
+    return math.floor(drive_size_gb*1000/photo_size_mb);
 
-  return Math.floor(hardDriveSizeGb*1000/photoSizeMb);
-}
-
-/* 20-09-2025: File Storage
+""" 20-09-2025: File Storage
 Given a file size, a unit for the file size, and hard drive capacity in gigabytes (GB), return the number of files the hard drive can store using the following constraints:
 
 The unit for the file size can be bytes ("B"), kilobytes ("KB"), or megabytes ("MB").
@@ -462,16 +454,16 @@ Unit	Equivalent
 1 MB	1000 KB
 1 GB	1000 MB
 For example, given 500, "KB", and 1 as arguments, determine how many 500 KB files can fit on a 1 GB hard drive.
-*/
+"""
 
-function numberOfFiles(fileSize, fileUnit, driveSizeGb) {
-  let uObj={"B":1,"KB":1000,"MB":1000000,"GB":1000000000};
-  let fS=fileSize*uObj[fileUnit];
-  let dS=driveSizeGb*uObj["GB"];
-  return Math.floor(dS/fS);
-}
-
-/* 21-09-2025: Video Storage
+import math
+def number_of_files(file_size, file_unit, drive_size_gb):
+    uObj={"B":1,"KB":1000,"MB":1000000,"GB":1000000000}  
+    fS=file_size*uObj[file_unit]
+    dS=drive_size_gb*uObj["GB"]
+    return math.floor(dS/fS)
+    
+""" 21-09-2025: Video Storage
 Given a video size, a unit for the video size, a hard drive capacity, and a unit for the hard drive, return the number of videos the hard drive can store using the following constraints:
 
 The unit for the video size can be bytes ("B"), kilobytes ("KB"), megabytes ("MB"), or gigabytes ("GB").
@@ -487,20 +479,18 @@ Unit	Equivalent
 1 GB	1000 MB
 1 TB	1000 GB
 For example, given 500, "MB", 100, and "GB" as arguments, determine how many 500 MB videos can fit on a 100 GB hard drive.
-*/
+"""
 
-function numberOfVideos(videoSize, videoUnit, driveSize, driveUnit) {
- let uObj={"B":1,"KB":1000,"MB":1000000,"GB":1000000000,"TB":1000000000000};
- let vS=videoSize*uObj[videoUnit];
- let dS=driveSize*uObj[driveUnit];
- if(!["KB","MB","GB"].includes(videoUnit)){
-   return "Invalid video unit";
- };
-if(!["GB","TB"].includes(driveUnit)){
-  return "Invalid drive unit";
-}
-  return Math.floor(dS/vS);
-}
+import math
+def number_of_videos(video_size, video_unit, drive_size, drive_unit):
+    uObj={"B":1,"KB":1000,"MB":1000000,"GB":1000000000,"TB":1000000000000}
+    vS=video_size*uObj[video_unit]
+    dS=drive_size*uObj[drive_unit]
+    if not video_unit in ["KB","MB","GB"]:
+        return "Invalid video unit"
+    if not drive_unit in ["GB","TB"]:
+        return "Invalid drive unit"
+    return math.floor(dS/vS)
 
 /* 22-09-2025: Digits vs Letters
 Given a string, return "digits" if the string has more digits than letters, "letters" if it has more letters than digits, and "tie" if it has the same amount of digits and letters.
