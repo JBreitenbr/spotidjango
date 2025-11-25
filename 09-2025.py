@@ -304,42 +304,24 @@ def too_much_screen_time(h):
             return True
     return False
 
-function tooMuchScreenTime(hours) {
-  let av=[];
-  let h=hours;
-  for(let i=0;i<h.length-2;i++){
-   av.push(1/3*(h[i]+h[i+1]+h[i+2]));
-  }
-  let r=h.reduce((a,b)=>a+b,0)/h.length;
-  if(h.filter((i)=>i>=10).length>0||av.filter((i)=>i>=8).length>0||r>=6){return true;}
-  return false;
-}
-
-/* 13-09-2025: Missing Numbers
+""" 13-09-2025: Missing Numbers
 Given an array of integers from 1 to n, inclusive, return an array of all the missing integers between 1 and n (where n is the largest number in the given array).
 
 The given array may be unsorted and may contain duplicates.
 The returned array should be in ascending order.
 If no integers are missing, return an empty array.
-*/
+"""
 
-function findMissingNumbers(arr) {
-  let s=Array.from(new Set(arr)).sort((a,b)=>a-b);
-  let b1=s[0];
-  let b2=s[s.length-1];
-  let r=[...Array(b2-b1+1).keys().map((i)=>i+b1)];
-  console.log(r);
-  let res=[];
-  for(let i=0;i<r.length;i++)
-  {
-    if(!s.includes(r[i])){
-      res.push(r[i]);
-    }
-  } 
-    return res;
-}
+def find_missing_numbers(arr):
+    st=sorted(arr)
+    rg=list(range(st[0],st[-1]+1))
+    m=[]
+    for el in rg:
+        if not el in arr:
+            m.append(el)
+    return m
 
-/* 14-09-2025: Word Frequency
+""" 14-09-2025: Word Frequency
 Given a paragraph, return an array of the three most frequently occurring words.
 
 Words in the paragraph will be separated by spaces.
@@ -347,39 +329,50 @@ Ignore case in the given paragraph. For example, treat Hello and hello as the sa
 Ignore punctuation in the given paragraph. Punctuation consists of commas (,), periods (.), and exclamation points (!).
 The returned array should have all lowercase words.
 The returned array should be in descending order with the most frequently occurring word first.
-*/
+"""
 
-function getWords(paragraph) {
-  let obj={};
-  let p=paragraph.replace(".","").replace(",","").replace("!","");
-  let spl=p.split(" ").map((item)=>item.toLowerCase().replace(",",""));
-  for(let i=0;i<spl.length;i++){
-    if(spl[i] in obj){
-      obj[spl[i]]+=1;
-    } else {obj[spl[i]]=1;}
-  }
-  let s = Object.entries(obj).sort((x,y)=>y[1]-x[1]).slice(0,3).map((item)=>item[0]);
-  return s;
-}
+def get_words(paragraph):
+    al="abcdefghijklmnopqrstuvxyz "
+    p0=paragraph.lower()
+    p=""
+    for i in range(len(p0)):
+        if p0[i] in al:
+            p+=p0[i]
+    d={}
+    sp=p.split(" ")
+    for el in sp:
+        if el not in d.keys():
+            d[el]=1
+        else:
+            d[el]+=1
+    st= sorted(d.items(), key=lambda kv: kv[1],reverse=True)
+    res=[]
+    for i in range(3):
+        res.append(st[i][0])
+    return res
 
-/* 15-09-2025: Thermostat Adjuster
+""" 15-09-2025: Thermostat Adjuster
 Given the current temperature of a room and a target temperature, return a string indicating how to adjust the room temperature based on these constraints:
 
 Return "heat" if the current temperature is below the target.
 Return "cool" if the current temperature is above the target.
 Return "hold" if the current temperature is equal to the target.
-*/
+"""
 
-function adjustThermostat(temp, target) {
-  return temp>target?"cool":temp==target?"hold":"heat";
-}
+def adjust_thermostat(temp, target):
+    if temp<target:
+        return "heat"
+    elif temp>target:
+        return "cool"
+    else:
+        return "hold"
 
-/* 16-09-2025: Sentence Capitalizer
+""" 16-09-2025: Sentence Capitalizer
 Given a paragraph, return a new paragraph where the first letter of each sentence is capitalized.
 
 All other characters should be preserved.
 Sentences can end with a period (.), one or more question marks (?), or one or more exclamation points (!).
-*/
+"""
 
 function capitalize(paragraph) {
   let p=paragraph.split("");
