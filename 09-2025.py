@@ -518,35 +518,40 @@ function digitsOrLetters(str) {
   return c1>c2?"letters":c1<c2?"digits":"tie";
 }
 
-/* 23-09-2025: String Mirror
+""" 23-09-2025: String Mirror
 Given two strings, determine if the second string is a mirror of the first.
 
 A string is considered a mirror if it contains the same letters in reverse order.
 Treat uppercase and lowercase letters as distinct.
 Ignore all non-alphabetical characters.
-*/
+"""
 
-function isMirror(str1, str2) {
-  let spl1=str1.split(/[" ",-]/).map((item)=>item.replace("!",""));
-  let spl2=str2.split(/[" ",-]/).map((item)=>item.replace("!",""));
-  let p=[];
-  for(let i=spl2.length-1;i>=0;i--){
-    p.push(spl2[i].split("").reverse().join(""));
-  }
-  return p.join(" ")==str1;
-}
+def is_mirror(str1, str2):
+    a0="abcdefghijklmnopqrstuvwxyz"   
+    a=a0+a0.upper()
+    stri1=""
+    stri2=""
+    for i in range(len(str1)):
+        if str1[i] in a:
+            stri1+=str1[i]
+    for i in range(len(str2)):
+        if str2[i] in a:
+            stri2+=str2[i]
+    return stri1==stri2[::-1]
 
-/* 24-09-2025: Perfect Square
+""" 24-09-2025: Perfect Square
 Given an integer, determine if it is a perfect square.
 
 A number is a perfect square if you can multiply an integer by itself to achieve the number. For example, 9 is a perfect square because you can multiply 3 by itself to get it.
-*/
+"""
 
-function isPerfectSquare(n) {
-  let r=Math.sqrt(n);
-  let f=Math.floor(r);
-  return r==f;
-}
+import math
+def is_perfect_square(n):
+    if n<0:
+        return False
+    r=math.sqrt(n)
+    f=math.floor(r)
+    return f==r
 
 /* 25-09-2025: 2nd Largest
 Given an array, return the second largest distinct number.
