@@ -1,4 +1,4 @@
-/* 01-09-2025: Tribonacci Sequence
+""" 01-09-2025: Tribonacci Sequence
 The Tribonacci sequence is a series of numbers where each number is the sum of the three preceding ones. When starting with 0, 0 and 1, the first 10 numbers in the sequence are 0, 0, 1, 1, 2, 4, 7, 13, 24, 44.
 
 Given an array containing the first three numbers of a Tribonacci sequence, and an integer representing the length of the sequence, return an array containing the sequence of the given length.
@@ -6,37 +6,37 @@ Given an array containing the first three numbers of a Tribonacci sequence, and 
 Your function should handle sequences of any length greater than or equal to zero.
 If the length is zero, return an empty array.
 Note that the starting numbers are part of the sequence.
-*/
+"""
 
-function tribo(n,first,second,third) {
-if(n==0){return first;}
-if(n==1){return second;}
-if(n==2){return third;}
-if(n>2){
-return tribo(n-1,first,second,third)+tribo(n-2,first,second,third)+tribo(n-3,first,second,third);}
-}
-function tribArr(n,first,second,third){
-let targ=[];
-for(let i=0;i<n;i++){
-targ.push(tribo(i,first,second,third));}
-return targ;
-}
+def tribo(n,first,second,third):
+    if n==0:
+        return first;
+    if n==1:
+        return second;
+    if n==2:
+        return third;
+    if n>2:
+        return tribo(n-1,first,second,third)+tribo(n-2,first,second,third)+tribo(n-3,first,second,third)  
 
-function tribonacciSequence(startSequence, length) {
-    if(length==0){ return [];}
-    else if(length==1){
-      return startSequence.slice(0,1);
-    }
-    else if(length==2){
-      return startSequence.slice(0,2);
-    }
-    else if(length==3){
-      return startSequence;
-    }
-    else return tribArr(length,startSequence[0],startSequence[1],startSequence[2]);
-}
+def trib_arr(n,first,second,third):
+    targ=[]
+    for i in range(n):
+        targ.append(tribo(i,first,second,third))
+    return targ
 
-/* 02-09-2025: RGB to Hex
+def tribonacci_sequence(start_sequence, length):
+    if length==0:
+        return []
+    elif length==1:
+        return start_sequence[0:1]
+    elif length==2:
+        return start_sequence[0:2]
+    elif length==3:
+        return start_sequence
+    else:
+        return trib_arr(length,start_sequence[0],start_sequence[1],start_sequence[2])
+
+""" 02-09-2025: RGB to Hex
 Given a CSS rgb(r, g, b) color string, return its hexadecimal equivalent.
 
 Here are some example outputs for a given input:
@@ -46,40 +46,32 @@ Input	Output
 "rgb(1, 2, 3)"	"#010203"
 Make any letters lowercase.
 Return a # followed by six characters. Don't use any shorthand values.
-*/
+"""
 
-function rgbToHex(rgb) {
-  let spl=rgb.split(",");
-  let r=Number(spl[0].substring(4)).toString(16);
-  if(r.length<2){r="0"+r;};
-  let g=Number(spl[1]).toString(16);
-  if(g.length<2){g="0"+g;};
-  let b=Number(spl[2].replace(")","")).toString(16);
-  if(b.length<2){b="0"+b;};
-  let stri="#"+r+g+b;
-  return stri;
-}
-
-/* 03-09-2025: Pangram
+def rgb_to_hex(rgb):
+    sp0=rgb.split("rgb")[1][1:-1]
+    sp=sp0.split(",")
+    return '#%02x%02x%02x'%(int(sp[0]),int(sp[1]),int(sp[2]))
+    
+""" 03-09-2025: Pangram
 Given a word or sentence and a string of lowercase letters, determine if the word or sentence uses all the letters from the given set at least once and no other letters.
 
 Ignore non-alphabetical characters in the word or sentence.
 Ignore letter casing in the word or sentence.
-*/
+"""
 
-function isPangram(sentence, letters) {
-  let s=sentence.toLowerCase().replaceAll(" ","").replaceAll(".","").replaceAll("!","").split(""); 
-let l=letters.toLowerCase().split("");
-  for(let i=0;i<s.length;i++){ if(!l.includes(s[i])){
-    return false;
-  }}
-  for(let i=0;i<l.length;i++){
-    if(!s.includes(l[i])){
-      return false;
-    }
-  }
-  return true;
-}
+def is_pangram(sentence, letters):
+    s1=sorted(list(set(sentence.lower())))
+    s2=sorted(list(set(letters.lower())))
+    stri1=""
+    stri2=""
+    for i in range(len(s1)):
+        if s1[i].isalpha():
+            stri1+=s1[i]
+    for i in range(len(s2)):
+        if s2[i].isalpha():
+            stri2+=s2[i]
+    return stri1==stri2
 
 /* 04-09-2025: Vowel Repeater
 Given a string, return a new version of the string where each vowel is duplicated one more time than the previous vowel you encountered. For instance, the first vowel in the sentence should remain unchanged. The second vowel should appear twice in a row. The third vowel should appear three times in a row, and so on.
