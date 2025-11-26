@@ -344,74 +344,65 @@ function propCase(stri){
   return prop;
 }
 
-/* 26-08-2025: Reverse Parenthesis
+""" 26-08-2025: Reverse Parenthesis
 Given a string that contains properly nested parentheses, return the decoded version of the string using the following rules:
 
 All characters inside each pair of parentheses should be reversed.
 Parentheses should be removed from the final result.
 If parentheses are nested, the innermost pair should be reversed first, and then its result should be included in the reversal of the outer pair.
 Assume all parentheses are evenly balanced and correctly nested.
-*/
+"""
 
-function indices(source, find) {
-if (!source) {return [];}    let result = [];
-for (let i = 0; i < source.length; i++) {
-if (source.substring(i, i + find.length) == find) {
-result.push(i);
-  }
- }
-return result;
-}
+def indices(source,find):
+    res=[]
+    for i in range(len(source)):
+        if source[i:i+len(find)]==find:
+            res.append(i)
+    return res
 
-function hlp(s){
-  let ind1=indices(s,"(");
-  let ind2=indices(s,")");
-  let ind=[...ind1,...ind2].sort((a,b)=>a-b);
-  let d=[];
-  for(let i=0;i<ind.length;i++){ 
-   if(ind1.includes(ind[i])&&ind2.includes(ind[i+1])){
-   d.push([ind[i],ind[i+1]]);
-   }
-  }
-  let ob={};
-for(let i=0;i<d.length;i++){
-  ob[i]=s.substring(d[i][0]+1,d[i][1]).split("").reverse().join("");
-}
- 
- let m=s.substring(0,d[0][0])+ob[0];
- for(let i=0;i<d.length-1;i++){
-   m+=s.substring(d[i][1]+1,d[i+1][0])+ob[i+1];
- }
- m+=s.substring(d[d.length-1][1]+1);
-  return m;
-}
+def hlp(s):
+    ind1=indices(s,"(")
+    ind2=indices(s,")")
+    ind=sorted(ind1+ind2)
+    d=[]
+    for i in range(len(ind)):
+        if ind[i] in ind1 and ind[i+1] in ind2:
+            d.append([ind[i],ind[i+1]])
+    ob={}
+    for i in range(len(d)):
+        ob[i]=s[d[i][0]+1:d[i][1]][::-1]
+    m=s[0:d[0][0]]+ob[0]
+    for i in range(len(d)-1):
+        m+=s[(d[i][1]+1):d[i+1][0]]+ob[i+1]
+    m+=s[(d[-1][1]+1):]
+    return m
 
-function decode(s) {
-if (s.includes('(')){
-  console.log(hlp(s));
-  return decode(hlp(s));
-  } else {return s;}
-} 
+def decode(s):
+    if "(" in s:
+        return decode(hlp(s))
+    else:
+        return s
 
-/* 27-08-2025: Unorder of Operations
+""" 27-08-2025: Unorder of Operations
 Given an array of integers and an array of string operators, apply the operations to the numbers sequentially from left-to-right. Repeat the operations as needed until all numbers are used. Return the final result.
 
 For example, given [1, 2, 3, 4, 5] and ['+', '*'], return the result of evaluating 1 + 2 * 3 + 4 * 5 from left-to-right ignoring standard order of operations.
 
 Valid operators are +, -, *, /, and %.
-*/
+"""
 
-function evaluate(numbers, operators) {
-  let op=Array(numbers.length).fill(operators).flat().slice(0,numbers.length-1);
-  let n=numbers;
-  let stri=n[0]+op[0]+n[1];
-  let val=eval(stri);
-  for(let i=1;i<op.length;i++){
-    let ex=val.toString()+op[i]+n[i+1];
-    val=eval(ex);
-  }
-  return val;
-}
+def evaluate(nums, ops):
+    op=[]
+    for i in range(len(nums)):
+        for j in range(len(ops)):
+            op.append(ops[j])
+    op=op[0:(len(nums)-1)] 
+    stri=str(nums[0])+op[0]+str(nums[1])
+    val=eval(stri) 
+    for i in range(1,len(op)):
+        ex=str(val)+op[i]+str(nums[i+1])
+        val=eval(ex);       
+    return val
 
 """ 28-08-2025: Second Best
 Given an array of integers representing the price of different laptops, and an integer representing your budget, return:
@@ -475,7 +466,7 @@ def find_duplicates(arr):
     s=sorted(list(set(duplist)))
     return s
 
-/* 31-08-2025: Hex Generator
+""" 31-08-2025: Hex Generator
 Given a named CSS color string, generate a random hexadecimal (hex) color code that is dominant in the given color.
 
 The function should handle "red", "green", or "blue" as an input argument.
@@ -486,33 +477,36 @@ Input	Output
 "red"	"FF0000"
 "green"	"00FF00"
 "blue"	"0000FF"
-*/
+"""
 
-function genRand(){
-  let c1=Math.floor(Math.random()*255);
-  let c2=Math.floor(Math.random()*255);
-  let maxi=Math.max(c1,c2);
-  let c3=Math.floor(Math.random()*(255-maxi))+maxi+1;
-  let arr=[c1,c2,c3];
-  return arr;
-}
+import random
+import math
+def hlp(stri):
+    if len(stri)==2:
+        return stri
+    else:
+        return "0"+stri
 
-function generateHex(color) {
-  let rCol;
-  let hCol;
-  if(color!=="red"&&color!=="green"&&color!=="blue"){
-  return "Invalid color";
-  }
-  if(color=="red"){
-    rCol=genRand();
-  hCol=rCol[2].toString(16)+rCol[0].toString(16)+rCol[1].toString(16);}
-  if(color=="green"){
-    rCol=genRand();
-    hCol=rCol[0].toString(16)+rCol[2].toString(16)+rCol[1].toString(16);
-  }
-  if(color=="blue"){
-    rCol=genRand();
-    hCol=rCol[1].toString(16)+
- rCol[0].toString(16)+rCol[2].toString(16);}
-  return hCol;
-}
+def genRand():
+    c1=math.floor(random.random()*255)
+    c2=math.floor(random.random()*255)
+    maxi=max(c1,c2)
+    c3=math.floor(random.random()*(255-maxi))+maxi+1
+    arr=[c1,c2,c3]
+    print(arr)
+    return arr
+genRand()
+
+def generate_hex(color):
+    if color!="red" and color!="green" and color!="blue":
+        return "Invalid color"
+    if color=="red":
+        rCol=genRand()
+        hCol=hlp(hex(rCol[2])[2:])+hlp(hex(rCol[0])[2:])+hlp(hex(rCol[1])[2:])
+    if color=="green":
+        rCol=genRand()
+        hCol=hlp(hex(rCol[0])[2:])+hlp(hex(rCol[2])[2:])+hlp(hex(rCol[1])[2:])
+    if color=="blue":
+        rCol=genRand()
+        hCol=hlp(hex(rCol[0])[2:])+hlp(hex(rCol[1])[2:])+hlp(hex(rCol[2])[2:])
+    return hCol
