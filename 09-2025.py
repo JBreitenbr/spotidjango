@@ -545,31 +545,28 @@ def is_perfect_square(n):
     f=math.floor(r)
     return f==r
 
-/* 25-09-2025: 2nd Largest
+""" 25-09-2025: 2nd Largest
 Given an array, return the second largest distinct number.
-*/
+"""
 
-function secondLargest(arr) {
-  let s=Array.from(new Set(arr)).sort((a,b)=>a-b);
-  console.log(s);
-  return s[s.length-2];
-}
+def second_largest(arr):
+    return sorted(list(set(arr)))[-2]
 
-/* 26-09-2025: Caught Speeding
+""" 26-09-2025: Caught Speeding
 Given an array of numbers representing the speed at which vehicles were observed traveling, and a number representing the speed limit, return an array with two items, the number of vehicles that were speeding, followed by the average amount beyond the speed limit of those vehicles.
 
 If there were no vehicles speeding, return [0, 0].
-*/
+"""
 
-function speeding(speeds, limit) {
-  let flt=speeds.filter((item)=>item > limit);
-  let av=flt.reduce((a,b)=>(a+b)-limit,0)/flt.length;
-  if(flt.length>0){
-  return [flt.length,av];
-  } else {
-    return [0,0];
-  }
-}
+from functools import reduce
+def speeding(speeds, limit):
+    flt=[val-limit for val in speeds if val > limit]
+    if len(flt)>0:
+       av = reduce(lambda x, y: x + y , flt)/len(flt)
+       res=[len(flt),float(av)]
+    else:
+        res=[0,0]
+    return res
 
 /* 27-09-2025: Spam Detector
 Given a phone number in the format "+A (BBB) CCC-DDDD", where each letter represents a digit as follows:
