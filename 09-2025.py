@@ -73,63 +73,39 @@ def is_pangram(sentence, letters):
             stri2+=s2[i]
     return stri1==stri2
 
-/* 04-09-2025: Vowel Repeater
+""" 04-09-2025: Vowel Repeater
 Given a string, return a new version of the string where each vowel is duplicated one more time than the previous vowel you encountered. For instance, the first vowel in the sentence should remain unchanged. The second vowel should appear twice in a row. The third vowel should appear three times in a row, and so on.
 
 The letters a, e, i, o, and u, in either uppercase or lowercase, are considered vowels.
 The original vowel should keeps its case.
 Repeated vowels should be lowercase.
 All non-vowel characters should keep their original case.
-*/
+"""
 
-function indices(source, find) {
-  if (!source) {return [];}    let result = [];
-  for (let i = 0; i < source.length; i++) {
-  if (find.includes(source.substring(i, i+1))) {
-  result.push(i);
-    }
-     }
-     return result;
-     }
-function mult(ch,n){
-  let stri="";
-  for(let i=0;i<n;i++){
-    stri+=ch;
-  }
-  return stri;
-}
-function repeatVowels(str) {
-  let v=["a","e","i","o","u"];
-  let ind=indices(str.toLowerCase(),v);
-  console.log(ind);
-  let stri=str.substring(0,ind[1]);
-  for(let i=1;i<ind.length;i++){
-    let a=mult(str.substring(ind[i],ind[i]+1),i);
-    let b=str.substring(ind[i],ind[i+1]);
-    stri+=a+b;
-  }
-  let pre=stri.split("");
-  for(let i=0;i<pre.length;i++){
-    if(["A","E","I","O","U"].includes(pre[i])){
-      pre[i]=pre[i].toLowerCase();
-    }
-  }
-  stri=pre.join("");
-  let arr=stri.split("");
-  for(let i=0;i<ind.length;i++){
-    arr[ind[i]+i*(i+1)*0.5-i]=str[ind[i]];
-  }
-  let res=arr.join("")
-  return res;
-                                  }
+def propcase(stri):
+    return stri[0].upper()+stri[1:].lower()
 
-/* 05-09-2025: IPv4 Validator
+def repeat_vowels(s):
+    v="aeiouAEIOU"
+    lst=list(s)
+    sn=0
+    for i in range(len(lst)):
+        if lst[i] in v:
+            sn+=1
+            if lst[i].isupper():
+               lst[i]=propcase(sn*lst[i])
+            else:
+                lst[i]=sn*lst[i]
+    j="".join(lst)
+    return j
+
+""" 05-09-2025: IPv4 Validator
 Given a string, determine if it is a valid IPv4 Address. A valid IPv4 address consists of four integer numbers separated by dots (.). Each number must satisfy the following conditions:
 
 It is between 0 and 255 inclusive.
 It does not have leading zeros (e.g. 0 is allowed, 01 is not).
 Only numeric characters are allowed.
-*/
+"""
 
 function indices(source, find) {
   if (!source) {return [];}    let result = [];
@@ -484,31 +460,28 @@ def number_of_videos(video_size, video_unit, drive_size, drive_unit):
         return "Invalid drive unit"
     return math.floor(dS/vS)
 
-/* 22-09-2025: Digits vs Letters
+""" 22-09-2025: Digits vs Letters
 Given a string, return "digits" if the string has more digits than letters, "letters" if it has more letters than digits, and "tie" if it has the same amount of digits and letters.
 
 Digits consist of 0-9.
 Letters consist of a-z in upper or lower case.
 Ignore any other characters.
-*/
+""" 
 
-function digitsOrLetters(str) {
-  let low="abcdefghojklmnopqrstuvwxyz";
-  let up=low.toUpperCase();
-  let alph=(low+up).split("");
-  let digs="0123456789".split("");
-  let c1=0;
-  let c2=0;
-  let a=str.split("");
-  for(let i=0;i<a.length;i++){
-    if(alph.includes(a[i])){
-      c1+=1;
-    } if(digs.includes(a[i])){
-      c2+=1;
-    }
-  }
-  return c1>c2?"letters":c1<c2?"digits":"tie";
-}
+def digits_or_letters(s):
+    d=0
+    a=0
+    for c in s:
+        if c.isdigit():
+           d+=1
+        if c.isalpha():
+           a+=1
+    if a>d:
+        return "letters"
+    elif a<d:
+        return "digits"
+    else:
+        return "tie"
 
 """ 23-09-2025: String Mirror
 Given two strings, determine if the second string is a mirror of the first.
@@ -611,29 +584,35 @@ function isSpam(number) {
 }
 isSpam("+0 (200) 234-0182");
 
-/* 28-09-2025: CSV Header Parser
+""" 28-09-2025: CSV Header Parser
 Given the first line of a comma-separated values (CSV) file, return an array containing the headings.
 
 The first line of a CSV file contains headings separated by commas.
 Remove any leading or trailing whitespace from each heading.
-*/
+"""
 
-function getHeadings(csv) {
-  return csv.split(",").map((item)=>item.trim());
-}
+def get_headings(csv):
+    sp=csv.split(",")
+    res=[]
+    for w in sp:
+        res.append(w.strip())
+    return res
 
-/* 29-09-2025: Longest Word
+""" 29-09-2025: Longest Word
 Given a sentence, return the longest word in the sentence.
 
 Ignore periods (.) when determining word length.
 If multiple words are ties for the longest, return the first one that occurs.
-*/
+"""
 
-function getLongestWord(sentence) {
-  let s=sentence.split(" ").map((item)=>item.replace(".","")).sort((a,b)=>b.length-a.length).slice(0,1);
-  return s;
-}
-getLongestWord("coding is fun")
+def get_longest_word(sentence):
+    s=sentence.replace(".","")
+    sp=s.split(" ")
+    maxi=sp[0]
+    for i in range(len(sp)):
+        if len(sp[i])>len(maxi):
+            maxi=sp[i]
+    return maxi
 
 /* 30-09-2025: Phone Number Formatter
 Given a string of ten digits, return the string as a phone number in this format: "+D (DDD) DDD-DDDD".
