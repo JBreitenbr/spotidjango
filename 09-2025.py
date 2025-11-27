@@ -107,31 +107,16 @@ It does not have leading zeros (e.g. 0 is allowed, 01 is not).
 Only numeric characters are allowed.
 """
 
-function indices(source, find) {
-  if (!source) {return [];}    let result = [];
-  for (let i = 0; i < source.length; i++) {
-  if (source.substring(i, i + find.length) == find) {
-  result.push(i);
-    }
-     }
-     return result;
-     }
-
-function isValidIPv4(ipv4) {
-  let ind=indices(ipv4,".");
-  let spl=ipv4.split(".").map((i)=>Number(i));
-  let flt=ipv4.split(".").filter((i)=>i!="");
-  let lz=ipv4.split(".").filter((i)=>i!="0" && i.substring(0,1)=="0");
-  if(ind.length!=3 || flt.length!=4 || lz.length){
-    return false;
-  } else {
-    let ch=spl.filter((i)=>i>=0 && i<256);
-    if(ch.length!=4){
-      return false;
-    }
-  }
-  return true;
-}
+def is_valid_ipv4(ipv4):
+    sp=ipv4.split(".")
+    for i in range(len(sp)):
+        if sp[i]=="":
+            return False
+        if int(sp[i])<0 or int(sp[i])>255:
+            return False
+        if sp[i][0]=="0" and len(sp[i])>1:
+            return False
+    return True
 
 """ 06-09-2025: Matrix Rotate
 Given a matrix (an array of arrays), rotate the matrix 90 degrees clockwise and return it. For instance, given [[1, 2], [3, 4]], which looks like this:
@@ -154,7 +139,7 @@ def rotate(matrix):
             res[i].append(m[j][i])
     return res
 
-/* 07-09-2025: Roman Numeral Parser
+""" 07-09-2025: Roman Numeral Parser
 Given a string representing a Roman numeral, return its integer value.
 
 Roman numerals consist of the following symbols and values:
@@ -169,27 +154,22 @@ D	500
 M	1000
 Numerals are read left to right. If a smaller numeral appears before a larger one, the value is subtracted.
 Otherwise, values are added.
-*/
+"""
 
-function parseRomanNumeral(numeral) {
-const values = new Map([
-    ['I', 1],
-    ['V', 5],
-    ['X', 10],
-    ['L', 50],
-    ['C', 100],
-    ['D', 500],
-    ['M', 1000]
-          ]);
-    let result = 0,
-        current, previous = 0;
-          for (const char of numeral.split("").reverse()) {
-current = values.get(char);
-if (current >= previous) {result += current; } else {
-result -= current;}
-previous = current;}
-return result;
-}
+def parse_roman_numeral(numeral):
+    vals={'I':1,'V':5,'X':10,'L':50,'C':100,'D':500,'M': 1000}
+    res=0
+    prev=0
+    curr=0
+    sp=list(numeral[::-1])
+    for el in sp:
+        curr=vals[el]
+        if curr>=prev:
+            res+=curr
+        else:
+            res-=curr
+        prev=curr
+    return res
 
 """ 08-09-2025: Acronym Builder
 Given a string containing one or more words, return an acronym of the words using the following constraints:
@@ -350,7 +330,7 @@ def capitalize(p):
             s[i]=s[i].upper()
     return "".join(s)
 
-/* 17-09-2025: Slug Generator
+""" 17-09-2025: Slug Generator
 Given a string, return a URL-friendly version of the string using the following constraints:
 
 All letters should be lowercase.
@@ -358,46 +338,32 @@ All characters that are not letters, numbers, or spaces should be removed.
 All spaces should be replaced with the URL-encoded space code %20.
 Consecutive spaces should be replaced with a single %20.
 The returned string should not have leading or trailing %20.
-*/
+"""
 
-function generateSlug(str) {
-  let low="abcdefghijklmnopqrstuvwxyz".split("");
-  let up="ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
-  let nums="0123456789".split("");
-  let s=str.trim().replace("  "," ").split("");
-  for(let i=0;i<s.length;i++){
-    if(s[i]==" "){
-      s[i]="Y";
-    }
-    if(!low.includes(s[i])&&!up.includes(s[i])&&!nums.includes(s[i])){
-      s[i]="X";
-    }
-  }
-  let flt=s.filter((item)=>item!="X").join("").toLowerCase();
-  return flt.replace("y","%20");
-}
+def generate_slug(str):
+    lst=list(str.lower().strip().replace("  "," "))
+    res=[]
+    for i in range(len(lst)):
+        if lst[i].isalpha() or lst[i].isnumeric() or lst[i]==" ":
+            res.append(lst[i])
+    stri="".join(res).replace(" ","%20")
+    return stri
 
-/* 18-09-2025: Fill The Tank
+""" 18-09-2025: Fill The Tank
 Given the size of a fuel tank, the current fuel level, and the price per gallon, return the cost to fill the tank all the way.
 
 tankSize is the total capacity of the tank in gallons.
 fuelLevel is the current amount of fuel in the tank in gallons.
 pricePerGallon is the cost of one gallon of fuel.
 The returned value should be rounded to two decimal places in the format: "$d.dd".
-*/
+"""
 
-function costToFill(tankSize, fuelLevel, pricePerGallon) {
-  let d=tankSize-fuelLevel;
-  let p="$"+d*pricePerGallon.toString();
-  if(!p.split("").includes(".")){
-    p+=".00";
-  }
-  let s=p.split(".");
-  if(s[s.length-1].length==1){
-    p+="0";
-  };
-  return p;
-}
+def cost_to_fill(tank_size, fuel_level, price_per_gallon):
+    d=tank_size-fuel_level
+    p="$"+str(d*price_per_gallon)
+    if p[-2]==".":
+        p+="0"
+    return p
 
 """ 19-09-2025: Photo Storage
 Given a photo size in megabytes (MB), and hard drive capacity in gigabytes (GB), return the number of photos the hard drive can store using the following constraints:
@@ -541,7 +507,7 @@ def speeding(speeds, limit):
         res=[0,0]
     return res
 
-/* 27-09-2025: Spam Detector
+""" 27-09-2025: Spam Detector
 Given a phone number in the format "+A (BBB) CCC-DDDD", where each letter represents a digit as follows:
 
 A represents the country code and can be any number of digits.
@@ -553,36 +519,25 @@ The country code is greater than 2 digits long or doesn't begin with a zero (0).
 The area code is greater than 900 or less than 200.
 The sum of first three digits of the local number appears within last four digits of the local number.
 The number has the same digit four or more times in a row (ignoring the formatting characters).
-*/
-
-function isSpam(number) {
-  let p="123456789".split("");
-  let nstr=number.split("").filter((item)=>p.includes(item)).join("");
-  for(let i=0;i<p.length;i++)
-  {
-    let cnt=nstr.split(p[i]).length-1;
-    if(cnt>3){
-      return true;
-    }
-  }
-  let spl=number.split(" ");
-  if(spl[0].slice(0,2)!="+0" || spl[0].length>3){
-    return true;
-  }
-  let ac=spl[1].slice(1,4);
-  if(Number(ac)<200 || Number(ac)>900) {
-    return true;
-  }
-
-  let ln1=spl[2].split("-")[0];
-  let ln2=spl[2].split("-")[1];
-  let sm=ln1.split("").map((item)=>Number(item)).reduce((a,b)=>a+b,0).toString();
-  if(ln2.split("").includes(sm)){
-    return true;
-  }
-  return false;
-}
-isSpam("+0 (200) 234-0182");
+"""
+from functools import reduce
+def is_spam(number):
+    sp=number.split(" ")
+    a=int(sp[1][1:-1])
+    l1=list((sp[2].split("-")[0]))
+    l2=sp[2].split("-")[1]
+    r=str(reduce(lambda x,y:int(x)+int(y),l1))
+    for c in list("123456789"):
+        spli=number.split(c)
+        if len(spli)>4:
+            return True
+    if r in l2:
+        return True
+    if a<200 or a>900:
+        return True
+    if len(sp[0][1:])>2 or sp[0][1]!="0":
+        return True
+    return False
 
 """ 28-09-2025: CSV Header Parser
 Given the first line of a comma-separated values (CSV) file, return an array containing the headings.
@@ -614,9 +569,9 @@ def get_longest_word(sentence):
             maxi=sp[i]
     return maxi
 
-/* 30-09-2025: Phone Number Formatter
+""" 30-09-2025: Phone Number Formatter
 Given a string of ten digits, return the string as a phone number in this format: "+D (DDD) DDD-DDDD".
-*/
+"""
 
 function formatNumber(number) {
   let n=number;
