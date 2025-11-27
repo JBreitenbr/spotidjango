@@ -573,11 +573,5 @@ def get_longest_word(sentence):
 Given a string of ten digits, return the string as a phone number in this format: "+D (DDD) DDD-DDDD".
 """
 
-function formatNumber(number) {
-  let n=number;
-  let stri="+"+n[0]+" ";
-  stri+="("+n.slice(1,4).toString()+") ";
-  stri+=n.slice(4,7)+"-";
-  stri+=n.slice(7,11).toString();
-  return stri;
-}
+def format_number(n):
+    return "+"+n[0]+" ("+n[1:4]+") "+n[4:7]+"-"+n[7:]
