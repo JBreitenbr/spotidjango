@@ -615,20 +615,22 @@ if(p=="-"){
 }
 dive([[ "-", "X"], [ "-", "O"], [ "-", "O"]], [1, 1])
 
-/* 25-10-2025 Complementary DNA
+""" 25-10-2025 Complementary DNA
 Given a string representing a DNA sequence, return its complementary strand using the following rules:
 
 DNA consists of the letters "A", "C", "G", and "T".
 The letters "A" and "T" complement each other.
 The letters "C" and "G" complement each other.
 For example, given "ACGT", return "TGCA".
-*/
+"""
 
-function complementaryDNA(strand) {
- let t={"A":"T","T":"A","G":"C","C":"G"};
-  return strand.split("").map((item)=>t[item]).join("");
-}
-complementaryDNA("ACGT")
+def complementary_dna(strand):
+    d={"A":"T","C":"G","G":"C","T":"A"}
+    res=""
+    for i in list(strand):
+        res+=d[i]
+    return res
+
 /* 26-10-2025: Duration Formatter
 Given an integer number of seconds, return a string representing the same duration in the format "H:MM:SS", where "H" is the number of hours, "MM" is the number of minutes, and "SS" is the number of seconds. Return the time using the following rules:
 
@@ -658,12 +660,18 @@ function format(seconds) {
 }
 format(1);
 
-/* 27-10-2025: Integer Sequence
+""" 27-10-2025: Integer Sequence
 Given a positive integer, return a string with all of the integers from 1 up to, and including, the given number, in numerical order.
 
 For example, given 5, return "12345".
-*/
+"""
 
+def sequence(n):
+    r=list(range(1,n+1))
+    res=""
+    for val in r:
+        res+=str(val)
+    return res
 function sequence(n) {
   let stri=Array.from(Array(n).keys()).map((item)=>item+1).join("");
   return stri;
