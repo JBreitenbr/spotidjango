@@ -289,55 +289,61 @@ The team with more winning words is the winner.
 Return "We win" if your team is the winner, "We lose" if your team loses, and "Draw" if both teams have the same number of wins.
 """
 
-function compArr(arr1,arr2){
-  let s1=0;
-  let s2=0;
-  for(let i=0;i<arr1.length;i++){
-    if(arr1[i]>arr2[i]){
-      s1+=1;
-    }
-    if(arr2[i]>arr1[i]){
-      s2+=1;
-    }
-  }
-  return [s1,s2];
-}
+def valued(word):
+    a1=list("abcdefghijklmnopqrstuvwxyz")
+    n1=list(range(1,27))
+    d1=dict(zip(a1,n1))
+    a2=list("ABCDEFGHIJKLMNOPQRSTUVWXYZ")
+    n2=list(range(2,54,2))
+    d2=dict(zip(a2,n2))
+    sn=0
+    for i in range(len(word)):
+        if word[i].islower():
+            sn+=d1[word[i]]
+        if word[i].isupper():
+            sn+=d2[word[i]]
+    return sn
 
-function battle(ourTeam, opponent) {
-  let alph1="abcdefghijklmnopqrstuvwxyz".split("");
-  let alph2=alph1.join("").toUpperCase().split("");
-  let arr1=alph1.map((item,index)=>index+1);
-  let arr2=alph2.map((item,index)=>2*index+2);  
-  let res = {};
-  alph1.forEach((key, index) => {res[key] = arr1[index];});
-  alph2.forEach((key, index)=>{res[key]=arr2[index];});
-  let stri1=ourTeam.split(" "); 
-  let stri2=opponent.split(" ");
-  let t1=stri1.map((item)=>item.split("").map((sub)=>res[sub]));
-  let r1=t1.map((item)=>item.reduce((a,b)=>a+b,0));
-  let t2=stri2.map((item)=>item.split("").map((sub)=>res[sub]));
-  let r2=t2.map((item)=>item.reduce((a,b)=>a+b,0));
-  let c=compArr(r1,r2);
-  return c[0]>c[1]?"We win":c[0]<c[1]?"We lose":"Draw";
-}
-//battle("hello world", "hello word");
-battle("We must never surrender", "Our team must win");
+def battle(our_team,opponent):
+    sp1=our_team.split(" ")
+    sp2=opponent.split(" ")
+    s1=0
+    s2=0
+    for i in range(len(sp1)):
+        if valued(sp1[i])>valued(sp2[i]):
+            s1+=1
+        if valued(sp2[i])>valued(sp1[i]):
+            s2+=1
+    if s1>s2:
+        return "We win"
+    elif s2>s1:
+        return "We lose"  
+    else:
+        return "Draw"
 
-/* 13-10-2025: 24 to 12
+""" 13-10-2025: 24 to 12
 Given a string representing a time of the day in the 24-hour format of "HHMM", return the time in its equivalent 12-hour format of "H:MM AM" or "H:MM PM".
 
 The given input will always be a four-digit string in 24-hour time format, from "0000" to "2359".
-*/
+"""
 
-function to12(time) {
-  let p1=time.slice(0,2);
-  let p2=time.slice(2,4);
-  let t1=Number(p1)>12?(Number(p1)%12).toString():p1=="00"?"12":p1<10?p1.slice(1,2):p1;
-  let d=Number(p1)>12?"PM":"AM";
-  return t1+":"+p2+" "+d;
-}
-to12("0030")
-  
+def to_12(time):
+    p1=time[0:2]
+    p2=time[2:4]
+    if int(p1)>12:
+        t1=str(int(p1)%12)
+    if p1=="00":
+        t1="12"
+    if int(p1)<10 and p1!="00":
+        t1=p1[1:2]
+    if 10<=int(p1)<=12:
+        t1=p1
+    if int(p1)<=12 or p1=="00":
+        d="AM"
+    else:
+        d="PM"
+    return t1+":"+p2+" "+d
+
 """ 14-10-2025: String Count
 Given two strings, determine how many times the second string appears in the first.
 
