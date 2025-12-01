@@ -189,7 +189,7 @@ def goldilocks_zone(mass):
     high=math.sqrt(lum)*1.37
     return [round(low,2),round(high,2)]
 
-/* 09-10-2025: Space Week Day 6: Moon Phase
+""" 09-10-2025: Space Week Day 6: Moon Phase
 For day six of Space Week, you will be given a date in the format "YYYY-MM-DD" and need to determine the phase of the moon for that day using the following rules:
 
 Use a simplified lunar cycle of 28 days, divided into four equal phases:
@@ -203,22 +203,25 @@ After day 28, the cycle repeats with day 1, a new moon.
 Use "2000-01-06" as a reference new moon (day 1 of the cycle) to determine the phase of the given day.
 You will not be given any dates before the reference date.
 Return the correct phase as a string.
-*/
+"""
 
-function calculateDays(startDate, endDate) {
-   let start = new Date(startDate);
-   let end = new Date(endDate);
-   let timeDifference = end - start;
-   let daysDifference = timeDifference / (1000 * 3600 * 24);
-   return daysDifference;
-  }
+from datetime import datetime
+def days_between(d1, d2):
+    d1 = datetime.strptime(d1, "%Y-%m-%d")
+    d2 = datetime.strptime(d2, "%Y-%m-%d")
+    return abs((d2 - d1).days)
 
-function moonPhase(dateString){
-  let diff=calculateDays("2000-01-06",dateString);
-  let s=(diff+1)%28;
-  return s<8?"New":s<15?"Waxing":s<22?"Full":"Waning";
-}
-moonPhase("2000-01-13");
+def moon_phase(date_string):
+    diff=days_between("2000-01-06",date_string);
+    s=(diff+1)%28
+    if s<8:
+        return "New"
+    elif s<15:
+        return "Waxing"
+    elif s<22:
+        return "Full"
+    else:
+        return "Waning"
 
 """ 10-10-2025: Space Week Day 7: Launch Fuel
 For the final day of Space Week, you will be given the mass in kilograms (kg) of a payload you want to send to orbit. Determine the amount of fuel needed to send your payload to orbit using the following rules:
@@ -358,21 +361,20 @@ def count(text, parameter):
          sn+=1
     return sn
 
-/* 15-10-2025: HTML Tag Stripper
+""" 15-10-2025: HTML Tag Stripper
 Given a string of HTML code, remove the tags and return the plain text content.
 
 The input string will contain only valid HTML.
 HTML tags may be nested.
 Remove the tags and any attributes.
 For example, '<a href="#">Click here</a>' should return "Click here".
-*/
+"""
 
-function stripTags(html) {
-  let txt=html.replace(/<[^>]*>/g,"");
-  return txt;
-}
+import re
+def strip_tags(html):
+    return re.sub('<[^<]+?>', '', html)
 
-/* 16-10-2025: Email Validator
+""" 16-10-2025: Email Validator
 Given a string, determine if it is a valid email address using the following constraints:
 
 It must contain exactly one @ symbol.
@@ -383,7 +385,7 @@ The domain part (after the @):
 Must contain at least one dot.
 Must end with a dot followed by at least two letters.
 Neither the local or domain part can have two dots in a row.
-*/
+"""
 
 function validate(email) {
   let l="abcdefghijklmnopqrstuvwxyz"; let v0=l+l.toUpperCase()+"0123456789"+"-"+"_"+".";
@@ -533,7 +535,7 @@ let targetF = (targetC * 1.8) + 32;
 }
 adjustThermostat(72, 18)
 
-/* 22-10-2025: Speak Wisely, You Must
+""" 22-10-2025: Speak Wisely, You Must
 Given a sentence, return a version of it that sounds like advice from a wise teacher using the following rules:
 
 Words are separated by a single space.
@@ -546,34 +548,35 @@ Capitalize the first letter of the new first word of the sentence.
 All given sentences will end with a single punctuation mark. Keep the original punctuation of the sentence and move it to the end of the new sentence.
 Return the new sentence, make sure there's a single space between each word and no spaces at the beginning or end of the sentence.
 For example, given "You must speak wisely." return "Speak wisely, you must."
-*/
+"""
 
-function wiseSpeak(sentence) {
-let w=["have", "must", "are", "will", "can"];
-let s=sentence.split(" ");
-let t=s.map((x, i) => [x,i]).filter(([x,i]) => w.includes(x)).map(([x,i]) => i)[0];
-console.log(t);
-let s1=s.slice(t+1).concat(s.slice(0,t+1));
-let s2=s1.map((item)=>item.toLowerCase()).map((item)=>item.replace(".",",")).map((item)=>item.replace("!",",")).map((item)=>item.replace("?",",")).map((item,index)=>index>0?item:item[0].toUpperCase()+item.slice(1));
-let last=sentence.split("").reverse()[0];
-let stri=s2.join(" ")+last;
-  return stri;
-}
-wiseSpeak("You can do it!")
+def wise_speak(sentence):
+    v=["have", "must", "are", "will", "can"]
+    s=sentence.lower().split(" ")
+    for i in range(len(s)):
+        if s[i] in v:
+            ind=i
+    fst=""
+    lst=""
+    for i in range(ind+1):
+        lst+=s[i]+" "
+    for i in range(ind+1,len(s)):
+        fst+=s[i]+" "
+    fst=fst[0].upper()+fst[1:].replace(".",",").replace("!",",").replace("?",",")
+    rev=fst+lst[0:-1]+sentence[-1]
+    return rev
 
-/* 23-10-2025: Favorite Songs
+""" 23-10-2025: Favorite Songs
 Remember iPods? The first model came out 24 years ago today, on Oct. 23, 2001.
 
 Given an array of song objects representing your iPod playlist, return an array with the titles of the two most played songs, with the most played song first.
 
-Each object will have a "title" property (string), and a "plays" property (integer).
-*/
+Each object will have a "title" property (string), and a "plays" property (integer)."""
 
-function favoriteSongs(playlist) {
-  let pl=playlist.sort((a,b)=>b.plays-a.plays);
-  let titles=pl.slice(0,2).map((item)=>item.title);
-  return titles;
-}
+def favorite_songs(playlist):
+    s=sorted(playlist, key=lambda songs: songs["plays"],reverse=True)
+    lst=[val["title"] for val in s]
+    return lst[0:2]
 
 /* 24-10-2025: Hidden Treasure
 Given a 2D array representing a map of the ocean floor that includes a hidden treasure, and an array with the coordinates ([row, column]) for the next dive of your treasure search, return "Empty", "Found", or "Recovered" using the following rules:
