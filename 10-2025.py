@@ -487,36 +487,31 @@ function extractAttributes(element) {
 }
 extractAttributes('<input name="email" type="email" required="true" />');
 
-/* 20-10-2025: Tip Calculator
+""" 20-10-2025: Tip Calculator
 Given the price of your meal and a custom tip percent, return an array with three tip values; 15%, 20%, and the custom amount.
 
 Prices will be given in the format: "$N.NN".
 Custom tip percents will be given in this format: "25%".
 Return amounts in the same "$N.NN" format, rounded to two decimal places.
 For example, given a "$10.00" meal price, and a "25%" custom tip value, return ["$1.50", "$2.00", "$2.50"].
-*/
+"""
 
-function mFormatter(stri){
-  let s=stri.split(".");
-  if(s.length==1){
-    return "$"+stri+".00";
-  } else if(s[1].length==1){
-    return "$"+stri+"0";
-  }
-  return "$"+stri;
-}
-
-function calculateTips(mealPrice, customTip) {
-  let mP=Number(mealPrice.slice(1));
-  let cT=customTip.split("").reverse().slice(1).reverse().join("")/100;
-  console.log(cT);
-  let m1=(Math.round(0.15*mP*100)/100).toString();
-  let m2=(Math.round(0.2*mP*100)/100).toString();
-  let m3=(Math.round(cT*mP*100)/100).toString();
-  return [mFormatter(m1),mFormatter(m2),mFormatter(m3)];
-}
-calculateTips("$10.00", "25%") ;
-//calculateTips("$89.67", "26%")
+def m_formatter(stri):
+    s=stri.split(".")
+    if len(s)==1:
+        return "$"+stri+".00"
+    elif len(s[1])==1:
+        return "$"+stri+"0"
+    else:
+        return "$"+stri
+        
+def calculate_tips(meal_price, custom_tip):
+    mp=float(meal_price[1:])
+    cp=float(custom_tip[::-1][1:][::-1])/100
+    m1=m_formatter(str(round(0.15*mp,2)))
+    m2=m_formatter(str(round(0.2*mp,2)))
+    m3=m_formatter(str(round(cp*mp,2)))
+    return [m1,m2,m3]
 
 /* 21-10-2025: Thermostat Adjuster 2
 Given the current temperature of a room in Fahrenheit and a target temperature in Celsius, return a string indicating how to adjust the room temperature based on these constraints:
