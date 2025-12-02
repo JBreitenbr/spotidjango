@@ -26,7 +26,7 @@ function verify(message, key, signature) {
         }
 verify("Check out the freeCodeCamp podcast,", "in the mobile app", 514)
 
-/* 02-11-2025: Infected
+""" 02-11-2025: Infected
 On November 2nd, 1988, the first major internet worm was released, infecting about 10% of computers connected to the internet after only a day.
 
 In this challenge, you are given a number of days that have passed since an internet worm was released, and you need to determine how many computers are infected using the following rules:
@@ -41,37 +41,34 @@ Day 1: 2 total computers are infected.
 Day 2: 4 total computers are infected.
 Day 3: 8 total computers are infected. Then, apply the patch: 8 infected * 20% = 1.6 patched. Round 1.6 up to 2. 8 computers infected - 2 patched = 6 total computers infected after day 3.
 Return the number of total infected computers after the given amount of days have passed.
-*/
+"""
 
-function infected(days) {
-  let p=[1];
-  for(let i=1;i<26;i++){
-    p[i]=2*p[i-1];
-    if(i%3==0){
-      p[i]-=Math.ceil(0.2*p[i]);
-    }
-  }
-  return p[days];
-}
+import math
+def infected(days):
+    p=[1]
+    for i in range(1,26):
+        p.append(2*p[i-1])
+        if i%3==0:
+           p[i]-=math.ceil(0.2*p[i])
+    return p[days]
 
-/* 03-11-2025: Word Counter
+""" 03-11-2025: Word Counter
 Given a sentence string, return the number of words that are in the sentence.
 
 Words are any sequence of non-space characters and are separated by a single space.
-*/
+"""
 
-function countWords(sentence) {
-  return sentence.split(" ").length;
-}
+def count_words(s):
+    return len(s.split(" "))
 
-/* 04-11-2025: Image Search
+""" 04-11-2025: Image Search
 On November 4th, 2001, Google launched its image search, allowing people to find images using search terms. In this challenge, you will imitate the image search.
 
 Given an array of image names and a search term, return an array of image names containing the search term.
 
 Ignore the case when matching the search terms.
 Return the images in the same order they appear in the input array.
-*/
+"""
 
 function imageSearch(images, term) {
   let res=[];
