@@ -1,4 +1,4 @@
-/* 01-11-2025: Signature Validation
+""" 01-11-2025: Signature Validation
 Given a message string, a secret key string, and a signature number, determine if the signature is valid using this encoding method:
 
 Letters in the message and secret key have these values:
@@ -12,19 +12,21 @@ f (6) + o (15) + o (15) = 36
 b (2) + a (1) + r (18) = 21
 36 + 21 = 57
 Check if the computed signature matches the provided signature.
-*/
+"""
 
-function verify(message, key, signature) {
-  let a0="abcdefghijklmnopqrstuvwxyz";
-  let a=[...a0.split(""),a0.toUpperCase().split("")].flat();
-  let r=Array.from(Array(52).keys()).map((item)=>item+1);
-  let obj = {};
-  a.forEach((key, index) => {obj[key] = r[index];});
-    let s1=message.split("").map((item)=>a.includes(item)?obj[item]:0).reduce((a,b)=>a+b,0);
-    let s2=key.split("").map((item)=>a.includes(item)?obj[item]:0).reduce((a,b)=>a+b,0);
-  return s1+s2==signature;
-        }
-verify("Check out the freeCodeCamp podcast,", "in the mobile app", 514)
+def verify(message, key, signature):
+    a0="abcdefghijklmnopqrstuvwxyz"
+    a=list(a0+a0.upper())
+    n=list(range(1,53))
+    d=dict(zip(a,n))
+    sn=0
+    for ch in message:
+        if ch.isupper() or ch.islower():
+           sn+=d[ch]
+    for ch in key:
+        if ch.isupper() or ch.islower():
+           sn+=d[ch]
+    return sn==signature
 
 """ 02-11-2025: Infected
 On November 2nd, 1988, the first major internet worm was released, infecting about 10% of computers connected to the internet after only a day.
@@ -70,18 +72,14 @@ Ignore the case when matching the search terms.
 Return the images in the same order they appear in the input array.
 """
 
-function imageSearch(images, term) {
-  let res=[];
-  let t=term.toLowerCase();
-  for(let i=0;i<images.length;i++){
-    if(images[i].toLowerCase().includes(t)){
-      res.push(images[i]);
-    }
-  }
-  return res;
-}
+def image_search(images, term):
+    res=[]
+    for im in images:
+        if term.lower() in im.lower():
+            res.append(im)
+    return res
 
-/* 05-11-2025: Matrix Builder
+""" 05-11-2025: Matrix Builder
 Given two integers (a number of rows and a number of columns), return a matrix (an array of arrays) filled with zeros (0) of the given size.
 
 For example, given 2 and 3, return:
@@ -90,11 +88,15 @@ For example, given 2 and 3, return:
   [0, 0, 0],
   [0, 0, 0]
 ]
-*/
+"""
 
-function buildMatrix(rows, cols) {
-  return Array(rows).fill("").map((item)=>Array(cols).fill(0));
-}
+def build_matrix(rows, cols):
+    mat=[]
+    for i in range(rows):
+        mat.append([])
+        for j in range(cols):
+            mat[i].append(0)
+    return mat
 
 /* 06-11-2025: Weekday Finder
 Given a string date in the format YYYY-MM-DD, return the day of the week.
