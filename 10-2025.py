@@ -617,34 +617,33 @@ def complementary_dna(strand):
         res+=d[i]
     return res
 
-/* 26-10-2025: Duration Formatter
+""" 26-10-2025: Duration Formatter
 Given an integer number of seconds, return a string representing the same duration in the format "H:MM:SS", where "H" is the number of hours, "MM" is the number of minutes, and "SS" is the number of seconds. Return the time using the following rules:
 
 Seconds: Should always be two digits.
 Minutes: Should omit leading zeros when they aren't needed. Use "0" if the duration is less than one minute.
-Hours: Should be included only if they're greater than zero.
-*/
+Hours: Should be included only if they're greater than zero. """
 
-function format(seconds) {
-  let min=Math.floor(seconds/60)%60;
-  let hrs=Math.floor(seconds/3600);
-  let sec=seconds-60*min-3600*hrs;
-  let _sec=sec<10?"0"+sec.toString():sec.toString();
-  let dt="";
-  if(hrs==0 && min==0){
-    dt+="0:"+_sec.toString();
-  } else if(hrs==0){
-    dt+=min.toString()+":"+_sec.toString();
-  } else {
-    if(min<10){
-    dt+=hrs.toString()+":0"+min.toString()+":"+_sec.toString();
-    } else {
-      dt+=hrs.toString()+":"+min.toString()+":"+_sec.toString();
-    }
-  }
-  return dt;
-}
-format(1);
+import math
+def format(secs):
+    mini=math.floor(secs/60)%60
+    hrs=math.floor(secs/3600)
+    sec=secs-60*mini-3600*hrs;
+    if sec<10:
+        _sec="0"+str(sec)
+    else:
+        _sec=str(sec)
+    dt=""
+    if hrs==0 and mini==0:
+        dt+="0:"+_sec
+    elif hrs==0:
+        dt+=str(mini)+":"+_sec
+    else:
+        if mini<10:
+            dt+=str(hrs)+":0"+str(mini)+":"+_sec
+        else:
+            dt+=str(hrs)+":"+str(mini)+":"+_sec
+    return dt
 
 """ 27-10-2025: Integer Sequence
 Given a positive integer, return a string with all of the integers from 1 up to, and including, the given number, in numerical order.
