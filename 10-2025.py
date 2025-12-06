@@ -557,7 +557,7 @@ def favorite_songs(playlist):
     lst=[val["title"] for val in s]
     return lst[0:2]
 
-/* 24-10-2025: Hidden Treasure
+""" 24-10-2025: Hidden Treasure
 Given a 2D array representing a map of the ocean floor that includes a hidden treasure, and an array with the coordinates ([row, column]) for the next dive of your treasure search, return "Empty", "Found", or "Recovered" using the following rules:
 
 The given 2D array will contain exactly one unrecovered treasure, which will occupy multiple cells.
@@ -580,19 +580,26 @@ For example, given:
   [ "-", "X"],
   [ "-", "O"]
 ]
-And [2, 1] for the coordinates of the dive location, return "Recovered" because the dive found the last unfound part of the treasure.
-*/
+And [2, 1] for the coordinates of the dive location, return "Recovered" because the dive found the last unfound part of the treasure."""
 
-function dive(map, coordinates) {
-  let fl=map.flat().filter((item)=>item=="O");
-  let p=map[coordinates[0]][coordinates[1]];
-if(p=="-"){
-  return "Empty";
-} else if(p=="X" || fl.length>1){
-  return "Found";
-} else return "Recovered";
-}
-dive([[ "-", "X"], [ "-", "O"], [ "-", "O"]], [1, 1])
+def srArr(arr):
+    narr =[]
+    for i in range(len(arr)):
+        if type(arr[i]) is list:
+            narr += srArr(arr[i])
+        else:
+            narr.append(arr[i])
+    return narr
+
+def dive(map, coords):
+    m="".join(srArr(map)).split("O") 
+    p=map[coords[0]][coords[1]]
+    if p=="-":
+        return "Empty"
+    elif p=="X" or len(m)>2:
+        return "Found"
+    else:
+        return "Recovered"
 
 """ 25-10-2025 Complementary DNA
 Given a string representing a DNA sequence, return its complementary strand using the following rules:
