@@ -82,3 +82,41 @@ function countPermutations(str) {
   }
   return sn;
 }
+
+/* 05-12-2025 Symmetric Difference
+Given two arrays, return a new array containing the symmetric difference of them.
+
+The symmetric difference between two sets is the set of values that appear in either set, but not both.
+Return the values in the order they first appear in the input arrays. */
+
+function difference(arr1, arr2) {
+  let res=[];
+  for(let i=0;i<arr1.length;i++){
+    if(!arr2.includes(arr1[i])){
+      res.push(arr1[i]);
+    }
+  }
+  for(let i=0;i<arr2.length;i++){
+    if(!arr1.includes(arr2[i])){
+      res.push(arr2[i]);
+    }
+  }
+  return res;
+}
+
+/* 06-12-2025: Date Formatter
+Given a date in the format "Month day, year", return the date in the format "YYYY-MM-DD".
+
+The given month will be the full English month name. For example: "January", "February", etc.
+In the return value, pad the month and day with leading zeros if necessary to ensure two digits.
+For example, given "December 6, 2025", return "2025-12-06". */
+
+function formatDate(dateString) {
+  let sp=dateString.split(" ");
+  let conv={"January":"01","February":"02","March":"03","April":"04","May":"05","June":"06","July":"07","August":"08","September":"09","October":"10","November":"11","December":"12"};
+  let p1=sp[0];
+  let p2=sp[1].replace(",","");
+  let d=Number(p2)<10?"0"+p2:p2;
+  let res=sp[2]+"-"+conv[p1]+"-"+d;
+  return res;
+}
