@@ -496,22 +496,23 @@ def calculate_tips(meal_price, custom_tip):
     m3=m_formatter(str(round(cp*mp,2)))
     return [m1,m2,m3]
 
-/* 21-10-2025: Thermostat Adjuster 2
+""" 21-10-2025: Thermostat Adjuster 2
 Given the current temperature of a room in Fahrenheit and a target temperature in Celsius, return a string indicating how to adjust the room temperature based on these constraints:
 
 Return "Heat: X degrees Fahrenheit" if the current temperature is below the target. With X being the number of degrees in Fahrenheit to heat the room to reach the target, rounded to 1 decimal place.
 Return "Cool: X degrees Fahrenheit" if the current temperature is above the target. With X being the number of degrees in Fahrenheit to cool the room to reach the target, rounded to 1 decimal place.
 Return "Hold" if the current temperature is equal to the target.
-To convert Celsius to Fahrenheit, multiply the Celsius temperature by 1.8 and add 32 to the result (F = (C * 1.8) + 32).
-*/
+To convert Celsius to Fahrenheit, multiply the Celsius temperature by 1.8 and add 32 to the result (F = (C * 1.8) + 32)."""
 
-function adjustThermostat(currentF, targetC) {
-let targetF = (targetC * 1.8) + 32;
-  let diff=(Math.round(10*(targetF-currentF))/10).toString();
-  diff=diff.includes(".")?diff:diff+".0";
-  return diff>0?`Heat: ${diff} degrees Fahrenheit`:diff<0?`Cool: ${-diff} degrees Fahrenheit`:"Hold";
-}
-adjustThermostat(72, 18)
+def adjust_thermostat(curr_f, targ_c):
+    targ_f=targ_c*1.8+32
+    diff=str(round(targ_f-curr_f,1))
+    if float(diff)>0:
+        return f"Heat: {diff} degrees Fahrenheit"
+    elif float(diff)<0:
+        return f"Cool: {diff[1:]} degrees Fahrenheit"
+    else:
+        return "Hold"
 
 """ 22-10-2025: Speak Wisely, You Must
 Given a sentence, return a version of it that sounds like advice from a wise teacher using the following rules:
