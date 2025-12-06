@@ -656,7 +656,7 @@ function sequence(n) {
   return stri;
 }
 
-/* 28-10-2025: Navigator
+""" 28-10-2025: Navigator
 On October 28, 1994, Netscape Navigator was released, helping millions explore the early web.
 
 Given an array of browser commands you executed on Netscape Navigator, return the current page you are on after executing all the commands using the following rules:
@@ -667,69 +667,38 @@ Valid commands are:
 "Back": Takes you to the previous page in your history or stays on the current page if there isn't one.
 "Forward": Takes you forward in the history to the page you came from or stays on the current page if there isn't one.
 For example, given ["Visit About Us", "Back", "Forward"], return "About Us".
-*/
+"""
 
-// JavaScript implementation of browser history
-// using 2 stacks,
-// from "https://www.geeksforgeeks.org/system-design/design-custom-browser-history-based-on-given-operations/"
-class BrowserHistory {
-    constructor(homepage) {
-        this.backStack = [];
-        this.forwardStack = [];
-
-        // Initialize object with homepage
-        this.backStack.push(homepage);
-    }
-
-    // Visit current URL
-    visit(url) {
-        this.forwardStack = [];
-        this.backStack.push(url);
-    }
-
-    // 'steps' move backward in history and 
-    // return current page
-    back(steps) {
-        while (this.backStack.length > 1 && steps-- > 0) {
-            this.forwardStack.push(this.backStack[
-                              this.backStack.length - 1]);
-                              
-            this.backStack.pop();
-        }
-        return this.backStack[this.backStack.length - 1];
-    }
-
-    // 'steps' move forward and return current page
-    forward(steps) {
-        while (this.forwardStack.length > 0 && steps-- > 0) {
-            this.backStack.push(this.forwardStack[
-                             this.forwardStack.length - 1]);
-                             
-            this.forwardStack.pop();
-        }
-        return this.backStack[this.backStack.length - 1];
-    }
-}
-                                                                                                                                                                                                                                                                                                                      }
-function navigate(commands){                                                                                                                                                                                                                                                                                                      function navigate(commands) {
-  let h=new BrowserHistory("Visit Home");
-  let c=commands;
-  let bf=["Back","Forward"];
-  for(let i=0;i<c.length;i++)
-  {
-      if(!bf.includes(c[i])){
-          h.visit(c[i]);  
-      }  
-      if(c[i]=="Back"){
-          h.back(1);
-      }
-      if(c[i]=="Forward"){
-          h.forward(1);
-      }         
-  }
-  return h.backStack[h.backStack.length-1].slice(6);
-}
-//navigate(["Visit About Us", "Visit Gallery", "Back", "Back"]) ;
+class BrowserHistory:
+    def __init__(self, homepage: str): 
+        self.backStack = [homepage]
+        self.forwardStack=[]  
+    def visit(self, url: str): 
+        self.forwardStack.clear()
+        self.backStack.append(url)
+    def back(self, steps: int): 
+        while len(self.backStack) > 1 and steps > 0: 
+            self.forwardStack.append(self.backStack.pop())
+            steps -= 1
+        return self.backStack[-1]
+    def forward(self, steps: int): 
+        while len(self.forwardStack) > 0 and steps > 0: 
+            self.backStack.append(self.forwardStack.pop())
+            steps -= 1
+        return self.backStack[-1]
+        
+def navigate(c):
+    h=BrowserHistory("Visit Home")
+    bf=["Back","Forward"]
+    for i in range(len(c)):
+        if not c[i] in bf:
+            h.visit(c[i])
+        if c[i]=="Back":
+            h.back(1)
+        if c[i]=="Forward":
+            h.forward(1)
+    res=h.backStack[len(h.backStack)-1][6:]
+    return res
 
 """ 29-10-2025: Email Sorter
 On October 29, 1971, the first email ever was sent, introducing the username@domain format we still use. Now, there are billions of email addresses.
