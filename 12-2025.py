@@ -27,3 +27,87 @@ def to_snake(c):
         res.append(c[ind[i-1]:ind[i]].lower())
     return "_".join(res)
 
+/* 03-12-2025: Markdown Ordered List Item Converter
+Given a string representing an ordered list item in Markdown, return the equivalent HTML string.
+
+A valid ordered list item in Markdown must:
+
+Start with zero or more spaces, followed by
+A number (1 or greater) and a period (.), followed by
+At least one space, and then
+The list item text.
+If the string doesn't have the exact format above, return "Invalid format". Otherwise, wrap the list item text in li tags and return the string.
+
+For example, given "1. My item", return "<li>My item</li>". */
+
+function convertListItem(md) {
+  let reg=/[1-9]\./gi;
+  let s=md.match(reg);
+  let ch=reg.test(md);
+  let res=md.replace(s,"").trimStart();
+  if(ch){
+  return "<li>"+res+"</li>";
+  } else return "Invalid format";
+}
+
+/* 04-12-2025: Permutation Count
+Given a string, return the number of distinct permutations that can be formed from its characters.
+
+A permutation is any reordering of the characters in the string.
+Do not count duplicate permutations.
+If the string contains repeated characters, repeated arrangements should only be counted once.
+The string will contain only letters (A-Z, a-z).
+For example, given "abb", return 3 because there's three unique ways to arrange the letters: "abb", "bab", and "bba".*/
+
+function factorial(n) {
+  if (n <= 1) {return 1;}
+  return n * factorial(n - 1)
+              }
+
+function countPermutations(str) {
+  let s=Array.from(new Set(str));
+  let sn=factorial(str.length);
+  for(let i=0;i<s.length;i++){
+    let sp=str.split(s[i]);
+    sn/=factorial(sp.length-1);
+  }
+  return sn;
+}
+
+/* 05-12-2025 Symmetric Difference
+Given two arrays, return a new array containing the symmetric difference of them.
+
+The symmetric difference between two sets is the set of values that appear in either set, but not both.
+Return the values in the order they first appear in the input arrays. */
+
+function difference(arr1, arr2) {
+  let res=[];
+  for(let i=0;i<arr1.length;i++){
+    if(!arr2.includes(arr1[i])){
+      res.push(arr1[i]);
+    }
+  }
+  for(let i=0;i<arr2.length;i++){
+    if(!arr1.includes(arr2[i])){
+      res.push(arr2[i]);
+    }
+  }
+  return res;
+}
+
+/* 06-12-2025: Date Formatter
+Given a date in the format "Month day, year", return the date in the format "YYYY-MM-DD".
+
+The given month will be the full English month name. For example: "January", "February", etc.
+In the return value, pad the month and day with leading zeros if necessary to ensure two digits.
+For example, given "December 6, 2025", return "2025-12-06". */
+
+function formatDate(dateString) {
+  let sp=dateString.split(" ");
+  let conv={"January":"01","February":"02","March":"03","April":"04","May":"05","June":"06","July":"07","August":"08","September":"09","October":"10","November":"11","December":"12"};
+  let p1=sp[0];
+  let p2=sp[1].replace(",","");
+  let d=Number(p2)<10?"0"+p2:p2;
+  let res=sp[2]+"-"+conv[p1]+"-"+d;
+  return res;
+}
