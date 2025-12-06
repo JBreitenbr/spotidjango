@@ -773,37 +773,41 @@ def nth_prime(n):
             p.append(i)
     return p[n-1]
 
-/* 31-10-2025: SpOoKy~CaSe
+""" 31-10-2025: SpOoKy~CaSe
 Given a string representing a variable name, convert it to "spooky case" using the following constraints:
 
 Replace all underscores (_), and hyphens (-) with a tilde (~).
 Capitalize the first letter of the string, and every other letter after that, ignore the tilde character when counting.
-For example, given hello_world, return HeLlO~wOrLd.
-*/
+For example, given hello_world, return HeLlO~wOrLd."""
 
-function alterCase(stri,v){
-  let s=stri.split("");
-  let st;
-  if(v==0){
-     st=s.map((item,index)=>index%2==0?item.toUpperCase():item.toLowerCase());
-  } else {
-    st=s.map((item,index)=>index%2==1?item.toUpperCase():item.toLowerCase());
-  }
-  return st.join("");
-}
-alterCase("hello",1);
-
-function spookify(boo) {
-  let b=boo.replaceAll("-","~").replaceAll("_","~").split("~");
-  let c=b.map((item)=>item.length);
-  let sn=[];
-  for(let i=1;i<c.length;i++){
-    sn.push(c.slice(0,i).reduce((a,b)=>a+b,0));
-  }
- let stri=alterCase(b[0],0)+"~";
-  let d=b.slice(1);
-  let arr=[];
-  for(let i=0;i<d.length;i++){ arr.push(alterCase(d[i],sn[i]%2));}
-  return stri+arr.join("~");
-}
-spookify("TRICK-or-TREAT")
+def alter(wrd,p):
+    res=""
+    if p==0:
+        for i in range(len(wrd)):
+            if i%2==0:
+                res+=wrd[i].upper()
+            else:
+                res+=wrd[i].lower()
+    if p==1:
+        for i in range(len(wrd)):
+            if i%2==0:
+                res+=wrd[i].lower()
+            else:
+                res+=wrd[i].upper()
+    return res
+    
+import re
+def spookify(boo):
+    b=boo.replace("-","~").replace("_","~")
+    b=b.replace("~~","~X~")
+    s=b.split("~")
+    res=[alter(s[0],0)]
+    for i in range(1,len(s)):
+        if res[i-1][-1].islower() and res[i-1].upper()!="X":
+            res.append(alter(s[i],0))
+        if res[i-1][-1].isupper() and res[i-1].upper()!="X":
+            res.append(alter(s[i],1))
+        if res[i-1].upper()=="X":
+            res.append(alter(s[i],1))
+    res="~".join(res).replace("x","").replace("X","")
+    return res
