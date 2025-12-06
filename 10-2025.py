@@ -718,16 +718,23 @@ Return an array of the sorted addresses.
 Returned addresses should retain their original case.
 For example, given ["jill@mail.com", "john@example.com", "jane@example.com"], return ["jane@example.com", "john@example.com", "jill@mail.com"].
 """
-                            
-function sort(emails) {
-  let s=emails.map((item)=>item.split("@")).map((item)=>item[1]+"/"+item[0]);
-  let t= s.sort(function (a, b) {
-      return a.toLowerCase().localeCompare(b.toLowerCase());
-      });
-  let r=s.map((item)=>item.split("/")).map((item)=>item[1]+"@"+item[0]);
-  return r;
-}
-sort(["jill@mail.com", "john@example.com", "jane@example.com"]);
+
+def sort(emails):
+    hlp=[[] for c in range(len(emails))]
+    for i in range(len(emails)):
+        sp=emails[i].split("@")
+        hlp[i].append(sp[1].lower())
+        hlp[i].append(sp[0].lower())
+        hlp[i].append(i)
+    st=sorted(hlp)
+    ords=[]
+    for i in range(len(st)):
+        ords.append(st[i][-1])
+    print(ords)
+    res=[]
+    for i in range(len(ords)):
+        res.append(emails[ords[i]])
+    return res
 
 """ 30-10-2025 Nth Prime
 A prime number is a positive integer greater than 1 that is divisible only by 1 and itself. The first five prime numbers are 2, 3, 5, 7, and 11.
