@@ -387,35 +387,22 @@ Must end with a dot followed by at least two letters.
 Neither the local or domain part can have two dots in a row.
 """
 
-function validate(email) {
-  let l="abcdefghijklmnopqrstuvwxyz"; let v0=l+l.toUpperCase()+"0123456789"+"-"+"_"+".";
-  let v=v0.split("");
-  let alph=v0.slice(0,52).split("");
-  let p=email.split("@");
-  if(p.length!=2){
-    return false;
-  }
-  let d=email.split(".");
-  let flt=d.filter((item)=>item.length!=0);
-  if(flt.length<d.length){
-    return false;
-  }
-  let p1=p[0];
-  let p2=p[1];
-  let ls=p2.split(".")[1];
-  if(p1[0]=="." ||p1[p1.length-1]=="."){
-    return false;
-  }
-  let flt2=ls.split("").filter((item)=>!alph.includes(item))
-  ;
-  if(flt2.length){
-    return false;
-  }
-  return true;
-}
-validate("example@test.c0")
-//validate("hello@world..com")
-//validate("git@commit@push.io")
+import re
+def validate(email):
+    sp=email.split("@")
+    if len(sp)!=2:
+        return False
+    if len(sp)==2:
+        en=sp[1]
+        if ".." in en:
+            return False
+        sp2=en.split(".")
+        if not sp2[-1].isalpha():
+            return False
+    p=sp[0]
+    if p[0]=="." or p[-1]=="." or ".." in p:
+        return False
+    return True
 
 """ 17-10-2025: Credit Card Masker
 Given a string of credit card numbers, return a masked version of it using the following constraints:
@@ -460,7 +447,7 @@ def sock_pairs(pairs, cycles):
     else:
       return math.floor(s/2)
 
-/* 19-10-2025: HTML Attribute Extractor
+""" 19-10-2025: HTML Attribute Extractor
 Given a string of a valid HTML element, return the attributes of the element using the following criteria:
 
 You will only be given one element.
@@ -468,24 +455,20 @@ Attributes will be in the format: attribute="value".
 Return an array of strings with each attribute property and value, separated by a comma, in this format: ["attribute1, value1", "attribute2, value2"].
 Return attributes in the order they are given.
 If no attributes are found, return an empty array.
-*/
+"""
 
-/* I used the article on "https://www.codemzy.com/blog/get-html-attributes-regex" to find the regular expression used to match */ 
-function extractAttributes(element) {
-  let sp=element.match(/[\w-]+=".+?"/gm);
-  if(!sp){
-    return [];
-  };
-  let res=[];
-  for(let i=0;i<sp.length;i++)
-  {
-    let w=sp[i].split("=");
-  let stri=w[0]+", "+w[1].replaceAll('\"',"");
-  res.push(stri);
-  }
-  return res;
-}
-extractAttributes('<input name="email" type="email" required="true" />');
+import re
+def extract_attributes(el):
+    s=re.findall('[\w-]+=".+?"',el)
+    if not s:
+        return []
+    res=[]
+    for i in range(len(s)):
+        w=s[i].split("=")
+        stri=w[0]+", "+w[1]
+        stri=stri.replace('"','')
+        res.append(stri)
+    return res
 
 """ 20-10-2025: Tip Calculator
 Given the price of your meal and a custom tip percent, return an array with three tip values; 15%, 20%, and the custom amount.
