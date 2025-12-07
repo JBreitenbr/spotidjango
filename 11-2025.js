@@ -449,3 +449,57 @@ function scaleRecipe(ingredients, scale) {
   return ing;
 }
 
+/* 23-11-2025: Character Count
+Given a sentence string, return an array with a count of each character in alphabetical order.
+
+Treat upper and lowercase letters as the same letter when counting.
+Ignore numbers, spaces, punctuation, etc.
+Return the count and letter in the format "letter count". For instance, "a 3".
+All returned letters should be lowercase.
+Do not return a count of letters that are not in the given string.*/
+
+function countCharacters(sentence) {
+  let reg=/[A-Za-z]/gi;
+  let x=sentence.match(reg).map((item)=>item.toLowerCase()).sort();
+  let obj={};
+  for(let i=0;i<x.length;i++){
+    if(!Object.keys(obj).includes(x[i])){
+      obj[x[i]]=1
+    } else {
+      obj[x[i]]+=1
+    }
+  }
+  let res=[]
+  for(let i=0;i<x.length;i++){
+    res.push(x[i]+" "+obj[x[i]])
+  }
+  return Array.from(new Set(res));
+}
+
+/* 24-11-2025: Message Validator
+Given a message string and a validation string, determine if the message is valid.
+
+A message is valid if each word in the message starts with the corresponding letter in the validation string, in order.
+Letters are case-insensitive.
+Words in the message are separated by single spaces.*/
+
+function isValidMessage(msg, val) {
+  if(msg.split(" ").length!=val.length){
+    return false;
+  } else {
+    let acr=msg.toLowerCase().split(" ").map((item)=>item[0]).join("");
+    if(acr==val.toLowerCase()){
+      return true;
+    } else return false;
+  }
+}
+
+/* 26-11-2025: BuzzFizz
+Given an array, determine if it is a correct FizzBuzz sequence from 1 to the last item in the array. A sequence is correct if:
+
+Numbers that are multiples of 3 are replaced with "Fizz"
+Numbers that are multiples of 5 are replaced with "Buzz"
+Numbers that are multiples of both 3 and 5 are replaced with "FizzBuzz"
+All other numbers remain as integers in ascending order, starting from 1.
+The array must start at 1 and have no missing or extra elements. */
+
