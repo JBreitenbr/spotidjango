@@ -503,3 +503,70 @@ Numbers that are multiples of both 3 and 5 are replaced with "FizzBuzz"
 All other numbers remain as integers in ascending order, starting from 1.
 The array must start at 1 and have no missing or extra elements. */
 
+/* 27-11-2025: What's My Age Again?
+Given the date of someone's birthday in the format YYYY-MM-DD, return the person's age as of November 27th, 2025.
+
+Assume all birthdays are valid dates before November 27th, 2025.
+Return the age as an integer.
+Be sure to account for whether the person has already had their birthday in 2025.*/
+
+function calculateAge(birthday) {
+  let b=(new Date(birthday)).valueOf();
+  let now=Date.now();
+  let diff=Math.floor((now-b)/31556952000);
+  return diff;
+}
+
+/* 28-11-2025: 
+Word Guesser
+Given two strings of the same length, a secret word and a guess, compare the guess to the secret word using the following rules:
+
+The secret word and guess will only consist of uppercase letters ("A" to "Z");
+For each letter in the guess, replace it with a number according to how it matches the secret word:
+"2" if the letter is in the secret word and in the correct position.
+"1" if the letter is in the secret word but in the wrong position.
+"0" if the letter is not in the secret word.
+Each letter in the secret word can be used at most once.
+Exact matches ("2") are assigned first, then partial matches ("1") are assigned from left to right for remaining letters.
+If a letter occurs multiple times in the guess, it can only match as many times as it appears in the secret word.
+For example, given a secret word of "APPLE" and a guess of "POPPA", return "10201":
+The first "P" is not in the correct location ("1"), the "O" isn't in the secret word ("0"), the second "P" is in the correct location ("2"), the third "P" is a zero ("0") because the two "P"'s in the secret word have been used, and the "A" is not in the correct location ("1").*/
+
+/* Hier hat das liebe ChatGPT geholfen, nachdem ich lange erfolglos nach einer Lösung gesucht hatte */
+function compare(secret, guess) {
+  const n = secret.length;
+  const result = Array(n).fill('0');
+
+  // Merkt sich, welche Positionen im Secret/Guess schon benutzt wurden
+  const secretUsed = Array(n).fill(false);
+  const guessUsed = Array(n).fill(false);
+
+  // 1. Runde: exakte Treffer ("2")
+  for (let i = 0; i < n; i++) {
+    if (guess[i] === secret[i]) {
+      result[i] = '2';
+      secretUsed[i] = true;
+      guessUsed[i] = true;
+    }
+  }
+
+  // 2. Runde: teilweise Treffer ("1"), von links nach rechts
+  for (let i = 0; i < n; i++) {
+    // schon exakter Treffer? Dann überspringen
+    if (guessUsed[i]) continue;
+
+    const ch = guess[i];
+
+    // Suche denselben Buchstaben irgendwo im Secret,
+    // aber nur an noch nicht benutzten Positionen
+    for (let j = 0; j < n; j++) {
+      if (!secretUsed[j] && secret[j] === ch) {
+        result[i] = '1';
+        secretUsed[j] = true; // diese Secret-Position ist jetzt "verbraucht"
+        break;                // nur einmal matchen!
+      }
+    }
+  }
+
+  return result.join('');
+}
