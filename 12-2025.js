@@ -120,3 +120,24 @@ function formatDate(dateString) {
   let res=sp[2]+"-"+conv[p1]+"-"+d;
   return res;
 }
+
+/* 07-12-2025: String Compression
+Given a string sentence, return a compressed version of the sentence where consecutive duplicate words are replaced by the word followed with the number of times it repeats in parentheses.
+
+Only consecutive duplicates are compressed.
+Words are separated by single spaces.
+For example, given "yes yes yes please", return "yes(3) please".*/
+
+function compressString(s) {
+  let obj={};
+  let sp=s.split(" ");
+  for(let i=0;i<sp.length;i++){
+    if(Object.keys(obj).includes(sp[i])){
+      obj[sp[i]]+=1;
+    } else {
+      obj[sp[i]]=1;
+    }
+  }
+  let stri=Array.from(new Set(sp)).map((item)=>item+"("+obj[item]+")").join(" ").replaceAll("(1)","");
+  return stri;
+}
