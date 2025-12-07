@@ -112,3 +112,25 @@ def format_date(date_string):
     else:
       d=p2
     return sp[2]+"-"+conv[p1]+"-"+d
+    
+""" 07-12-2025: String Compression
+Given a string sentence, return a compressed version of the sentence where consecutive duplicate words are replaced by the word followed with the number of times it repeats in parentheses.
+
+Only consecutive duplicates are compressed.
+Words are separated by single spaces.
+For example, given "yes yes yes please", return "yes(3) please". """
+
+def compress_string(s):
+    d={}
+    sp=s.split(" ")
+    for i in range(len(sp)):
+        if sp[i] in d.keys():
+            d[sp[i]]+=1
+        else:
+            d[sp[i]]=1
+    r=list(d.keys())
+    res=[]
+    for i in range(len(r)):
+        stri=(r[i]+"("+str(d[r[i]])+")").replace("(1)","")
+        res.append(stri)
+    return " ".join(res)
