@@ -219,24 +219,28 @@ function getExtension(filename) {
   else return 'none';
 }
 
-/* 11-11-2025: Vowels and Consonants
+""" 11-11-2025: Vowels and Consonants
 Given a string, return an array with the number of vowels and number of consonants in the string.
 
 Vowels consist of a, e, i, o, u in any case.
 Consonants consist of all other letters in any case.
 Ignore any non-letter characters.
 For example, given "Hello World", return [3, 7].
-*/
+"""
 
-function count(str) {
-let vReg=/[aeiou]/gi;
-let lReg=/[a-z]/gi;
-  let s1=str.split("").map((item)=>item.match(vReg)?1:0).reduce((a,b)=>a+b,0);
-  let s2=str.split("").map((item)=>item.match(lReg)?1:0).reduce((a,b)=>a+b,0);
-  return [s1,s2-s1];
-}
+import re
+def count(s):
+    v="aeiouAEIOU"
+    sv=0
+    sc=0
+    for i in range(len(s)):
+        if s[i].isalpha():
+           sc+=1
+        if s[i] in v:
+           sv+=1
+    return [sv,sc-sv]
 
-/* 12-11-2025: Email Signature Generator
+""" 12-11-2025: Email Signature Generator
 Given strings for a person's name, title, and company, return an email signature as a single string using the following rules:
 
 The name should appear first, preceded by a prefix that depends on the first letter of the name. For names starting with (case-insensitive):
@@ -246,37 +250,35 @@ S-Z: Use :: as the prefix.
 A comma and space (, ) should follow the name.
 The title and company should follow the comma and space, separated by " at " (with spaces around it).
 For example, given "Quinn Waverly", "Founder and CEO", and "TechCo" return "--Quinn Waverly, Founder and CEO at TechCo".
-*/
-  
-function generateSignature(name, title, company) {
-  let r1=/[A-I]/;
-  let r2=/[J-R]/;
-  let r3=/[S-Z]/;
-  let stri=r1.test(name[0])?">>":r2.test(name[0])?"--":"::";
-  stri+=name+", "+title+" at "+ company;
-  return stri;
- }
-
-/* 13-11-2025: Array Shift
+"""
+def generate_signature(name, title, company):
+    x1="abcdefghiABCDEFGHI"
+    x2="jklmnopqrJKLMNOPQR"
+    x3="stuvwxyzSTUVWXYZ"
+    if name[0] in x1:
+        res=">>"
+    elif name[0] in x2:
+        res="--"
+    else:
+        res="::"
+    sig=res+name+", "+title+" at "+company
+    return sig
+ 
+""" 13-11-2025: Array Shift
 Given an array and an integer representing how many positions to shift the array, return the shifted array.
 
 A positive integer shifts the array to the left.
 A negative integer shifts the array to the right.
 The shift wraps around the array.
 For example, given [1, 2, 3] and 1, shift the array 1 to the left, returning [2, 3, 1].
-*/
+"""
 
-function shiftArray(arr, n) {
-  let rep=[].concat(...new Array(5).fill(arr));
-  let s=rep.slice(n,n+arr.length);
-  if(n<0){
-    s=rep.slice(n+arr.length,n+2*arr.length);
-  }
-  return s;
-}
-shiftArray([1,2,3],-1);
-shiftArray(["alpha", "bravo", "charlie"], 5) 
-shiftArray([0, 1, 2, 3, 4, 5, 6, 7, 8, 9], 15)
+def shift_array(arr, n):
+    new=arr*5
+    s=new[n:n+len(arr)]
+    if n<0:
+        s=new[n+len(arr):n+2*len(arr)]
+    return s
 
 /* 14-11-2025: Is It the Weekend?
 Given a date in the format "YYYY-MM-DD", return the number of days left until the weekend.
@@ -297,16 +299,23 @@ function daysUntilWeekend(dateString) {
   }
 }
 
-/* 15-11-2025: GCD
+""" 15-11-2025: GCD
 Given two positive integers, return their greatest common divisor (GCD).
 
 The GCD of two integers is the largest number that divides evenly into both numbers without leaving a remainder.
 For example, the divisors of 4 are 1, 2, and 4. The divisors of 6 are 1, 2, 3, and 6. So given 4 and 6, return 2, the largest number that appears in both sets of divisors.
-*/
+"""
 
-function gcd(x, y) {
-  return Array.from(Array(x>y?x:y).keys()).map((item)=>item+1).filter((item)=>x%item==0&&y%item==0).reverse()[0];
-}
+def gcd(x, y):
+    if x>y:
+        r=list(range(1,x+1))
+    else:
+        r=list(range(1,y+1))
+    res=[]
+    for i in range(len(r)):
+        if x%r[i]==0 and y%r[i]==0:
+            res.append(r[i])
+    return res[-1]
 
 /* 16-11-2025: Rectangle Count
 Given two positive integers representing the width and height of a rectangle, determine how many rectangles can fit in the given one.
@@ -452,19 +461,28 @@ function longestWord(sentence) {
   return s[0];
 }
 
-/* 21-11-2025 LCM
+""" 21-11-2025 LCM
 Given two integers, return the least common multiple (LCM) of the two numbers.
 
 The LCM of two numbers is the smallest positive integer that is a multiple of both numbers. For example, given 4 and 6, return 12 because:
 
 Multiples of 4 are 4, 8, 12 and so on.
 Multiples of 6 are 6, 12, 18 and so on.
-12 is the smallest number that is a multiple of both.*/
+12 is the smallest number that is a multiple of both. """
   
-function lcm(a, b) {
-  let gcd=Array.from(Array(a>b?a:b).keys()).map((item)=>item+1).filter((item)=>a%item==0 && b%item==0).reverse()[0];
-  return a*b/gcd;
-}
+def gcd(x,y):
+    if x>y:
+        r=list(range(1,x+1))
+    else:
+        r=list(range(1,y+1))
+    res=[]
+    for i in range(len(r)):
+        if x%r[i]==0 and y%r[i]==0:
+            res.append(r[i])
+    return res[-1]
+
+def lcm(a, b):
+    return a*b/gcd(a,b)
 
 /* 22-11-2025: Recipe Scaler
 Given an array of recipe ingredients and a number to scale the recipe, return an array with the quantities scaled accordingly.
