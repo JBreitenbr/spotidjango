@@ -324,14 +324,6 @@ function countRectangles(width, height) {
   return count;
 }
 
-/* Python */
-def count_rectangles(width, height):
-    cnt=0
-    for i in range(1,width+1):
-        for j in range(1,height+1):
-            cnt+=(width-i+1)*(height-j+1)
-    return cnt
-
 /* 17-11-2025: Fingerprint Test
 Given two strings representing fingerprints, determine if they are a match using the following rules:
 
@@ -363,22 +355,6 @@ function isMatch(fingerprintA, fingerprintB) {
   }
 }
 
-/* Python */
-def is_match(f_a, f_b):
-    sn=0
-    if len(f_a) !=len(f_b):
-        return False
-    else:
-        if f_a==f_b:
-           return True
-        else: 
-            for i in range(len(f_a)):
-                if f_a[i]!=f_b[i]:
-                    sn+=1
-                    if sn/len(f_a)>0.1:
-                        return False
-    return True
-
 /* 18-11-2025: 100 Characters
 Welcome to the 100th Daily Coding Challenge!
 
@@ -389,10 +365,6 @@ function oneHundred(chars) {
 let rep=[].concat(...new Array(100).fill(chars)).join("").slice(0,100);
   return rep;
 }
-
-/* Python */
-def one_hundred(chars):
-    return (chars*100)[0:100]
 
 /* 19-11-2025 Markdown Heading Converter
 Given a string representing a Markdown heading, return the equivalent HTML heading.
@@ -477,15 +449,3 @@ function scaleRecipe(ingredients, scale) {
   return ing;
 }
 
-def scale_recipe(ingredients, scale):
-    ing=ingredients
-    lst=[]
-    for i in range(len(ing)):
-        lst.append([])
-        s=ing[i].split(" ")
-        lst[i].append(str(float(s[0])*scale).replace(".0",""))
-        lst[i].append(" ".join(s[1:]))
-    res=[]
-    for i in range(len(ing)):
-        res.append(" ".join(lst[i]))
-    return res
