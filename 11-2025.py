@@ -98,7 +98,7 @@ def build_matrix(rows, cols):
             mat[i].append(0)
     return mat
 
-/* 06-11-2025: Weekday Finder
+""" 06-11-2025: Weekday Finder
 Given a string date in the format YYYY-MM-DD, return the day of the week.
 
 Valid return days are:
@@ -111,50 +111,52 @@ Valid return days are:
 "Friday"
 "Saturday"
 Be sure to ignore time zones.
-*/
+"""
 
-function getWeekday(dateString) {
-  let wD={0:"Sunday",1:"Monday",2:"Tuesday",3:"Wednesday",4:"Thursday",5:"Friday",6:"Saturday"};
-  let d=new Date(dateString).getDay();
-  return wD[d];
-}
+from datetime import datetime
+def get_weekday(d):
+    dt=datetime.strptime(d, "%Y-%m-%d")  
+    wd = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
+    return wd[dt.weekday()]
 
-/* 07-11-2025: Counting Cards
+""" 07-11-2025: Counting Cards
 A standard deck of playing cards has 13 unique cards in each suit. Given an integer representing the number of cards to pick from the deck, return the number of unique combinations of cards you can pick.
 
 Order does not matter. Picking card A then card B is the same as picking card B then card A.
 For example, given 52, return 1. There's only one combination of 52 cards to pick from a 52 card deck. And given 2, return 1326, There's 1326 card combinations you can end up with when picking 2 cards from the deck.
-*/
+"""
 
-function combinations(cards) {
-  if(cards>52 || cards<0) {return 0;}
-  else if(cards==52 || cards==0){
-    return 1;
-  }
-  else if(cards==51 || cards==1){
-    return 52;
-  } else {
-    if(cards>26){
-      cards=52-cards;
-    }
-    let res=52;
-    for(let i = 2; i <= cards; i++) res *= (52 - i + 1) / i;
-  return Math.round(res);
-  }
-}
-
-/* 08-11-2025: Character Limit
+def combinations(cards):
+    if cards>52 or cards<0:
+        return 0
+    elif cards==52 or cards==0:
+        return 1
+    elif cards==51 or cards==1:
+        return 52
+    else:
+        if cards>26:
+            cards=52-cards
+        res=52
+        for i in range(2,cards+1):
+            res*=(52-i+1)/i
+    return round(res)
+    
+""" 08-11-2025: Character Limit
 In this challenge, you are given a string and need to determine if it fits in a social media post. Return the following strings based on the rules given:
 
 "short post" if it fits within a 40-character limit.
 "long post" if it's greater than 40 characters and fits within an 80-character limit.
 "invalid post" if it's too long to fit within either limit.
-*/
-
-function canPost(message) {
-  return message.length<=40?"short post":message.length<=80?"long post":"invalid post";
-}
-
+"""
+    
+def can_post(msg):
+    if len(msg)<=40:
+        return "short post"
+    elif len(msg)<=80:
+        return "long post"
+    else:
+        return "invalid post"
+        
 /* 09-11-2025: Word Search
 Given a matrix (an array of arrays) of single letters and a word to find, return the start and end indices of the word in the matrix.
 
