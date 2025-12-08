@@ -134,3 +134,29 @@ def compress_string(s):
         stri=(r[i]+"("+str(d[r[i]])+")").replace("(1)","")
         res.append(stri)
     return " ".join(res)
+    
+""" 08-12-2025: Pounds to Kilograms
+Given a weight in pounds as a number, return the string "(lbs) pounds equals (kgs) kilograms.".
+
+Replace "(lbs)" with the input number.
+Replace "(kgs)" with the input converted to kilograms, rounded to two decimals and always include two decimal places in the value.
+1 pound equals 0.453592 kilograms.
+If the input is 1, use "pound" instead of "pounds".
+If the converted value is 1, use "kilogram" instead of "kilograms". """
+
+def convert_to_kgs(lbs):
+    kg=round(lbs*0.453592,2)
+    if str(kg)[-2:]==".0":
+        fkg=str(kg)+"0"
+    else:
+        fkg=str(kg)
+    if lbs==1:
+        s1=""
+    else:
+        s1="s"
+    if kg==1:
+        s2=""
+    else:
+        s2="s"
+    stri=f"{lbs} pound{s1} equals {fkg} kilogram{s2}."
+    return stri
