@@ -506,3 +506,213 @@ def scale_recipe(ingredients, scale):
     for i in range(len(ing)):
         res.append(" ".join(lst[i]))
     return res
+/* 23-11-2025: Character Count
+Given a sentence string, return an array with a count of each character in alphabetical order.
+
+Treat upper and lowercase letters as the same letter when counting.
+Ignore numbers, spaces, punctuation, etc.
+Return the count and letter in the format "letter count". For instance, "a 3".
+All returned letters should be lowercase.
+Do not return a count of letters that are not in the given string.*/
+
+function countCharacters(sentence) {
+  let reg=/[A-Za-z]/gi;
+  let x=sentence.match(reg).map((item)=>item.toLowerCase()).sort();
+  let obj={};
+  for(let i=0;i<x.length;i++){
+    if(!Object.keys(obj).includes(x[i])){
+      obj[x[i]]=1
+    } else {
+      obj[x[i]]+=1
+    }
+  }
+  let res=[]
+  for(let i=0;i<x.length;i++){
+    res.push(x[i]+" "+obj[x[i]])
+  }
+  return Array.from(new Set(res));
+}
+
+/* 24-11-2025: Message Validator
+Given a message string and a validation string, determine if the message is valid.
+
+A message is valid if each word in the message starts with the corresponding letter in the validation string, in order.
+Letters are case-insensitive.
+Words in the message are separated by single spaces.*/
+
+function isValidMessage(msg, val) {
+  if(msg.split(" ").length!=val.length){
+    return false;
+  } else {
+    let acr=msg.toLowerCase().split(" ").map((item)=>item[0]).join("");
+    if(acr==val.toLowerCase()){
+      return true;
+    } else return false;
+  }
+}
+
+/* 26-11-2025: BuzzFizz
+Given an array, determine if it is a correct FizzBuzz sequence from 1 to the last item in the array. A sequence is correct if:
+
+Numbers that are multiples of 3 are replaced with "Fizz"
+Numbers that are multiples of 5 are replaced with "Buzz"
+Numbers that are multiples of both 3 and 5 are replaced with "FizzBuzz"
+All other numbers remain as integers in ascending order, starting from 1.
+The array must start at 1 and have no missing or extra elements. */
+
+function isFizzBuzz(seq) {
+  let fb=["Fizz","Buzz","FizzBuzz"];
+  for(let i=0;i<seq.length;i++){
+    if(seq[i]!="Fizz"&&(i+1)%3==0&&(i+1)%5!=0 || seq[i]!="Buzz"&&(i+1)%3!=0&&(i+1)%5==0||seq[i]!="FizzBuzz"&&(i+1)%3==0&&(i+1)%5==0||fb.includes(seq[i])&&(i+1)%3!=0&&(i+1)%5!=0){
+      return false;
+    };
+  }
+  return true;
+}
+
+/* 27-11-2025: What's My Age Again?
+Given the date of someone's birthday in the format YYYY-MM-DD, return the person's age as of November 27th, 2025.
+
+Assume all birthdays are valid dates before November 27th, 2025.
+Return the age as an integer.
+Be sure to account for whether the person has already had their birthday in 2025.*/
+
+function calculateAge(birthday) {
+  let b=(new Date(birthday)).valueOf();
+  let now=Date.now();
+  let diff=Math.floor((now-b)/31556952000);
+  return diff;
+}
+
+/* 28-11-2025: 
+Word Guesser
+Given two strings of the same length, a secret word and a guess, compare the guess to the secret word using the following rules:
+
+The secret word and guess will only consist of uppercase letters ("A" to "Z");
+For each letter in the guess, replace it with a number according to how it matches the secret word:
+"2" if the letter is in the secret word and in the correct position.
+"1" if the letter is in the secret word but in the wrong position.
+"0" if the letter is not in the secret word.
+Each letter in the secret word can be used at most once.
+Exact matches ("2") are assigned first, then partial matches ("1") are assigned from left to right for remaining letters.
+If a letter occurs multiple times in the guess, it can only match as many times as it appears in the secret word.
+For example, given a secret word of "APPLE" and a guess of "POPPA", return "10201":
+The first "P" is not in the correct location ("1"), the "O" isn't in the secret word ("0"), the second "P" is in the correct location ("2"), the third "P" is a zero ("0") because the two "P"'s in the secret word have been used, and the "A" is not in the correct location ("1").*/
+
+/* Hier hat das liebe ChatGPT geholfen, nachdem ich lange erfolglos nach einer Lösung gesucht hatte */
+function compare(secret, guess) {
+  const n = secret.length;
+  const result = Array(n).fill('0');
+
+  // Merkt sich, welche Positionen im Secret/Guess schon benutzt wurden
+  const secretUsed = Array(n).fill(false);
+  const guessUsed = Array(n).fill(false);
+
+  // 1. Runde: exakte Treffer ("2")
+  for (let i = 0; i < n; i++) {
+    if (guess[i] === secret[i]) {
+      result[i] = '2';
+      secretUsed[i] = true;
+      guessUsed[i] = true;
+    }
+  }
+
+  // 2. Runde: teilweise Treffer ("1"), von links nach rechts
+  for (let i = 0; i < n; i++) {
+    // schon exakter Treffer? Dann überspringen
+    if (guessUsed[i]) continue;
+
+    const ch = guess[i];
+
+    // Suche denselben Buchstaben irgendwo im Secret,
+    // aber nur an noch nicht benutzten Positionen
+    for (let j = 0; j < n; j++) {
+      if (!secretUsed[j] && secret[j] === ch) {
+        result[i] = '1';
+        secretUsed[j] = true; // diese Secret-Position ist jetzt "verbraucht"
+        break;                // nur einmal matchen!
+      }
+    }
+  }
+
+  return result.join('');
+}
+  
+/* 29-11-2025: Ball Trajectory
+Today's challenge is inspired by the video game Pong, which was released November 29, 1972.
+
+Given a matrix (array of arrays) that includes the location of the ball (2), and the previous location of the ball (1), return the matrix indices for the next location of the ball.
+
+The ball always moves in a straight line.
+The movement direction is determined by how the ball moved from 1 to 2.
+The edges of the matrix are considered walls. If the ball hits a:
+top or bottom wall, it bounces by reversing its vertical direction.
+left or right wall, it bounces by reversing its horizontal direction.
+corner, it bounces by reversing both directions.*/
+
+// Hier hat wieder das liebe ChatGPT geholfen, da ich zunächst keinen Plan hatte.
+function getNextLocation(matrix) {
+  const rows = matrix.length;
+  const cols = matrix[0].length;
+
+  let r1, c1, r2, c2;
+
+  // 1. Finde Position von 1 (vorher) und 2 (jetzt)
+  for (let i = 0; i < rows; i++) {
+    for (let j = 0; j < cols; j++) {
+      if (matrix[i][j] === 1) {
+        r1 = i;
+        c1 = j;
+      } else if (matrix[i][j] === 2) {
+        r2 = i;
+        c2 = j;
+      }
+    }
+  }
+
+  // 2. Bewegungsrichtung bestimmen
+  const dx = r2 - r1; // vertikale Bewegung
+  const dy = c2 - c1; // horizontale Bewegung
+
+  // 3. Naive nächste Position
+  let nr = r2 + dx;
+  let nc = c2 + dy;
+
+  // 4. Wände checken – vertikal
+  if (nr < 0 || nr >= rows) {
+    const ndx = -dx;      // vertikale Richtung umdrehen
+    nr = r2 + ndx;
+  }
+
+  // 5. Wände checken – horizontal
+  if (nc < 0 || nc >= cols) {
+    const ndy = -dy;      // horizontale Richtung umdrehen
+    nc = c2 + ndy;
+  }
+
+  return [nr, nc];
+}
+
+/* 30-11-2025: AI Detector
+Today's challenge is inspired by the release of ChatGPT on November 30, 2022.
+
+Given a string of one or more sentences, determine if it was likely generated by AI using the following rules:
+
+It contains two or more dashes (-).
+
+It contains two or more sets of parenthesis (()). Text can be within the parenthesis.
+
+It contains three or more words with 7 or more letters.
+
+Words are separated by a single space and only consist of letters (A-Z). Don't include punctuation or other non-letters as part of a word.
+
+If the given sentence meets any of the rules above, return "AI", otherwise, return "Human".*/
+
+function detectAI(text) {
+  let spl=text.split(" ");
+  let flt1=spl.filter((item)=>item[0]=="(" && item[item.length-1]==")");
+  let flt2=spl.filter((item)=>item.length>=7);
+  if(text.split("-").length>2 || flt1.length>=2 || flt2.length>=3)
+  return "AI";
+  else return "Human";
+}
