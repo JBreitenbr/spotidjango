@@ -522,6 +522,26 @@ function isValidMessage(msg, val) {
   }
 }
 
+""" 25-11-2025: FizzBuzz
+Given an integer (n), return an array of integers from 1 to n (inclusive), replacing numbers that are multiple of:
+
+3 with "Fizz".
+5 with "Buzz".
+3 and 5 with "FizzBuzz"."""
+
+def fizz_buzz(n):
+    lst=[]
+    for i in range(n):
+        if (i+1)%3!=0 and (i+1)%5!=0:
+            lst.append(i+1)
+        elif (i+1)%3==0 and (i+1)%5!=0:
+            lst.append("Fizz")
+        elif (i+1)%3!=0 and (i+1)%5==0:
+            lst.append("Buzz")
+        else:
+            lst.append("FizzBuzz")
+    return lst
+
 /* 26-11-2025: BuzzFizz
 Given an array, determine if it is a correct FizzBuzz sequence from 1 to the last item in the array. A sequence is correct if:
 
