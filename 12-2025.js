@@ -141,3 +141,21 @@ function compressString(s) {
   let stri=Array.from(new Set(sp)).map((item)=>item+"("+obj[item]+")").join(" ").replaceAll("(1)","");
   return stri;
 }
+
+/* 08-12-2025: Pounds to Kilograms
+Given a weight in pounds as a number, return the string "(lbs) pounds equals (kgs) kilograms.".
+
+Replace "(lbs)" with the input number.
+Replace "(kgs)" with the input converted to kilograms, rounded to two decimals and always include two decimal places in the value.
+1 pound equals 0.453592 kilograms.
+If the input is 1, use "pound" instead of "pounds".
+If the converted value is 1, use "kilogram" instead of "kilograms".*/
+
+function convertToKgs(lbs) {
+  let kg=Math.round(0.453592*lbs*100)/100;
+  let fkg=parseInt(kg)==kg?kg.toString()+".00":kg.toString();
+  let s1=lbs==1?"":"s";
+  let s2=kg==1?"":"s";
+  let stri=`${lbs} pound${s1} equals ${fkg} kilogram${s2}.`;
+  return stri;
+}
