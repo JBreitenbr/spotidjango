@@ -249,6 +249,7 @@ A comma and space (, ) should follow the name.
 The title and company should follow the comma and space, separated by " at " (with spaces around it).
 For example, given "Quinn Waverly", "Founder and CEO", and "TechCo" return "--Quinn Waverly, Founder and CEO at TechCo".
 """
+
 def generate_signature(name, title, company):
     x1="abcdefghiABCDEFGHI"
     x2="jklmnopqrJKLMNOPQR"
@@ -278,7 +279,7 @@ def shift_array(arr, n):
         s=new[n+len(arr):n+2*len(arr)]
     return s
 
-/* 14-11-2025: Is It the Weekend?
+""" 14-11-2025: Is It the Weekend?
 Given a date in the format "YYYY-MM-DD", return the number of days left until the weekend.
 
 The weekend starts on Saturday.
@@ -286,16 +287,21 @@ If the given date is Saturday or Sunday, return "It's the weekend!".
 Otherwise, return "X days until the weekend.", where X is the number of days until Saturday.
 If X is 1, use "day" (singular) instead of "days" (plural).
 Make sure the calculation ignores your local timezone.
-*/
+"""
 
-function daysUntilWeekend(dateString) {
-  let wD=new Date(dateString).getDay();
-  if(wD==0 || wD==6){
-  return "It's the weekend!";
-  } else {
-    return wD<5?`${6-wD} days until the weekend.`:"1 day until the weekend."
-  }
-}
+from datetime import date
+def days_until_weekend(date_string):
+    y=int(date_string[0:4])
+    m=int(date_string[5:7])
+    d=int(date_string[8:10])
+    dt=date(y,m,d)
+    wd=dt.weekday()
+    if wd==5 or wd==6:
+        return "It's the weekend!"
+    elif wd==4:
+        return "1 day until the weekend."
+    else:
+        return f"{5-wd} days until the weekend."
 
 """ 15-11-2025: GCD
 Given two positive integers, return their greatest common divisor (GCD).
@@ -315,24 +321,13 @@ def gcd(x, y):
             res.append(r[i])
     return res[-1]
 
-/* 16-11-2025: Rectangle Count
+""" 16-11-2025: Rectangle Count
 Given two positive integers representing the width and height of a rectangle, determine how many rectangles can fit in the given one.
 
 Only count rectangles with integer width and height.
 For example, given 1 and 3, return 6. Three 1x1 rectangles, two 1x2 rectangles, and one 1x3 rectangle.
-*/
+"""
 
-function countRectangles(width, height) {
-   let count = 0;
-   for (let i = 1; i <= width; i++) { 
-     for (let j = 1; j <= height; j++) { 
-      count += (width - i + 1) * (height - j + 1); 
-    }
-      }
-  return count;
-}
-
-/* Python */
 def count_rectangles(width, height):
     cnt=0
     for i in range(1,width+1):
@@ -340,38 +335,14 @@ def count_rectangles(width, height):
             cnt+=(width-i+1)*(height-j+1)
     return cnt
 
-/* 17-11-2025: Fingerprint Test
+""" 17-11-2025: Fingerprint Test
 Given two strings representing fingerprints, determine if they are a match using the following rules:
 
 Each fingerprint will consist only of lowercase letters (a-z).
 Two fingerprints are considered a match if:
 They are the same length.
-The number of differing characters does not exceed 10% of the fingerprint length.
-*/
+The number of differing characters does not exceed 10% of the fingerprint length."""
 
-function isMatch(fingerprintA, fingerprintB) {
-  let l1=fingerprintA.length;
-  let l2=fingerprintB.length;
-  if(l1!==l2){
-    return false;
-  }
-  else {
-  if(fingerprintA===fingerprintB){
-    return true;
-  }
-  else {
-  let sn=0;
-    for(let i=0;i<l1;i++){
-      if(fingerprintA[i]!==fingerprintB[i]){
-        sn+=1;
-      }
-    }
-    return sn/l1<=0.1?true:false;
-  }
-  }
-}
-
-/* Python */
 def is_match(f_a, f_b):
     sn=0
     if len(f_a) !=len(f_b):
