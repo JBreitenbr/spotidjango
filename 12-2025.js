@@ -159,3 +159,9 @@ function convertToKgs(lbs) {
   let stri=`${lbs} pound${s1} equals ${fkg} kilogram${s2}.`;
   return stri;
 }
+
+/* 09-12-2025: Most Frequent
+Given an array of elements, return the element that appears most frequently.
+
+There will always be a single most frequent element.*/
+
