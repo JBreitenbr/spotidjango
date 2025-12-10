@@ -161,32 +161,26 @@ def convert_to_kgs(lbs):
     stri=f"{lbs} pound{s1} equals {fkg} kilogram{s2}."
     return stri
     
-/* 09-12-2025: Most Frequent
+""" 09-12-2025: Most Frequent
 Given an array of elements, return the element that appears most frequently.
 
-There will always be a single most frequent element.*/
+There will always be a single most frequent element."""
 
-function mostFrequent(arr) {
-    let n = arr.length, maxcount = 0;
-    let res = 0;
-    
-    for (let i = 0; i < n; i++) {
-        let count = 0;
-        for (let j = 0; j < n; j++) {
-            if (arr[i] === arr[j])
-                count++;
-        }
-        
-        if (count > maxcount || (count === maxcount && arr[i] > res)) {
-            maxcount = count;
-            res = arr[i];
-        }
-    }
+def most_frequent(arr):
+    d={}
+    for i in range(len(arr)):
+        if arr[i] in d.keys():
+            d[arr[i]]+=1
+        else:
+            d[arr[i]]=1
+    maxi=arr[0]
+    for k in d.keys():
+        if d[k]>=d[maxi]:
+            maxi=k
+    return maxi
 
-    return res;
-}
 
-/* 10-12-2025: Markdown Bold Parser
+""" 10-12-2025: Markdown Bold Parser
 Given a string that may include some bold text in Markdown, return the equivalent HTML string.
 
 Bold text in Markdown is any text that starts and ends with two asterisks (**) or two underscores (__).
@@ -194,16 +188,18 @@ There cannot be any spaces between the text and the asterisks or underscores, bu
 Convert all bold occurrences to HTML b tags and return the string.
 For example, given "**This is bold**", return "<b>This is bold</b>".
 
-Note: The console may not display HTML tags in strings when logging messages. Check the browser console to see logs with tags included.*/
+Note: The console may not display HTML tags in strings when logging messages. Check the browser console to see logs with tags included."""
 
-function parseBold(md) {
-  let sp=md.split(" ");
-  console.log(sp);
-  let flt=sp.filter((item)=>item=="**"||item=="__");
-  if(flt.length>0){
-    return md;
-  } else {
-    let mp=sp.map((item)=>item.slice(0,2)=="**"||item.slice(0,2)=="__"?"<b>"+item.slice(2,item.length):item).map((item)=>item.slice(item.length-2,item.length)=="**"||item.slice(item.length-2,item.length)=="__"?item.slice(0,item.length-2)+"</b>":item);
-    return mp.join(" ");
-  } 
-}
+def parse_bold(md):
+    lst=[]
+    sp=md.split(" ")
+    for i in range(len(sp)):
+        if sp[i]=="**" or sp[i]=="__":
+            return md
+    for i in range(len(sp)):
+        if sp[i][0:2]=="**" or sp[i][0:2]=="__":
+            sp[i]="<b>"+sp[i][2:]
+    for i in range(len(sp)):
+        if sp[i][-2:]=="**" or sp[i][-2:]=="__":
+            sp[i]=sp[i][0:-2]+"</b>"
+    return " ".join(sp)
