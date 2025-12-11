@@ -157,7 +157,7 @@ def can_post(msg):
     else:
         return "invalid post"
         
-/* 09-11-2025: Word Search
+""" 09-11-2025: Word Search
 Given a matrix (an array of arrays) of single letters and a word to find, return the start and end indices of the word in the matrix.
 
 The given matrix will be filled with all lowercase letters (a-z).
@@ -177,31 +177,41 @@ For example, given the matrix:
 And the word "cat", return:
 
 [[0, 1], [2, 1]]
-Where [0, 1] are the indices for the "c" (start of the word), and [2, 1] are the indices for the "t" (end of the word).
-*/
+Where [0, 1] are the indices for the "c" (start of the word), and [2, 1] are the indices for the "t" (end of the word)."""
 
-function findWord(matrix, word) {
-    let pre=[];
-    let l=matrix.length;
-    let m=matrix;
-    let wL=word.length;
-    let t=m[0].map((_, colIndex)=>m.map(row=>row[colIndex]));
-    for(let i=0;i<l;i++){
-        if(m[i].join("").slice(0,wL)==word){
-            pre.push([i,wL==l?0:1],[i,l-1]);
-           } 
-        if(m[i].reverse().join("").slice(0,wL)==word){
-            pre.push([i,l-1],[i,wL==l?0:1]);
-           } 
-        if(t[i].join("").slice(0,wL)==word){
-            pre.push([wL==l?0:1,i],[l-1,i]);
-           } 
-        if(t[i].reverse().join("").slice(0,wL)==word){
-            pre.push([l-1,i],[wL==l?0:1,i]);
-           }
-        return pre;
-}
-findWord([["f", "x", "o", "x"], ["o", "x", "o", "f"], ["f", "o", "f", "x"], ["f", "x", "x", "o"]], "fox") 
+def find_word(m, w):
+    pre=[]
+    t=[[m[j][i] for j in range(len(m))] for i in range(len(m[0]))]
+    for i in range(len(m)):
+        if "".join(m[i])[0:len(w)]==w:
+            if len(m)==len(w):
+                pre.append([i,0])
+                pre.append([i,len(m)-1])
+            else:
+                pre.append([i,1])
+                pre.append([i,len(m)-1])
+        if "".join(m[i])[::-1][0:len(w)]==w:
+            if len(m)==len(w):
+                pre.append([i,len(m)-1])
+                pre.append([i,0])
+            else:
+                pre.append([i,len(m)-1])
+                pre.append([i,1])
+        if "".join(t[i])[0:len(w)]==w:
+            if len(m)==len(w):
+                pre.append([0,i])
+                pre.append([len(m)-1,i])
+            else:
+                pre.append([1,i])
+                pre.append([len(m)-1,i])
+        if "".join(t[i])[::-1][0:len(w)]==w:
+            if len(m)==len(w):
+                pre.append([len(m)-1,i])
+                pre.append([0,i])
+            else:
+                pre.append([len(m)-1,i])
+                pre.append([1,i])
+    return pre
 
 """ 10-11-2025: Extension Extractor
 Given a string representing a filename, return the extension of the file.
@@ -358,22 +368,16 @@ def is_match(f_a, f_b):
                         return False
     return True
 
-/* 18-11-2025: 100 Characters
+""" 18-11-2025: 100 Characters
 Welcome to the 100th Daily Coding Challenge!
 
 Given a string, repeat its characters until the result is exactly 100 characters long. If your repetitions go over 100 characters, trim the extra so it's exactly 100.
-*/
+"""
 
-function oneHundred(chars) {
-let rep=[].concat(...new Array(100).fill(chars)).join("").slice(0,100);
-  return rep;
-}
-
-/* Python */
 def one_hundred(chars):
     return (chars*100)[0:100]
 
-/* 19-11-2025 Markdown Heading Converter
+""" 19-11-2025 Markdown Heading Converter
 Given a string representing a Markdown heading, return the equivalent HTML heading.
 
 A valid Markdown heading must:
@@ -388,7 +392,7 @@ If the given string doesn't have the exact format above, return "Invalid format"
 
 For example, given "# My level 1 heading", return "<h1>My level 1 heading</h1>".
 
-Note: The console may not display HTML tags in strings when logging messages. Check the browser console to see logs with tags included. */
+Note: The console may not display HTML tags in strings when logging messages. Check the browser console to see logs with tags included. """
 
 function convert(heading) {
   let h=heading.trimStart();
@@ -453,12 +457,12 @@ def gcd(x,y):
 def lcm(a, b):
     return a*b/gcd(a,b)
 
-/* 22-11-2025: Recipe Scaler
+""" 22-11-2025: Recipe Scaler
 Given an array of recipe ingredients and a number to scale the recipe, return an array with the quantities scaled accordingly.
 
 Each item in the given array will be a string in the format: "quantity unit ingredient". For example "2 C Flour".
 Scale the quantity by the given number. Do not include any trailing zeros and do not convert any units.
-Return the scaled items in the same order they are given.*/
+Return the scaled items in the same order they are given."""
 
 function scaleRecipe(ingredients, scale) {
   let ing=ingredients.map((item)=>item.split(" ")).map((item)=>[item[0]*scale,item.slice(1)]).map((item)=>item.flat()).map((item)=>item.join(" "));
