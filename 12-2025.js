@@ -244,3 +244,46 @@ while(numToConv > 0){
 }
  return romRes;
 }
+
+/* 12-12-2025: Inventory Update
+Given a 2D array representing the inventory of your store, and another 2D array representing a shipment you have received, return your updated inventory.
+
+Each element in the arrays will have the format: [quantity, "item"], where quantity is an integer and "item" is a string.
+Update items in the inventory by adding the quantity of any matching items from the shipment.
+If a received item does not exist in the current inventory, add it as a new entry to the end of the inventory.
+Return inventory in the order it was given with new items at the end in the order they appear in the shipment.
+For example, given an inventory of [[2, "apples"], [5, "bananas"]] and a shipment of [[1, "apples"], [3, "bananas"]], return [[3, "apples"], [8, "bananas"]]. */
+
+function arrToObj (keys, vals) {
+  let res = {};
+    keys.forEach((key, index) => {res[key] = vals[index];});
+      return res;
+      }
+
+function updateInventory(inv, ship) {
+  let arr1=[];
+  let arr2=[];
+  let am1=[];
+  let am2=[];
+  for(let i=0;i<inv.length;i++){
+    arr1.push(inv[i][1]);
+    am1.push(inv[i][0]);
+  }
+  for(let j=0;j<ship.length;j++){
+    arr2.push(ship[j][1]);
+    am2.push(ship[j][0]);
+  }
+  let d=arrToObj(arr1,am1);
+  for(let j=0;j<ship.length;j++){
+    if(Object.keys(d).includes(arr2[j])){
+      d[arr2[j]]+=am2[j];
+    } else {
+      d[arr2[j]]=am2[j];
+    }
+  }
+  let res=[];
+  for(let k in d){
+    res.push([d[k],k]);
+  }
+  return res;
+    }
