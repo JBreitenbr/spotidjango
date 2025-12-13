@@ -499,23 +499,19 @@ Return the count and letter in the format "letter count". For instance, "a 3".
 All returned letters should be lowercase.
 Do not return a count of letters that are not in the given string. """
 
-function countCharacters(sentence) {
-  let reg=/[A-Za-z]/gi;
-  let x=sentence.match(reg).map((item)=>item.toLowerCase()).sort();
-  let obj={};
-  for(let i=0;i<x.length;i++){
-    if(!Object.keys(obj).includes(x[i])){
-      obj[x[i]]=1
-    } else {
-      obj[x[i]]+=1
-    }
-  }
-  let res=[]
-  for(let i=0;i<x.length;i++){
-    res.push(x[i]+" "+obj[x[i]])
-  }
-  return Array.from(new Set(res));
-}
+def count_characters(s):
+    stri=""
+    v=[]
+    for i in range(len(s)):
+        if s[i].islower() or s[i].isupper():
+           stri+=s[i].lower()
+    k=sorted(list(set(list(stri))))
+    for i in range(len(k)):
+        v.append(len(stri.split(k[i]))-1)
+    res=[]
+    for i in range(len(k)):
+        res.append(k[i]+" "+str(v[i]))
+    return res
 
 /* 24-11-2025: Message Validator
 Given a message string and a validation string, determine if the message is valid.
@@ -555,24 +551,30 @@ def fizz_buzz(n):
             lst.append("FizzBuzz")
     return lst
 
-/* 26-11-2025: BuzzFizz
+""" 26-11-2025: BuzzFizz
 Given an array, determine if it is a correct FizzBuzz sequence from 1 to the last item in the array. A sequence is correct if:
 
 Numbers that are multiples of 3 are replaced with "Fizz"
 Numbers that are multiples of 5 are replaced with "Buzz"
 Numbers that are multiples of both 3 and 5 are replaced with "FizzBuzz"
 All other numbers remain as integers in ascending order, starting from 1.
-The array must start at 1 and have no missing or extra elements. */
+The array must start at 1 and have no missing or extra elements. """
 
-function isFizzBuzz(seq) {
-  let fb=["Fizz","Buzz","FizzBuzz"];
-  for(let i=0;i<seq.length;i++){
-    if(seq[i]!="Fizz"&&(i+1)%3==0&&(i+1)%5!=0 || seq[i]!="Buzz"&&(i+1)%3!=0&&(i+1)%5==0||seq[i]!="FizzBuzz"&&(i+1)%3==0&&(i+1)%5==0||fb.includes(seq[i])&&(i+1)%3!=0&&(i+1)%5!=0){
-      return false;
-    };
-  }
-  return true;
-}
+def is_fizz_buzz(seq):
+    lst=[]
+    for i in range(len(seq)):
+        if (i+1)%3!=0 and (i+1)%5!=0:
+            lst.append(i+1)
+        elif (i+1)%3==0 and (i+1)%5!=0:
+            lst.append("Fizz")
+        elif (i+1)%3!=0 and (i+1)%5==0:
+            lst.append("Buzz")
+        else:
+            lst.append("FizzBuzz")
+    for i in range(len(seq)):
+        if seq[i]!=lst[i]:
+            return False
+    return True
 
 """ 27-11-2025: What's My Age Again?
 Given the date of someone's birthday in the format YYYY-MM-DD, return the person's age as of November 27th, 2025.
@@ -625,11 +627,9 @@ def compare(word, guess):
                 res[i]="1"
                 word_used[j]="1"
                 break
-
-    
     return "".join(res) 
   
-/* 29-11-2025: Ball Trajectory
+""" 29-11-2025: Ball Trajectory
 Today's challenge is inspired by the video game Pong, which was released November 29, 1972.
 
 Given a matrix (array of arrays) that includes the location of the ball (2), and the previous location of the ball (1), return the matrix indices for the next location of the ball.
@@ -639,50 +639,28 @@ The movement direction is determined by how the ball moved from 1 to 2.
 The edges of the matrix are considered walls. If the ball hits a:
 top or bottom wall, it bounces by reversing its vertical direction.
 left or right wall, it bounces by reversing its horizontal direction.
-corner, it bounces by reversing both directions.*/
+corner, it bounces by reversing both directions."""
 
-// Hier hat wieder das liebe ChatGPT geholfen, da ich zunächst keinen Plan hatte.
-function getNextLocation(matrix) {
-  const rows = matrix.length;
-  const cols = matrix[0].length;
-
-  let r1, c1, r2, c2;
-
-  // 1. Finde Position von 1 (vorher) und 2 (jetzt)
-  for (let i = 0; i < rows; i++) {
-    for (let j = 0; j < cols; j++) {
-      if (matrix[i][j] === 1) {
-        r1 = i;
-        c1 = j;
-      } else if (matrix[i][j] === 2) {
-        r2 = i;
-        c2 = j;
-      }
-    }
-  }
-
-  // 2. Bewegungsrichtung bestimmen
-  const dx = r2 - r1; // vertikale Bewegung
-  const dy = c2 - c1; // horizontale Bewegung
-
-  // 3. Naive nächste Position
-  let nr = r2 + dx;
-  let nc = c2 + dy;
-
-  // 4. Wände checken – vertikal
-  if (nr < 0 || nr >= rows) {
-    const ndx = -dx;      // vertikale Richtung umdrehen
-    nr = r2 + ndx;
-  }
-
-  // 5. Wände checken – horizontal
-  if (nc < 0 || nc >= cols) {
-    const ndy = -dy;      // horizontale Richtung umdrehen
-    nc = c2 + ndy;
-  }
-
-  return [nr, nc];
-}
+def get_next_location(matrix):
+    for i in range(4):
+        for j in range(4):
+            if matrix[i][j]==1:
+                r1=i
+                c1=j
+            if matrix[i][j]==2:
+                r2=i
+                c2=j
+    dx=r2-r1
+    dy=c2-c1
+    nr=r2+dx
+    nc=c2+dy
+    if nr<0 or nr>3:
+        ndx=-dx
+        nr=r2+ndx
+    if nc<0 or nc>3:
+        ndy=-dy
+        nc=c2+ndy
+    return [nr,nc]
 
 """ 30-11-2025: AI Detector
 Today's challenge is inspired by the release of ChatGPT on November 30, 2022.
