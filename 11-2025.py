@@ -394,31 +394,26 @@ For example, given "# My level 1 heading", return "<h1>My level 1 heading</h1>".
 
 Note: The console may not display HTML tags in strings when logging messages. Check the browser console to see logs with tags included. """
 
-function convert(heading) {
-  let h=heading.trimStart();
-  let s=h.split(" ");
-  let r=/^[#]{1,6}$/;
-  console.log(s);
-  if(!r.test(s[0])){
-    return "Invalid format";
-  }
-  let res="";
-  let s2=s.slice(1).filter((item)=>item!="").join(" ");
-  if(s[0]=="#"){
-    res="<h1>"+s2+"</h1>";
-  } else if(s[0]=="##"){
-    res="<h2>"+s2+"</h2>";
-  } else if(s[0]=="###"){
-    res="<h3>"+s2+"</h3>";
-  } else if(s[0]=="####"){
-    res="<h4>"+s2+"</h4>";
-  } else if(s[0]=="#####"){
-    res="<h5>"+s2+"</h5>";
-  } else if(s[0]=="######"){
-    res="<h6>"+s2+"</h6>";
-  }
-  return res;
-}
+import re
+def convert(heading):
+    h=heading.strip().replace("  "," ")
+    sp=h.split(" ")
+    sn=0
+    res=""
+    for i in range(1,7):
+        t="#"*i+" "
+        s=sp[0]+" "
+        j=" ".join(sp[1:])
+        if s==t:
+            res+=f"<h{i}>"
+            res+=j
+            res+=f"</h{i}>"
+    for i in range(1,7):
+        if sp[0]!="#"*i:
+            sn+=1
+        if sn==6:
+            return "Invalid format"
+    return res
 
 """ 20-11-2025: Longest Word
 Given a sentence string, return the longest word in the sentence.
@@ -472,11 +467,6 @@ Each item in the given array will be a string in the format: "quantity unit ingr
 Scale the quantity by the given number. Do not include any trailing zeros and do not convert any units.
 Return the scaled items in the same order they are given."""
 
-function scaleRecipe(ingredients, scale) {
-  let ing=ingredients.map((item)=>item.split(" ")).map((item)=>[item[0]*scale,item.slice(1)]).map((item)=>item.flat()).map((item)=>item.join(" "));
-  return ing;
-}
-
 def scale_recipe(ingredients, scale):
     ing=ingredients
     lst=[]
@@ -513,23 +503,22 @@ def count_characters(s):
         res.append(k[i]+" "+str(v[i]))
     return res
 
-/* 24-11-2025: Message Validator
+""" 24-11-2025: Message Validator
 Given a message string and a validation string, determine if the message is valid.
 
 A message is valid if each word in the message starts with the corresponding letter in the validation string, in order.
 Letters are case-insensitive.
-Words in the message are separated by single spaces.*/
+Words in the message are separated by single spaces."""
 
-function isValidMessage(msg, val) {
-  if(msg.split(" ").length!=val.length){
-    return false;
-  } else {
-    let acr=msg.toLowerCase().split(" ").map((item)=>item[0]).join("");
-    if(acr==val.toLowerCase()){
-      return true;
-    } else return false;
-  }
-}
+def is_valid_message(msg, val):
+    res=""
+    sp=msg.split(" ")
+    if len(sp)!=len(val):
+        return False
+    else:
+        for i in range(len(sp)):
+            res+=sp[i][0].lower() 
+        return val.lower()==res
 
 """ 25-11-2025: FizzBuzz
 Given an integer (n), return an array of integers from 1 to n (inclusive), replacing numbers that are multiple of:
