@@ -287,3 +287,66 @@ function updateInventory(inv, ship) {
   }
   return res;
     }
+
+/* 13-12-2025: Game of Life
+Given a matrix (array of arrays) representing the current state in Conway's Game of Life, return the next state of the matrix using these rules:
+
+Each cell is either 1 (alive) or 0 (dead).
+A cell's neighbors are the up to eight surrounding cells (vertically, horizontally, and diagonally).
+Cells on the edges have fewer than eight neighbors.
+Rules for updating each cell:
+
+Any live cell with fewer than two live neighbors dies (underpopulation).
+Any live cell with two or three live neighbors lives on.
+Any live cell with more than three live neighbors dies (overpopulation).
+Any dead cell with exactly three live neighbors becomes alive (reproduction).
+For example, given:
+
+[
+  [0, 1, 0],
+  [0, 1, 1],
+  [1, 1, 0]
+]
+return:
+
+[
+  [0, 1, 1],
+  [0, 0, 1],
+  [1, 1, 1]
+]
+Each cell updates according to the number of live neighbors. 
+For instance, [0][0] stays dead (2 live neighbors), [0][1] stays alive (2 live neighbors), [0][2] dies (3 live neighbors), and so on. */
+
+function countNeighbors(row, col, numRows, numCols, grid) {
+    let count = 0;
+    for (let i = -1; i <= 1; i++) {
+        for (let j = -1; j <= 1; j++) {
+            const r = row + i;
+            const c = col + j;
+            if (r >= 0 && r < numRows && c >= 0 &&
+                c < numCols && !(i === 0 && j === 0)) {
+                count += grid[r][c];
+            }
+         }
+    }
+    return count;
+  }
+function gameOfLife(grid){
+   let numRows=grid.length;
+   let numCols=grid.length;
+   let newGrid = [];
+   for (let i = 0; i < numRows; i++) {
+        newGrid[i] = [];
+        for (let j = 0; j < numCols; j++) {
+            const neighbors = countNeighbors(i, j, numRows, numCols, grid);
+            if (grid[i][j] === 1 && (neighbors < 2 || neighbors > 3)) {
+                newGrid[i][j] = 0; 
+             } else if (grid[i][j] === 0 && neighbors === 3) {
+                newGrid[i][j] = 1; 
+            } else {
+                 newGrid[i][j] = grid[i][j]; 
+             }
+         }
+    }
+  return newGrid;
+}
