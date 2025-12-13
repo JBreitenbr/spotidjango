@@ -420,19 +420,27 @@ function convert(heading) {
   return res;
 }
 
-/* 20-11-2025 Longest Word
+""" 20-11-2025: Longest Word
 Given a sentence string, return the longest word in the sentence.
 
 Words are separated by a single space.
 Only letters (a-z, case-insensitive) count toward the word's length.
 If there are multiple words with the same length, return the first one that appears.
-Return the word as it appears in the given string, with punctuation removed.*/
+Return the word as it appears in the given string, with punctuation removed."""
 
-function longestWord(sentence) {
-  let reg=/[A-Za-z ]/gi;
-  let s=sentence.match(reg).join("").split(" ").sort((a,b)=>b.length-a.length);
-  return s[0];
-}
+def longest_word(s):
+    stri=""
+    for i in range(len(s)):
+        if s[i].islower() or s[i].isupper() or s[i]==" ":
+            stri+=s[i]
+    sp=stri.split(" ")
+    st=sorted(sp,key=len)
+    maxi=len(st[-1])
+    p=[]
+    for i in range(len(sp)):
+        if len(sp[i])==maxi:
+            p.append(sp[i])
+    return p[0]
 
 """ 21-11-2025 LCM
 Given two integers, return the least common multiple (LCM) of the two numbers.
@@ -481,14 +489,15 @@ def scale_recipe(ingredients, scale):
     for i in range(len(ing)):
         res.append(" ".join(lst[i]))
     return res
-/* 23-11-2025: Character Count
+    
+""" 23-11-2025: Character Count
 Given a sentence string, return an array with a count of each character in alphabetical order.
 
 Treat upper and lowercase letters as the same letter when counting.
 Ignore numbers, spaces, punctuation, etc.
 Return the count and letter in the format "letter count". For instance, "a 3".
 All returned letters should be lowercase.
-Do not return a count of letters that are not in the given string.*/
+Do not return a count of letters that are not in the given string. """
 
 function countCharacters(sentence) {
   let reg=/[A-Za-z]/gi;
