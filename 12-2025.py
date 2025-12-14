@@ -314,3 +314,17 @@ def game_of_life(grid):
             else:
                 new[i][j]=grid[i][j]
     return new
+    
+""" 14-12-2025: Capitalize It
+Given a string title, return a new string formatted in title case using the following rules:
+
+Capitalize the first letter of each word.
+Make all other letters in each word lowercase.
+Words are always separated by a single space."""
+
+def title_case(title):
+    sp=title.split(" ")
+    res=""
+    for i in range(len(sp)):
+        res+=sp[i][0].upper()+sp[i][1:].lower()+" "
+    return res[0:-1]
