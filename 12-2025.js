@@ -350,3 +350,15 @@ function gameOfLife(grid){
     }
   return newGrid;
 }
+
+/* 14-12-2025: Capitalize It
+Given a string title, return a new string formatted in title case using the following rules:
+
+Capitalize the first letter of each word.
+Make all other letters in each word lowercase.
+Words are always separated by a single space.*/
+
+function titleCase(title) {
+  let sp=title.split(" ").map((item)=>item[0].toUpperCase()+item.slice(1).toLowerCase());
+  return sp.join(" ");
+}
