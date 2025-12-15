@@ -328,3 +328,20 @@ def title_case(title):
     for i in range(len(sp)):
         res+=sp[i][0].upper()+sp[i][1:].lower()+" "
     return res[0:-1]
+    
+""" 15-12-2025: Speed Check
+Given the speed you are traveling in miles per hour (MPH), and a speed limit in kilometers per hour (KPH), determine whether you are speeding and if you will get a warning or a ticket.
+
+1 mile equals 1.60934 kilometers.
+If you are travelling less than or equal to the speed limit, return "Not Speeding".
+If you are travelling 5 KPH or less over the speed limit, return "Warning".
+If you are travelling more than 5 KPH over the speed limit, return "Ticket"."""
+
+def speed_check(speed_mph, speed_limit_kph):
+    speed_kph=speed_mph*1.60934
+    if speed_kph<=speed_limit_kph:
+        return "Not Speeding"
+    elif speed_kph-5<=speed_limit_kph:
+        return "Warning"
+    else:
+        return "Ticket"
