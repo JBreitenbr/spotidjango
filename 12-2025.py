@@ -345,3 +345,17 @@ def speed_check(speed_mph, speed_limit_kph):
         return "Warning"
     else:
         return "Ticket"
+        
+""" 16-11-2025: Consonant Count
+Given a string and a target number, determine whether the string contains exactly the target number of consonants.
+
+Consonants are all alphabetic characters except "a", "e", "i", "o", and "u" in any case.
+Ignore digits, punctuation, spaces, and other non-letter characters when counting."""
+
+def has_consonant_count(text, target):
+    sn=0
+    c="bcdfghjklmnpqrstvwxyz";
+    for ch in text:
+        if ch.lower() in c:
+            sn+=1
+    return sn==target
