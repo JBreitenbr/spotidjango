@@ -375,3 +375,20 @@ function speedCheck(speedMph, speedLimitKph) {
   let speedKph=1.60934*speedMph
   return speedKph<=speedLimitKph?"Not Speeding":speedKph-5<=speedLimitKph?"Warning":"Ticket";
 }
+
+/* 16-11-2025: Consonant Count
+Given a string and a target number, determine whether the string contains exactly the target number of consonants.
+
+Consonants are all alphabetic characters except "a", "e", "i", "o", and "u" in any case.
+Ignore digits, punctuation, spaces, and other non-letter characters when counting.*/
+
+function hasConsonantCount(text, target) {
+  let sn=0;
+  let c="bcdfghjklmnpqrstvwxyz".split("");
+  for(let i=0;i<text.length;i++){
+    if(c.includes(text[i].toLowerCase())){
+      sn+=1;
+    }
+  }
+  return sn==target;
+}
