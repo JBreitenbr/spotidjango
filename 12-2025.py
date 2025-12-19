@@ -408,3 +408,21 @@ def create_board(dims):
             else:
                 a[i].append("O")
     return a
+
+""" 19-12-2025: Pairwise
+Given an array of integers and a target number, find all pairs of elements in the array whose values add up to the target and return the sum of their indices.
+
+For example, given [2, 3, 4, 6, 8] and 10, you will find two valid pairs:
+
+2 and 8 (2 + 8 = 10), whose indices are 0 and 4
+4 and 6 (4 + 6 = 10), whose indices are 2 and 3
+Add all the indices together to get a return value of 9. """
+
+def pairwise(arr, target):
+    sn=0
+    for i in range(len(arr)):
+        for j in range(len(arr)):
+            if arr[i]+arr[j]==target and j>i:
+                sn+=i+j
+    return sn
+
