@@ -426,3 +426,18 @@ def pairwise(arr, target):
                 sn+=i+j
     return sn
 
+""" 20-12-2025: Purge Most Frequent
+Given an array of values, remove all occurrences of the most frequently occurring element and return the resulting array.
+
+If multiple values are tied for most frequent, remove all of them.
+Do not change any of the other elements or their order. """
+
+import collections
+def purge_most_frequent(arr):
+    cnt=collections.Counter(arr)
+    mf=cnt.most_common(1)[0][0]
+    res=[]
+    for i in range(len(arr)):
+        if arr[i]!=mf:
+            res.append(arr[i])
+    return res
