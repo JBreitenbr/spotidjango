@@ -470,3 +470,39 @@ function pairwise(arr, target) {
   let res=p.reduce((a,b)=>a+b,0);
   return res;
 }
+
+/* 20-12-2025: Purge Most Frequent
+Given an array of values, remove all occurrences of the most frequently occurring element and return the resulting array.
+
+If multiple values are tied for most frequent, remove all of them.
+Do not change any of the other elements or their order. */
+
+function mostFrequent(arr) {
+    let n = arr.length, maxcount = 0;
+    let res = 0;
+    
+    for (let i = 0; i < n; i++) {
+        let count = 0;
+        for (let j = 0; j < n; j++) {
+            if (arr[i] === arr[j])
+                count++;
+        }
+        
+        if (count > maxcount || (count === maxcount && arr[i] > res)) {
+            maxcount = count;
+            res = arr[i];
+        }
+    }
+   return res;
+}
+
+function purgeMostFrequent(arr) {
+  let res=[];
+  let maxi=mostFrequent(arr);
+  for(let i=0;i<arr.length;i++){
+    if(arr[i]!=maxi){
+      res.push(arr[i]);
+    }
+  }
+  return res;
+}
