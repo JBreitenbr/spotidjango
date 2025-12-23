@@ -441,3 +441,82 @@ def purge_most_frequent(arr):
         if arr[i]!=mf:
             res.append(arr[i])
     return res
+    
+""" 21-12-2025: Daylight Hours
+December 21st is the winter solstice for the northern hemisphere and the summer solstice for the southern hemisphere. That means it's the day with the least daylight in the north and the most daylight in the south.
+
+Given a latitude number from -90 to 90, return a rough approximation of daylight hours on the solstice using the following table:
+
+Latitude	Daylight Hours
+-90	24
+-75	23
+-60	21
+-45	15
+-30	13
+-15	12
+0	12
+15	11
+30	10
+45	9
+60	6
+75	2
+90	0
+If the given latitude does not exactly match a table entry, use the value of the closest latitude. """
+
+def daylight_hours(lat):
+    lats=[-90,-75,-60,-45,-30,-15,0,15,30,45,60,75,90]
+    vals=[24,23,21,15,13,12,12,11,10,9,6,2,0]
+    diff=[]
+    for i in range(len(lats)):
+        diff.append(abs(lats[i]-lat))
+    ind=diff.index(min(diff))
+    return vals[ind]
+
+""" 22-12-2025: Traveling Shopper
+Given an amount of money you have, and an array of items you want to buy, determine how many of them you can afford.
+
+The given amount will be in the format ["Amount", "Currency Code"]. For example: ["150.00", "USD"] or ["6000", "JPY"].
+Each array item you want to purchase will be in the same format.
+Use the following exchange rates to convert values:
+
+Currency	1 Unit Equals
+USD	1.00 USD
+EUR	1.10 USD
+GBP	1.25 USD
+JPY	0.0070 USD
+CAD	0.75 USD
+If you can afford all the items in the list, return "Buy them all!".
+Otherwise, return "Buy the first X items.", where X is the number of items you can afford when purchased in the order given. """
+
+def buy_items(funds, items):
+    conv={"USD":1.00,"EUR":1.10,"GBP":1.25,"JPY":0.0070,"CAD":0.75}	
+    av=float(funds[0])*conv[funds[1]]
+    am=0
+    sn=0
+    for i in range(len(items)):
+        c=float(items[i][0])*conv[items[i][1]]
+        am+=c
+        if am<=av:
+            sn+=1
+    if sn==len(items):
+        return "Buy them all!"
+    else:
+        return f"Buy the first {sn} items."
+
+""" 23-12-2025: Re: Fwd: Fw: Count
+Given a string representing the subject line of an email, determine how many times the email has been forwarded or replied to.
+
+For simplicity, consider an email forwarded or replied to if the string contains any of the following markers (case-insensitive):
+
+"fw:"
+"fwd:"
+"re:"
+Return the total number of occurrences of these markers. """
+
+def email_chain_count(subject):
+    sn=0
+    sp=subject.split(":")
+    for i in range(len(sp)):
+        if sp[i].lower().strip() in ["fw","fwd","re"]:
+            sn+=1
+    return sn
