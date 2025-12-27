@@ -589,3 +589,93 @@ function emailChainCount(subject) {
   let flt=sp.filter((item)=>["fw","fwd","re"].includes(item));
   return flt.length;
 }
+
+/* 24-12-2025: Markdown Image Parser
+Given a string of an image in Markdown, return the equivalent HTML string.
+
+A Markdown image has the following format: "![alt text](image_url)". Where:
+
+alt text is the description of the image (the alt attribute value).
+image_url is the source URL of the image (the src attribute value).
+Return a string of the HTML img tag with the src set to the image URL and the alt set to the alt text.
+
+For example, given "![Cute cat](cat.png)" return '<img src="cat.png" alt="Cute cat">';
+
+Make sure the tag, order of attributes, spacing, and quote usage is the same as above.
+Note: The console may not display HTML tags in strings when logging messages — check the browser console to see logs with tags included.*/
+
+function parseImage(md) {
+  let sp=md.split("(");
+  let im=sp[1].slice(0,sp[1].length-1);
+  let alt=sp[0].slice(2,sp[0].length-1);
+  let stri=`<img src="${im}" alt="${alt}">`;
+  return stri;
+}
+
+/* 25-12-2025: Snowflake Generator
+Given a multi-line string that uses newline characters (\n) to represent a line break, return a new string where each line is mirrored horizontally and attached to the end of the original line.
+
+Mirror a line by reversing all of its characters, including spaces.
+For example, given "* \n *\n* ", which logs to the console as:
+
+* 
+ *
+* 
+Return "*  *\n ** \n*  *", which logs to the console as:
+
+*  *
+ ** 
+*  *
+Take careful note of the whitespaces in the given and returned strings. Be sure not to trim any of them. */
+
+function rStri(stri) {
+  return stri.split("").reverse().join("");
+}
+
+function generateSnowflake(crystals) {
+  let sp=crystals.split("\n").map((item)=>item+rStri(item));
+  return sp.join("\n");
+}
+
+/* 26-12-2025: Sum of Divisors
+Given a positive integer, return the sum of all its divisors.
+
+A divisor is any integer that divides the number evenly (the remainder is 0).
+Only count each divisor once.
+For example, given 6, return 12 because the divisors of 6 are 1, 2, 3, and 6, and the sum of those is 12.*/
+
+function sumDivisors(n) {
+  let arr=Array.from(Array(n).keys()).map((item)=>item+1);
+  let flt=arr.filter((item)=>n%item==0);
+  return flt.reduce((a,b)=>a+b,0);
+}
+
+/* 27-12-2025: Rock, Paper, Scissors
+Given two strings, the first representing Player 1 and the second representing Player 2, determine the winner of a match of Rock, Paper, Scissors.
+
+The input strings will always be "Rock", "Paper", or "Scissors".
+"Rock" beats "Scissors".
+"Paper" beats "Rock".
+"Scissors" beats "Paper".
+Return:
+
+"Player 1 wins" if Player 1 wins.
+"Player 2 wins" if Player 2 wins.
+"Tie" if both players choose the same option.*/
+
+function rockPaperScissors(player1, player2) {
+  let c=[["Rock","Scissors"],["Paper","Rock"],["Scissors","Paper"]];
+  if(player1==player2){
+    return "Tie";
+  } else {
+    for(let i=0;i<3;i++){
+      if(player1==c[i][0]&&player2==c[i][1]){
+        return "Player 1 wins";
+      }
+      if(player1==c[i][1]&&player2==c[i][0]){
+        return "Player 2 wins";
+      }
+    }
+  }
+}
+
