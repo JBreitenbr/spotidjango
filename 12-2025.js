@@ -679,3 +679,56 @@ function rockPaperScissors(player1, player2) {
   }
 }
 
+/* 28-12-2025: SCREAMING_SNAKE_CASE
+Given a string representing a variable name, return the variable name converted to SCREAMING_SNAKE_CASE.
+
+The given variable names will be written in one of the following formats:
+
+camelCase
+PascalCase
+snake_case
+kebab-case
+In the above formats, words are separated by an underscore (_), a hyphen (-), or a new word starts with a capital letter.
+
+To convert to SCREAMING_SNAKE_CASE:
+
+Make all letters uppercase
+Separate words with an underscore (_) */
+
+function toScreamingSnakeCase(vari) {
+  let res=vari[0].toUpperCase();
+  for(let i=1;i<vari.length;i++){
+    let v=vari[i].toUpperCase()==vari[i] && !["_","-"].includes(vari[i]);
+    if(v){
+      res+="_"+vari[i];
+    } else res+=vari[i].toUpperCase();
+  }
+  return res.replaceAll("-","_");
+}
+
+/* 29-12-2025: Takeoff Fuel
+Given the numbers of gallons of fuel currently in your airplane, and the required number of liters of fuel to reach your destination, determine how many additional gallons of fuel you should add.
+
+1 gallon equals 3.78541 liters.
+If the airplane already has enough fuel, return 0.
+You can only add whole gallons.
+Do not include decimals in the return number. */
+
+function fuelToAdd(currGall, reqLit) {
+  let currLit=currGall*3.78541;
+  let need=Math.ceil((reqLit-currLit)/3.78541);
+  return need<0?0:need;
+}
+
+/* 30-12-2025: Sum the String
+Given a string containing digits and other characters, return the sum of all numbers in the string.
+
+Treat consecutive digits as a single number. For example, "13" counts as 13, not 1 + 3.
+Ignore any non-digit characters. */
+
+function stringSum(str) {
+  let reg=/[0-9]+/gi;
+  let m=str.match(reg);
+  let res=m.map((item)=>Number(item)).reduce((a,b)=>a+b,0);
+  return res;
+}
