@@ -601,3 +601,60 @@ def rock_paper_scissors(player1, player2):
         return "Player 1 wins"
     else:
         return "Player 2 wins"
+        
+""" 28-12-2025: SCREAMING_SNAKE_CASE
+Given a string representing a variable name, return the variable name converted to SCREAMING_SNAKE_CASE.
+
+The given variable names will be written in one of the following formats:
+
+camelCase
+PascalCase
+snake_case
+kebab-case
+In the above formats, words are separated by an underscore (_), a hyphen (-), or a new word starts with a capital letter.
+
+To convert to SCREAMING_SNAKE_CASE:
+
+Make all letters uppercase
+Separate words with an underscore (_) """
+
+def to_screaming_snake_case(vari):
+    res=vari[0].upper()
+    for i in range(1,len(vari)):
+        if(vari[i].isupper()):
+            res+="_"+vari[i]
+        else:
+            res+=vari[i].upper()
+    res=res.replace("-","_")
+    return res
+
+""" 29-12-2025: Takeoff Fuel
+Given the numbers of gallons of fuel currently in your airplane, and the required number of liters of fuel to reach your destination, determine how many additional gallons of fuel you should add.
+
+1 gallon equals 3.78541 liters.
+If the airplane already has enough fuel, return 0.
+You can only add whole gallons.
+Do not include decimals in the return number. """
+
+import math
+def fuel_to_add(curr_gall, req_lit):
+    curr_lit=curr_gall*3.78541
+    need=math.ceil((req_lit-curr_lit)/3.78541)
+    if need<0:
+        return 0
+    else:
+        return need
+
+""" 30-12-2025: Sum the String
+Given a string containing digits and other characters, return the sum of all numbers in the string.
+
+Treat consecutive digits as a single number. For example, "13" counts as 13, not 1 + 3.
+Ignore any non-digit characters. """
+
+import re
+def string_sum(s):
+    sn=0
+    m = re.findall("[0-9]+",s)
+    for i in range(len(m)):
+        sn+=int(m[i])
+    return sn
