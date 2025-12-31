@@ -732,3 +732,21 @@ function stringSum(str) {
   let res=m.map((item)=>Number(item)).reduce((a,b)=>a+b,0);
   return res;
 }
+
+/* 31-12-2025: Markdown Italic Parser
+Given a string that may include some italic text in Markdown, return the equivalent HTML string.
+
+Italic text in Markdown is any text that starts and ends with a single asterisk (*) or a single underscore (_).
+There cannot be any spaces between the text and the asterisk or underscore, but there can be spaces in the text itself.
+Convert all italic occurrences to HTML i tags and return the string.
+For example, given "*This is italic*", return "<i>This is italic</i>". */
+
+function parseItalics(md) {
+  let sp=md.split(/[*_]+/gi);
+  let st=["* ","_ "];
+  let en=[" *"," _"];
+  let c=st.includes(md.slice(0,2))||en.includes(md.slice(md.length-2,md.length));
+  if(c) return md;
+  let flt=sp.map((item)=>item.trimStart()==item && item.trimEnd()==item && item!=""?"<i>"+item+"</i>":item);
+  return flt.join("");
+}
