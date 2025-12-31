@@ -658,3 +658,24 @@ def string_sum(s):
     for i in range(len(m)):
         sn+=int(m[i])
     return sn
+    
+""" 31-12-2025: Markdown Italic Parser
+Given a string that may include some italic text in Markdown, return the equivalent HTML string.
+
+Italic text in Markdown is any text that starts and ends with a single asterisk (*) or a single underscore (_).
+There cannot be any spaces between the text and the asterisk or underscore, but there can be spaces in the text itself.
+Convert all italic occurrences to HTML i tags and return the string.
+For example, given "*This is italic*", return "<i>This is italic</i>". """
+
+import re
+def parse_italics(md):
+    sp=re.split(r'[*_]+',md)
+    if md[:2] in ["* ","_ "] or md[-2:] in [" *"," _"]:
+        return md
+    res=""
+    for i in range(len(sp)):
+        if sp[i]==sp[i].strip() and len(sp[i])>0:
+            res+="<i>"+sp[i]+"</i>"
+        else:
+            res+=sp[i]
+    return res
