@@ -95,3 +95,64 @@ The year is evenly divisible by 400. */
 function isLeapYear(year) {
   return year%400==0||year%4==0&&year%100!=0;
 }
+
+/* 05-01-2026: Tire Pressure
+Given an array with four numbers representing the tire pressures in psi of the four tires in your vehicle, and another array of two numbers representing the minimum and maximum pressure for your tires in bar, return an array of four strings describing each tire's status.
+
+1 bar equal 14.5038 psi.
+Return an array with the following values for each tire:
+
+"Low" if the tire pressure is below the minimum allowed.
+"Good" if it's between the minimum and maximum allowed.
+"High" if it's above the maximum allowed. */
+
+function tireStatus(pressuresPSI, rangeBar) {
+  let c=14.5038;
+  return pressuresPSI.map((item)=>item/c<rangeBar[0]?"Low":item/c<rangeBar[1]?"Good":"High");
+}
+
+/* 06-01-2026: vOwElcAsE
+Given a string, return a new string where all vowels are converted to uppercase and all other alphabetical characters are converted to lowercase.
+
+Vowels are "a", "e", "i", "o", and "u" in any case.
+Non-alphabetical characters should remain unchanged. */
+
+function vowelCase(str) {
+  let v="aeiou".split("");
+  let c="BCDFGHJKLMNPQRSTVWXYZ".split("");
+  let res="";
+  for(let i=0;i<str.length;i++){
+    if(v.includes(str[i])){
+      res+=str[i].toUpperCase();
+    } else if(c.includes(str[i])){
+      res+=str[i].toLowerCase();
+    }
+    else res+=str[i];
+  }
+  return res;
+}
+
+/* 07-01-2026: Markdown Unordered List Parser
+Given the string of a valid unordered list in Markdown, return the equivalent HTML string.
+
+An unordered list consists of one or more list items. A valid list item appears on its own line and:
+
+Starts with a dash ("-"), followed by
+At least one space, and then
+The list item text.
+The list is given as a single string with new lines separated by the newline character ("\n"). Do not include the newline characters in the item text.
+
+Wrap each list item in HTML li tags, and the whole list of items in ul tags.
+
+For example, given "- Item A\n- Item B", return "<ul><li>Item A</li><li>Item B</li></ul>". */
+
+function parseUnorderedList(md) {
+  let res="<ul>";
+  let sp=md.replaceAll("\n","").split("- ");
+  for(let i=0;i<sp.length;i++){
+    if(sp[i]!=""){
+      res+="<li>"+sp[i].trimStart()+"</li>"
+    }
+  }
+  return res+"</ul>";
+}
