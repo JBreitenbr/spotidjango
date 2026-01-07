@@ -92,3 +92,65 @@ The year is evenly divisible by 400.
 def is_leap_year(year):
     return year%400==0 or year%4==0 and year%100!=0
 
+""" 05-01-2026: Tire Pressure
+Given an array with four numbers representing the tire pressures in psi of the four tires in your vehicle, and another array of two numbers representing the minimum and maximum pressure for your tires in bar, return an array of four strings describing each tire's status.
+
+1 bar equal 14.5038 psi.
+Return an array with the following values for each tire:
+
+"Low" if the tire pressure is below the minimum allowed.
+"Good" if it's between the minimum and maximum allowed.
+"High" if it's above the maximum allowed. """
+
+def tire_status(pressures_psi, range_bar):
+    c=14.5038
+    res=[]
+    for el in pressures_psi:
+        if el/c<range_bar[0]:
+            res.append("Low")
+        elif el/c<range_bar[1]:
+            res.append("Good")
+        else:
+            res.append("High")
+    return res
+
+""" 06-01-2026: vOwElcAsE
+Given a string, return a new string where all vowels are converted to uppercase and all other alphabetical characters are converted to lowercase.
+
+Vowels are "a", "e", "i", "o", and "u" in any case.
+Non-alphabetical characters should remain unchanged. """
+
+def vowel_case(s):
+    v=list("aeiou")
+    c=list("BCDFGHJKLMNPQRSTVWXYZ")
+    res=""
+    for l in s:
+        if l in v:
+            res+=l.upper()
+        elif l in c:
+            res+=l.lower()
+        else:
+            res+=l
+    return res
+
+""" 07-01-2026: Markdown Unordered List Parser
+Given the string of a valid unordered list in Markdown, return the equivalent HTML string.
+
+An unordered list consists of one or more list items. A valid list item appears on its own line and:
+
+Starts with a dash ("-"), followed by
+At least one space, and then
+The list item text.
+The list is given as a single string with new lines separated by the newline character ("\n"). Do not include the newline characters in the item text.
+
+Wrap each list item in HTML li tags, and the whole list of items in ul tags.
+
+For example, given "- Item A\n- Item B", return "<ul><li>Item A</li><li>Item B</li></ul>". """
+
+def parse_unordered_list(md):
+    sp=md.replace("\n","").split("- ")
+    res="<ul>"
+    for el in sp:
+        if el!="":
+            res+="<li>"+el.strip()+"</li>"
+    return res+"</ul>"
