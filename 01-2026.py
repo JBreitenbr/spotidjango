@@ -154,3 +154,82 @@ def parse_unordered_list(md):
         if el!="":
             res+="<li>"+el.strip()+"</li>"
     return res+"</ul>"
+    
+""" 08-01-2026: Sorted Array?
+Given an array of numbers, determine if the numbers are sorted in ascending order, descending order, or neither.
+
+If the given array is:
+
+In ascending order (lowest to highest), return "Ascending".
+In descending order (highest to lowest), return "Descending".
+Not sorted in ascending or descending order, return "Not sorted". """
+
+def is_sorted(arr):
+    c=[]
+    for i in range(1,len(arr)):
+        c.append(arr[i]-arr[i-1])
+    flt1=[]
+    flt2=[]
+    for i in range(len(c)):
+        if c[i]>0:
+            flt1.append(c[i])
+        if c[i]<0:
+            flt2.append(c[i])
+    if len(flt1)==len(c):
+        return "Ascending"
+    elif len(flt2)==len(c):
+        return "Descending"
+    else:
+        return "Not sorted"
+
+""" 09-01-2026: Circular Prime
+Given an integer, determine if it is a circular prime.
+
+A circular prime is an integer where all rotations of its digits are themselves prime.
+
+For example, 197 is a circular prime because all rotations of its digits: 197, 971, and 719, are prime numbers. """
+
+def is_prime(n):
+    res=[]
+    for i in range(2,n):
+        if n%i==0:
+            res.append(i)
+    if len(res)==0:
+        return True
+    else:
+        return False
+
+
+def is_circular_prime(n):
+    c=[str(n)]
+    for i in range(1,len(str(n))):
+        t=c[i-1][1:]+c[i-1][0]
+        c.append(t)
+    for i in range(len(c)):
+        if not is_prime(int(c[i])):
+            return False
+            break
+    return True
+    
+""" 10-01-2026: Tic-Tac-Toe
+Given a 3×3 matrix (an array of arrays) representing a completed Tic-Tac-Toe game, determine the winner.
+
+Each element in the given matrix is either an "X" or "O".
+A player wins if they have three of their characters in a row - horizontally, vertically, or diagonally.
+
+Return:
+
+"X wins" if player X has three in a row.
+"O wins" if player O has three in a row.
+"Draw" if no player has three in a row. """
+
+def tic_tac_toe(m):
+    t=[[m[j][i] for j in range(len(m))] for i in range(len(m[0]))]
+    d1=m[0][0]+m[1][1]+m[2][2]
+    d2=m[0][2]+m[1][1]+m[2][0]
+    for i in range(3):
+        if "".join(m[i])=="OOO" or "".join(t[i])=="OOO" or d1=="OOO" or d2=="OOO":
+            return "O wins"
+        elif "".join(m[i])=="XXX" or "".join(t[i])=="XXX" or d1=="XXX" or d2=="XXX":
+            return "X wins"
+    return "Draw"
