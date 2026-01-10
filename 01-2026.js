@@ -156,3 +156,68 @@ function parseUnorderedList(md) {
   }
   return res+"</ul>";
 }
+
+/* 08-01-2026: Sorted Array?
+Given an array of numbers, determine if the numbers are sorted in ascending order, descending order, or neither.
+
+If the given array is:
+
+In ascending order (lowest to highest), return "Ascending".
+In descending order (highest to lowest), return "Descending".
+Not sorted in ascending or descending order, return "Not sorted". */
+
+function isSorted(arr) {
+  let c=[];
+  for(let i=1;i<arr.length;i++){
+    c.push(arr[i]-arr[i-1]);
+  }
+  let flt1=c.filter((item)=>item>0);
+  let flt2=c.filter((item)=>item<0);
+  return flt1.length+1==arr.length?"Ascending":flt2.length+1==arr.length?"Descending":"Not sorted";
+} 
+
+/* 09-01-2026: Circular Prime
+Given an integer, determine if it is a circular prime.
+
+A circular prime is an integer where all rotations of its digits are themselves prime.
+
+For example, 197 is a circular prime because all rotations of its digits: 197, 971, and 719, are prime numbers. */
+
+function isPrime(n) {
+  let arr=Array.from(Array(n).keys()).map((item)=>item+1);
+  let flt=arr.filter((item)=>n%item==0&&item>1);
+  return flt.length==1?true:false;
+}
+
+function isCircularPrime(n) {
+  let s=n.toString();
+  let c=[s];
+  for(let i=1;i<s.length;i++){
+    let t=c[i-1].slice(1,c[i-1])+c[i-1][0];
+    c.push(t);
+  }
+  return c.map((item)=>Number(item)).every(isPrime);
+}
+
+/* 10-01-2026: Tic-Tac-Toe
+Given a 3×3 matrix (an array of arrays) representing a completed Tic-Tac-Toe game, determine the winner.
+
+Each element in the given matrix is either an "X" or "O".
+A player wins if they have three of their characters in a row - horizontally, vertically, or diagonally.
+
+Return:
+
+"X wins" if player X has three in a row.
+"O wins" if player O has three in a row.
+"Draw" if no player has three in a row.  */
+
+function ticTacToe(board) {
+let trans = board[0].map((_, colIndex) => board.map(row => row[colIndex]));
+  let diag1=board[0][0]+board[1][1]+board[2][2];
+  let diag2=board[0][2]+board[1][1]+board[2][0];
+  for(let i=0;i<3;i++){
+    if(board[i].join("")=="OOO"||trans[i].join("")=="OOO"||diag1=="OOO"||diag2=="OOO") return "O wins";
+    else if(board[i].join("")=="XXX"||trans[i].join("")=="XXX"||diag1=="XXX"||diag2=="XXX") return "X wins";
+  }
+  return "Draw";
+}
